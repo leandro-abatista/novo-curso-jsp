@@ -8,22 +8,33 @@
 </head>
 <body>
 
-	<h1>Bem vindo ao curso de jsp</h1>
+	<h1>Bem vindo ao Sistema de Gerenciamento de Estoque</h1>
 	
-	<%
-	out.println("Java Seu sucesso garantido - ");
-	out.println("");
-	out.println("Formuário de entrada de dados ::");
-	out.println("");
-	%>
+	<!-- mensagem -->
+	<h4>${msg}</h4>
 	
 	<!-- formulário - enviados dados do formulário para a página receber-nome.jsp-->
 	<form action="ServletLogin" method="post"><!--  -->
 		<br>
-		<input name="nome">
-		<input name="idade">
 		
-		<input type="submit" value="enviar">
+		<table>
+
+			<tr>
+				<td><label>Login :: </label></td>
+				<td><input name="login"></td>
+			</tr>
+
+			<tr>
+				<td><label>Senha :: </label></td>
+				<td><input type="password" name="senha"></td>
+			</tr>
+
+			<tr></tr>
+			<tr>
+				<td><input type="submit" value="Entrar"></td>
+			</tr>
+
+		</table>
 	</form>
 </body>
 </html>
