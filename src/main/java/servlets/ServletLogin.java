@@ -33,8 +33,8 @@ public class ServletLogin extends HttpServlet {
 
 	/*Recebe os dados enviados por um formulário*/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("nome");
-		String senha = request.getParameter("idade");
+		String login = request.getParameter("login");
+		String senha = request.getParameter("senha");
 		
 		/*validar login e senha na página*/
 		if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
@@ -43,6 +43,27 @@ public class ServletLogin extends HttpServlet {
 			ModelLogin modelLogin = new ModelLogin();
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
+			
+			/*simulação de entrada de dados*/
+			if (modelLogin.getLogin().equalsIgnoreCase("admin".trim()) 
+					&& modelLogin.getSenha().equalsIgnoreCase("admin".trim())) {
+				
+				/*esse código pega o usuário logado na sessão*/
+				request.getSession().setAttribute("usuarioLogado", modelLogin.getLogin());
+				
+				RequestDispatcher redirecionar = request.getRequestDispatcher("principal/principal.jsp");
+				request.setAttribute("msg", "Usuário autênticado com sucesso!");
+				redirecionar.forward(request, response);
+				
+			} else {/*se não foi informado login e senha*/
+				/*retorna para a mesma página*/
+				RequestDispatcher redirecionar = request.getRequestDispatcher("pagina-inicial.jsp");
+				request.setAttribute("msg", "Informe o Login e a Senha corretamente!");
+				redirecionar.forward(request, response);
+				
+			}
+			
+			
 		} else {/*se não foi informado login e senha*/
 			/*retorna para a mesma página*/
 			RequestDispatcher redirecionar = request.getRequestDispatcher("pagina-inicial.jsp");
