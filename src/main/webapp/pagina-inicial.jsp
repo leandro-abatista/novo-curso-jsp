@@ -11,7 +11,19 @@
 	<h1>Bem vindo ao curso de jsp</h1>
 	
 	<%
-	out.print("Java Seu sucesso garantido");
+	out.println("Java Seu sucesso garantido - ");
+	out.println("");
+	out.println("Formuário de entrada de dados ::");
+	out.println("");
 	%>
+	
+	<!-- formulário - enviados dados do formulário para a página receber-nome.jsp-->
+	<form action="ServletLogin" method="post"><!--  -->
+		<br>
+		<input name="nome">
+		<input name="idade">
+		
+		<input type="submit" value="enviar">
+	</form>
 </body>
 </html>
