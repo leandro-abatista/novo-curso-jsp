@@ -22,7 +22,7 @@ public class SingleConnectionBanco {
 		try {
 			
 			if (connection == null) {
-				Class.forName("org.postgressql.Driver");/*Carrega o driver de conexão do banco de dados*/
+				Class.forName("org.postgresql.Driver");/*Carrega o driver de conexão do banco de dados*/
 				connection = DriverManager.getConnection(banco, user, password);
 				connection.setAutoCommit(false);/*para não efetuar alterarações no banco sem autorização*/
 			}

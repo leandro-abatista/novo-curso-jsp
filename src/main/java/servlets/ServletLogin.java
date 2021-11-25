@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
 
+import dao.DAOLoginRepository;
 import model.ModelLogin;
 
 /**
@@ -23,6 +24,8 @@ import model.ModelLogin;
 public class ServletLogin extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private DAOLoginRepository repository = new DAOLoginRepository();
        
     public ServletLogin() {
         super();
@@ -39,47 +42,53 @@ public class ServletLogin extends HttpServlet {
 		String senha = request.getParameter("senha");
 		String url = request.getParameter("url");
 		
-		/*validar login e senha na página*/
-		if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
-			
-			/*instanciando o objeto ModeloLogin*/
-			ModelLogin modelLogin = new ModelLogin();
-			modelLogin.setLogin(login);
-			modelLogin.setSenha(senha);
-			
-			/*simulação de entrada de dados*/
-			if (modelLogin.getLogin().equalsIgnoreCase("admin".trim()) 
-					&& modelLogin.getSenha().equalsIgnoreCase("admin".trim())) {
-				
-				/*esse código pega o usuário logado na sessão*/
-				request.getSession().setAttribute("usuarioLogado", modelLogin.getLogin());
-				
-				if(url == null || url.equals("null")){
-					url = "principal/principal.jsp";
+		
+		try {
+			/* validar login e senha na página */
+			if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
+
+				/* instanciando o objeto ModeloLogin */
+				ModelLogin modelLogin = new ModelLogin();
+				modelLogin.setLogin(login);
+				modelLogin.setSenha(senha);
+
+				if (repository.validarAutenticacao(modelLogin)) {
+
+					/* esse código pega o usuário logado na sessão */
+					request.getSession().setAttribute("usuarioLogado", modelLogin.getLogin());
+
+					if (url == null || url.equals("null")) {
+						url = "principal/principal.jsp";
+					}
+
+					RequestDispatcher redirecionar = request.getRequestDispatcher(url);
+					request.setAttribute("msg", "Usuário autênticado com sucesso!");
+					redirecionar.forward(request, response);
+
+				} else {/* se não foi informado login e senha */
+					/* retorna para a mesma página */
+					RequestDispatcher redirecionar = request.getRequestDispatcher("/pagina-inicial.jsp");
+					request.setAttribute("msg", "Informe o Login e a Senha corretamente!");
+					redirecionar.forward(request, response);
+
 				}
-				
-				RequestDispatcher redirecionar = request.getRequestDispatcher(url);
-				request.setAttribute("msg", "Usuário autênticado com sucesso!");
-				redirecionar.forward(request, response);
-				
-			} else {/*se não foi informado login e senha*/
-				/*retorna para a mesma página*/
-				RequestDispatcher redirecionar = request.getRequestDispatcher("/pagina-inicial.jsp");
+
+			} else {/* se não foi informado login e senha */
+				/* retorna para a mesma página */
+				RequestDispatcher redirecionar = request.getRequestDispatcher("pagina-inicial.jsp");
 				request.setAttribute("msg", "Informe o Login e a Senha corretamente!");
 				redirecionar.forward(request, response);
-				
+
 			}
-			
-			
-		} else {/*se não foi informado login e senha*/
-			/*retorna para a mesma página*/
-			RequestDispatcher redirecionar = request.getRequestDispatcher("pagina-inicial.jsp");
-			request.setAttribute("msg", "Informe o Login e a Senha corretamente!");
-			redirecionar.forward(request, response);
-			
+
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		
+
 	}
 
 }
