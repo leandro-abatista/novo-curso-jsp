@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.If;
+
 import model.ModelLogin;
 
 /**
@@ -17,7 +19,7 @@ import model.ModelLogin;
  * @author leand
  *
  */
-@WebServlet("/ServletLogin")/*mapeamento de URl que vem da tela*/
+@WebServlet(urlPatterns = {"/principal/ServletLogin", "/ServletLogin"})/*mapeamento de URl que vem da tela*/
 public class ServletLogin extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -35,6 +37,7 @@ public class ServletLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
+		String url = request.getParameter("url");
 		
 		/*validar login e senha na página*/
 		if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
@@ -51,13 +54,17 @@ public class ServletLogin extends HttpServlet {
 				/*esse código pega o usuário logado na sessão*/
 				request.getSession().setAttribute("usuarioLogado", modelLogin.getLogin());
 				
-				RequestDispatcher redirecionar = request.getRequestDispatcher("principal/principal.jsp");
+				if(url == null || url.equals("null")){
+					url = "principal/principal.jsp";
+				}
+				
+				RequestDispatcher redirecionar = request.getRequestDispatcher(url);
 				request.setAttribute("msg", "Usuário autênticado com sucesso!");
 				redirecionar.forward(request, response);
 				
 			} else {/*se não foi informado login e senha*/
 				/*retorna para a mesma página*/
-				RequestDispatcher redirecionar = request.getRequestDispatcher("pagina-inicial.jsp");
+				RequestDispatcher redirecionar = request.getRequestDispatcher("/pagina-inicial.jsp");
 				request.setAttribute("msg", "Informe o Login e a Senha corretamente!");
 				redirecionar.forward(request, response);
 				

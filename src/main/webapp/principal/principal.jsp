@@ -7,6 +7,7 @@
 	<title>Curso-JSP</title>
 </head>
 <body>
+	<h2>${msg}</h2>
 	<h2>Tela principal após login autenticado</h2>
 </body>
 </html>
