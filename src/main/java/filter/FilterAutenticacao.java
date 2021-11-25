@@ -1,6 +1,9 @@
 package filter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,8 +15,12 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import connection.SingleConnectionBanco;
+
 @WebFilter(urlPatterns = {"/principal/*"})/*Intercepta todas as requisições que vierem do projeto, ou mapeamento*/
 public class FilterAutenticacao implements Filter {
+	
+	private static Connection connection;
 
     /**
      *  constructor padrão
@@ -26,6 +33,11 @@ public class FilterAutenticacao implements Filter {
      * Mata os processos de conexão com o banco de dados
      */
 	public void destroy() {
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -35,7 +47,10 @@ public class FilterAutenticacao implements Filter {
 	 * Dar commit e rollback de transaçãoes com o banco de dados
 	 * Valida e realiza o redirecionamento de páginas
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
+			throws IOException, ServletException {
+		
+		try {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpSession session = req.getSession();
 		String usuarioLog = (String) session.getAttribute("usuarioLogado");
@@ -53,9 +68,22 @@ public class FilterAutenticacao implements Filter {
 		} else {
 			chain.doFilter(request, response);
 		}
+		
+		connection.commit();/* commita a operações no banco de dados */
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
+		connection = SingleConnectionBanco.getConnection();
 	}
 
 }
