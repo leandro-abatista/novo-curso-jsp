@@ -33,7 +33,8 @@ public class ServletLogin extends HttpServlet {
 
     /*Recebe os dados da URL vindos por parâmetros*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		/*resolve o problema para a tela na ficar em branco*/
+		doPost(request, response);
 	}
 
 	/*Recebe os dados enviados por um formulário*/

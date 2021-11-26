@@ -52,6 +52,7 @@
 						placeholder="Informe seu login" required="required">
 
 					<div class="invalid-feedback">Campo obrigatório</div>
+					<div class="valid-feedback">Ok!</div>
 				</div>
 
 				<div class="mb-3">
@@ -60,7 +61,8 @@
 						id="senha" type="password" name="senha" class="form-control" style="font-weight: bold;"
 						placeholder="Informe sua senha" required="required">
 						
-					<div class="invalid-feedback">Campo obrigatório</div>	
+					<div class="invalid-feedback">Campo obrigatório</div>
+					<div class="valid-feedback">Ok!</div>	
 				</div>
 
 				<div class="d-grid gap-2">
