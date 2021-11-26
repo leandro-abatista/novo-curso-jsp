@@ -18,7 +18,7 @@
 </head>
 <body>
 
-	<div class="card center" style="position: absolute; top: 10%; left: 33%; right: 33%">
+	<div class="card center" style="margin: 6%">
 		<div class="card-header" style="text-align: center;">
 			<h1>Bem vindo ao SGE</h1>
 			<h6>Sistema de Gerenciamento de Estoque</h6>	
