@@ -3,11 +3,20 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
 
+<script src="sweetalert2/dist/sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
+
 <jsp:include page="head.jsp"></jsp:include>
 
 <body>
+
 	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>
+	
+	<div id="msgLogado">
+		<strong>${msgLogado}</strong>
+	</div>
+	
 	<!-- Pre-loader end -->
 	<div id="pcoded" class="pcoded">
 		<div class="pcoded-overlay-box"></div>
@@ -46,6 +55,7 @@
 	
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
+	
 </body>
 
 </html>

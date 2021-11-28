@@ -5,8 +5,8 @@
 <nav class="navbar header-navbar pcoded-header">
 				<div class="navbar-wrapper">
 					<div class="navbar-logo">
-						<a class="mobile-menu waves-effect waves-light"
-							id="mobile-collapse" href="#!"> <i class="ti-menu"></i>
+						<a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!"> 
+							<i class="ti-menu"></i>
 						</a>
 						<div class="mobile-search waves-effect waves-light">
 							<div class="header-search">
@@ -16,7 +16,8 @@
 											class="ti-close"></i></span> <input type="text" class="form-control"
 											placeholder="Enter Keyword"> <span
 											class="input-group-addon search-btn"><i
-											class="ti-search"></i></span>
+											class="ti-search"></i>
+										</span>
 									</div>
 								</div>
 							</div>
@@ -64,7 +65,7 @@
 												src="assets/images/avatar-2.jpg"
 												alt="Generic placeholder image">
 											<div class="media-body">
-												<h5 class="notification-user">John Doe</h5>
+												<h5 class="notification-user"><%= session.getAttribute("usuarioLogado") %></h5>
 												<p class="notification-msg">Lorem ipsum dolor sit amet,
 													consectetuer elit.</p>
 												<span class="notification-time">30 minutes ago</span>
@@ -98,12 +99,13 @@
 										</div>
 									</li>
 								</ul></li>
-							<li class="user-profile header-notification"><a href="#!"
-								class="waves-effect waves-light"> <img
-									src="assets/images/avatar-4.jpg" class="img-radius"
-									alt="User-Profile-Image"> <span>John Doe</span> <i
-									class="ti-angle-down"></i>
-							</a>
+							<li class="user-profile header-notification">
+								<a href="#!" class="waves-effect waves-light"> 
+									<img src="assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image"> 
+										<!-- dados do usuário -->
+										<span><%= session.getAttribute("usuarioLogado") %></span> 
+										<i class="ti-angle-down"></i>
+								</a>
 								<ul class="show-notification profile-notification">
 									<li class="waves-effect waves-light"><a href="#!"> <i
 											class="ti-settings"></i> Settings
@@ -119,12 +121,37 @@
 										href="auth-lock-screen.html"> <i class="ti-lock"></i> Lock
 											Screen
 									</a></li>
-									<li class="waves-effect waves-light"><a
-										href="auth-normal-sign-in.html"> <i
+									<li class="waves-effect waves-light"><a type="button"
+										href="ServletLogin?acao=logout" onclick="mensagem();"> <i
 											class="ti-layout-sidebar-left"></i> Logout
 									</a></li>
 								</ul></li>
 						</ul>
 					</div>
 				</div>
-			</nav>    
+			</nav>   
+			
+			<script type="text/javascript">
+				
+			function mensagem(){
+				  swal({
+				  title: 'Você está certo disso?',
+				  text: "Esta pergunta vale um milhão de reais!",
+				  type: 'warning',
+				  showCancelButton: true,
+				  confirmButtonColor: '#3085d6',
+				  cancelButtonColor: '#d33',
+				  confirmButtonText: 'Sim, tenho certeza!',
+				  cancelButtonText: 'Melhor eu parar...'
+				  }).then((result) => {
+				    if (result.value) {
+				      swal(
+				        'Parabéns!',
+				        'Você acertou e ganhou um milhão de reais!',
+				        'success'
+				      )
+				    }
+				  })
+				};
+			
+			</script> 
