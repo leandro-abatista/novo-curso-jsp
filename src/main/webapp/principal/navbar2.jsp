@@ -9,7 +9,7 @@
 						<div class="pcoded-inner-navbar main-menu">
 							<div class="">
 								<div class="main-menu-header">
-									<img class="img-80 img-radius" src="assets/images/avatar-4.jpg"
+									<img class="img-80 img-radius" src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg"
 										alt="User-Profile-Image">
 									<div class="user-details">
 										<span id="more-details"><%= session.getAttribute("usuarioLogado") %>
@@ -49,14 +49,13 @@
 								<li class="pcoded-hasmenu"><a href="javascript:void(0)"
 									class="waves-effect waves-dark"> <span class="pcoded-micon"><i
 											class="ti-layout-grid2-alt"></i></span> <span class="pcoded-mtext"
-										data-i18n="nav.basic-components.main">Components</span> <span
+										data-i18n="nav.basic-components.main">Cadastros</span> <span
 										class="pcoded-mcaret"></span>
 								</a>
 									<ul class="pcoded-submenu">
-										<li class=" "><a href="accordion.html"
-											class="waves-effect waves-dark"> <span
-												class="pcoded-micon"><i class="ti-angle-right"></i></span> <span
-												class="pcoded-mtext" data-i18n="nav.basic-components.alert">Accordion</span>
+										<li class=" "><a href="principal/cad_usuario.jsp" class="waves-effect waves-dark"> 
+											<span class="pcoded-micon"><i class="ti-angle-right"></i></span> 
+											<span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Usuário</span>
 												<span class="pcoded-mcaret"></span>
 										</a></li>
 										<li class=" "><a href="breadcrumb.html"
