@@ -6,9 +6,9 @@
 <script src="sweetalert2/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
 
-<jsp:include page="head.jsp"></jsp:include>
 
 <body>
+	<jsp:include page="head.jsp"></jsp:include>
 
 	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>

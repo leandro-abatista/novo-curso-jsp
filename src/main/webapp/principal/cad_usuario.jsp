@@ -16,6 +16,8 @@
 
 <body>
 
+	<jsp:include page="head.jsp"></jsp:include>
+
 	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>
 
@@ -55,7 +57,7 @@
 
 														<div class="col-md-3">
 															<label for="codigo" class="form-label">Código</label> 
-															<input type="text" name="id" class="form-control" id="codigo" readonly="readonly">
+															<input type="text" name="id" class="form-control" id="codigo" readonly="readonly" value="${modelLogin.id}">
 														</div>
 														
 														<div class="col-md-6">
@@ -63,35 +65,39 @@
 
 														<div class="col-md-6">
 															<label for="nome" class="form-label">Nome</label> 
-															<input type="text" name="nome" class="form-control" id="nome">
+															<input type="text" name="nome" class="form-control" id="nome" 
+															style="font-weight: bold;" value="${modelLogin.nome}">
 														</div>
 
 														<div class="col-md-6">
 															<label for="email" class="form-label">E-mail</label> 
-															<input type="email" name="email" class="form-control" id="email">
+															<input type="email" name="email" class="form-control" id="email" 
+															style="font-weight: bold;" value="${modelLogin.email}">
 														</div>
 
 														<div class="col-md-6">
 															<label for="login" class="form-label">Login</label> 
-															<input type="text" name="login" class="form-control" id="login">
+															<input type="text" name="login" class="form-control" id="login" 
+															style="font-weight: bold;" value="${modelLogin.login}">
 														</div>
 
 														<div class="col-md-6">
 															<label for="senha" class="form-label">Senha</label> <input
-																type="password" name="senha" class="form-control" id="senha">
+																type="password" name="senha" class="form-control" id="senha" 
+																style="font-weight: bold;" value="${modelLogin.senha}">
 														</div>
 														
 														<div class="d-grid gap-2 d-md-flex justify-content-md-end"
 														style="margin-top: 2rem">
 
 
-														<button type="submit" class="btn btn-secondary btn-lg"
+														<button type="submit" class="btn btn-primary waves-effect waves-light btn-lg"
 															>Novo</button>
 
-														<button type="submit" class="btn btn-danger btn-lg"
+														<button type="submit" class="btn btn-danger waves-effect waves-light btn-lg"
 															>Deletar</button>
 
-														<button type="submit" class="btn btn-primary btn-lg">Gravar</button>
+														<button type="submit" class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
 
 														</div>
 													</form>

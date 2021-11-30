@@ -43,6 +43,8 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setSenha(senha);
 		
 		RequestDispatcher redireciona = request.getRequestDispatcher("principal/cad_usuario.jsp");
+		/*seta os atributos de ModelLogin na tela*/
+		request.setAttribute("modelLogin", modelLogin);
 		redireciona.forward(request, response);
 	
 	}
