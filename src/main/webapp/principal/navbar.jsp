@@ -122,7 +122,7 @@
 											Screen
 									</a></li>
 									<li class="waves-effect waves-light"><a type="button"
-										href="ServletLogin?acao=logout" onclick="mensagem();"> <i
+										href="<%= request.getContextPath() %>/ServletLogin?acao=logout" onclick="mensagem();"> <i
 											class="ti-layout-sidebar-left"></i> Logout
 									</a></li>
 								</ul></li>
