@@ -80,25 +80,21 @@
 															<label for="senha" class="form-label">Senha</label> <input
 																type="password" name="senha" class="form-control" id="senha">
 														</div>
-													</form>
-
-													<div class="d-grid gap-2 d-md-flex justify-content-md-end"
+														
+														<div class="d-grid gap-2 d-md-flex justify-content-md-end"
 														style="margin-top: 2rem">
 
-														<button type="submit" class="btn btn-warning btn-lg"
-															data-bs-toggle="modal"
-															data-bs-target="#modalPesquisaUser">Pesquisar</button>
 
 														<button type="submit" class="btn btn-secondary btn-lg"
-															onclick="novoCadastro()">Novo</button>
+															>Novo</button>
 
 														<button type="submit" class="btn btn-danger btn-lg"
-															onclick="deletarCadastro();">Deletar</button>
+															>Deletar</button>
 
-														<button type="submit" class="btn btn-primary btn-lg"
-															onclick="salvarUsuario();">Gravar</button>
+														<button type="submit" class="btn btn-primary btn-lg">Gravar</button>
 
-													</div>
+														</div>
+													</form>
 												</div>
 											</div>
 
