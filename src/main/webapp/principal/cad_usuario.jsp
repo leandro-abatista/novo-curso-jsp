@@ -3,16 +3,15 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
 
-<jsp:include page="head.jsp"></jsp:include>
-	<script src="sweetalert2/dist/sweetalert2.min.js"></script>
-	<link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
-
+<head>
 	<!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+	
+</head>
 
 <body>
 
@@ -42,6 +41,22 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
+											
+											<!-- alerta de sucesso -->
+											<div class="alert alert-success" style="font-weight: bold;" role="alert">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<strong>${mensagemDeGravar}</strong> 
+											</div>
+											
+											<!-- alerta de erro -->
+											<div class="alert alert-danger" style="font-weight: bold;" role="alert">
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<strong>${mensagemDeGravar}</strong> 
+											</div>
 
 											<div class="card"
 												style="font-weight: bold; background-color: #D3D3D3">
@@ -121,6 +136,26 @@
 
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
+	
+	
+	
+	<script>window.setTimeout(function () {
+	    $(".alert").fadeTo(500, 0).slideUp(500, function () {
+	        $(this).remove();
+	    });
+		}, 4000);
+	
+	
+	/*Iniciará quando todo o corpo do documento HTML estiver pronto.*/
+	$().ready(function() {
+		setTimeout(function () {
+			$('##').hide(); // "mensagemDeGravar" é o id do elemento que seja manipular.
+		}, 2500); // O valor é representado em milisegundos.
+	});
+	
+	</script>
+		
+	
 
 </body>
 
