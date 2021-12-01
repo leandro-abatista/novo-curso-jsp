@@ -45,7 +45,7 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setLogin(login);
 		modelLogin.setSenha(senha);
 		
-		daoUsuarioRepository.gravarUsuario(modelLogin);
+		modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin);
 		
 		request.setAttribute("mensagemDeGravar", "Usuário Cadastrado com sucesso!");
 		RequestDispatcher redireciona = request.getRequestDispatcher("principal/cad_usuario.jsp");

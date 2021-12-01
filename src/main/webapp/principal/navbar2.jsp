@@ -24,7 +24,7 @@
 											<a href="#!">
 											<i class="ti-settings"></i>Settings</a> 
 											<a href="<%= request.getContextPath() %>/ServletLogin?acao=logout">
-												<i class="ti-layout-sidebar-left"></i>Logout</a>
+											<i class="ti-layout-sidebar-left"></i>Logout</a>
 										</li>
 									</ul>
 								</div>

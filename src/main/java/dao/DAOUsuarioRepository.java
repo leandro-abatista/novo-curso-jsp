@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connection.SingleConnectionBanco;
@@ -15,7 +16,7 @@ public class DAOUsuarioRepository {
 		connection = SingleConnectionBanco.getConnection();
 	}
 
-	public void gravarUsuario(ModelLogin modelLogin) {
+	public ModelLogin gravarUsuario(ModelLogin modelLogin) {
 		try {
 			String sql = "INSERT INTO public.model_login(login, senha, nome, email) VALUES (?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -26,10 +27,32 @@ public class DAOUsuarioRepository {
 
 			statement.execute();
 			connection.commit();
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return this.consultaUsuario(modelLogin.getLogin());
+	}
+	
+	public ModelLogin consultaUsuario(String loginUsuario) {
+		
+		ModelLogin modelLogin = new ModelLogin();
+		try {
+			String sql = "SELECT * FROM model_login WHERE upper(login) = upper('" + loginUsuario + "');";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultadoDaConsulta = statement.executeQuery();
+			while (resultadoDaConsulta.next()) {
+				modelLogin.setId(resultadoDaConsulta.getLong("id"));
+				modelLogin.setNome(resultadoDaConsulta.getString("nome"));
+				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
+				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
+				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return modelLogin;
 	}
 
 }
