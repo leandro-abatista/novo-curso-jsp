@@ -47,7 +47,7 @@
 												style="font-weight: bold; background-color: #D3D3D3">
 												
 												<div class="card-header" 
-												style="margin: 0.5rem; font-weight: bold; text-align: center;  background-color: #6A5ACD;">
+												style="margin: 0.5rem; font-weight: bold; text-align: center;  background-color: #F5F5F5;">
 													<h4>Cadastro de Usuários</h4>
 												</div>
 												

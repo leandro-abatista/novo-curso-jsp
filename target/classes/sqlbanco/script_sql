@@ -27,3 +27,14 @@ INSERT INTO public.model_login(
 	VALUES ('admin', 'admin');
 	
 select * from model_login;
+
+alter table model_login add id serial primary key;
+alter table model_login add nome character varying(200) not null;
+alter table model_login add email character varying(200) not null;
+
+INSERT INTO public.model_login(
+	login, senha, nome, email)
+	VALUES ('admin', 'admin', 'administrador', 'administrador@gmail.com');
+	
+update model_login set senha = 'admin';
+alter table model_login alter column senha set not null;
