@@ -16,9 +16,11 @@ public class DAOUsuarioRepository {
 		connection = SingleConnectionBanco.getConnection();
 	}
 
-	public ModelLogin gravarUsuario(ModelLogin modelLogin) {
-		try {
-			String sql = "INSERT INTO public.model_login(login, senha, nome, email) VALUES (?, ?, ?, ?);";
+	public ModelLogin gravarUsuario(ModelLogin modelLogin) throws Exception{
+			
+			if (modelLogin.isNovo()) {/*grava um novo*/
+				
+			String sql = "INSERT INTO model_login(login, senha, nome, email) VALUES (?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
 			statement.setString(2, modelLogin.getSenha());
@@ -28,12 +30,26 @@ public class DAOUsuarioRepository {
 			statement.execute();
 			connection.commit();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return this.consultaUsuario(modelLogin.getLogin());
+			} else {
+				String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=? "
+						+ " WHERE id = "+ modelLogin.getId() +";";
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setString(1, modelLogin.getLogin());
+				statement.setString(2, modelLogin.getSenha());
+				statement.setString(3, modelLogin.getNome());
+				statement.setString(4, modelLogin.getEmail());
+				
+				statement.executeUpdate();
+				connection.commit();
+			}
+			return this.consultaUsuario(modelLogin.getLogin());
 	}
 	
+	/**
+	 * Método para consultar usuários
+	 * @param loginUsuario
+	 * @return
+	 */
 	public ModelLogin consultaUsuario(String loginUsuario) {
 		
 		ModelLogin modelLogin = new ModelLogin();
@@ -53,6 +69,23 @@ public class DAOUsuarioRepository {
 		}
 		
 		return modelLogin;
+	}
+	
+	public boolean validaLogin(String loginUsuario) {
+		try {
+			String sql = "select count(1) > 0 AS existe from model_login where upper(login) = upper('" + loginUsuario + "')";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultadoDaConsulta = statement.executeQuery();
+			
+			if (resultadoDaConsulta.next()) {/*o next é pra ele entrar nos resultados*/
+				return resultadoDaConsulta.getBoolean("existe");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }

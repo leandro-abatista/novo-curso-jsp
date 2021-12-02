@@ -13,6 +13,22 @@ public class ModelLogin implements Serializable {
 	private String login;
 	private String senha;
 
+	/**
+	 * Método genérico para gravar um novo registro de usuário
+	 * 
+	 * @return
+	 */
+	public boolean isNovo() {
+
+		if (this.id == null) {
+			return true;/*Inseri um novo registro*/
+		} else if (this.id != null && this.id > 0) {
+			return false;/*Atualiza um registro existente*/
+		}
+		
+		return id == null;
+	}
+
 	public String getLogin() {
 		return login;
 	}

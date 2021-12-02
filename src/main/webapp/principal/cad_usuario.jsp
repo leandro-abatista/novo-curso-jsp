@@ -43,27 +43,20 @@
 											<!-- conteudo das páginas -->
 											
 											<!-- alerta de sucesso -->
-											<div class="alert alert-success" style="font-weight: bold;" role="alert">
+											<div class="alert alert-danger" style="font-weight: bold; background: #98FB98" role="alert">
 												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
-												<strong>${mensagemDeGravar}</strong> 
+												<strong>${mensagem}</strong> 
 											</div>
 											
-											<!-- alerta de erro -->
-											<div class="alert alert-danger" style="font-weight: bold;" role="alert">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-												<strong>${mensagemDeGravar}</strong> 
-											</div>
 
 											<div class="card"
 												style="font-weight: bold; background-color: #D3D3D3">
 												
 												<div class="card-header" 
 												style="margin: 0.5rem; font-weight: bold; text-align: center;  background-color: #F5F5F5;">
-													<h4>Cadastro de Usuários</h4>
+													<h4 class="card-title">Cadastro de Usuários</h4>
 												</div>
 												
 												<div class="card-body">
@@ -139,21 +132,25 @@
 	
 	
 	
-	<script>window.setTimeout(function () {
+	<script>
+	
+		window.setTimeout(function () {
 	    $(".alert").fadeTo(500, 0).slideUp(500, function () {
 	        $(this).remove();
 	    });
 		}, 4000);
-	
-	
-	/*Iniciará quando todo o corpo do documento HTML estiver pronto.*/
-	$().ready(function() {
-		setTimeout(function () {
-			$('##').hide(); // "mensagemDeGravar" é o id do elemento que seja manipular.
-		}, 2500); // O valor é representado em milisegundos.
-	});
+		
+		/*Iniciará quando todo o corpo do documento HTML estiver pronto.
+		$().ready(function() {
+			setTimeout(function () {
+				$('alert').fadeTo(500, 0).slideUp(500, function () {
+			        $(this).remove(); // "mensagemDeGravar" é o id do elemento que seja manipular.
+			}, 4000); // O valor é representado em milisegundos.
+		});
+		*/
 	
 	</script>
+		
 		
 	
 
