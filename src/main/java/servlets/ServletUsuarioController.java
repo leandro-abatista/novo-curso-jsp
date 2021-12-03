@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.tagplugins.jstl.core.If;
 
 import dao.DAOUsuarioRepository;
 import model.ModelLogin;
@@ -29,7 +28,21 @@ public class ServletUsuarioController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		try {
+			String acao = request.getParameter("acao");
+			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
+				String idUsuario = request.getParameter("id");
+				daoUsuarioRepository.deletarUsuario(idUsuario);
+				request.setAttribute("mensagem", "Registro excluído com sucesso!");
+			}
+			request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			RequestDispatcher redirecionar = request.getRequestDispatcher("/error/erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionar.forward(request, response);
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

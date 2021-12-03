@@ -55,14 +55,16 @@
 												style="font-weight: bold; background-color: #D3D3D3">
 												
 												<div class="card-header" 
-												style="margin: 0.5rem; font-weight: bold; text-align: center;  background-color: #F5F5F5;">
+												style="margin: 0.5rem; font-weight: bold; text-align: center;  background-color: #F5F5F5; padding: 0.2rem">
 													<h4 class="card-title">Cadastro de Usuários</h4>
 												</div>
 												
 												<div class="card-body">
 												
 													<form class="row g-3" id="formUsuario" method="post" action="<%= request.getContextPath()%>/ServletUsuarioController">
-
+														
+														<input type="hidden" name="acao" value="deletar">
+														
 														<div class="col-md-3">
 															<label for="codigo" class="form-label">Código</label> 
 															<input type="text" name="id" class="form-control" id="codigo" readonly="readonly" value="${modelLogin.id}">
@@ -74,41 +76,45 @@
 														<div class="col-md-6">
 															<label for="nome" class="form-label">Nome</label> 
 															<input type="text" name="nome" class="form-control" id="nome" 
-															style="font-weight: bold;" value="${modelLogin.nome}">
+															style="font-weight: bold;" value="${modelLogin.nome}" required="required">
 														</div>
 
 														<div class="col-md-6">
 															<label for="email" class="form-label">E-mail</label> 
 															<input type="email" name="email" class="form-control" id="email" 
-															style="font-weight: bold;" value="${modelLogin.email}">
+															style="font-weight: bold;" value="${modelLogin.email}" required="required">
 														</div>
 
 														<div class="col-md-6">
 															<label for="login" class="form-label">Login</label> 
 															<input type="text" name="login" class="form-control" id="login" 
-															style="font-weight: bold;" value="${modelLogin.login}">
+															style="font-weight: bold;" value="${modelLogin.login}" required="required">
 														</div>
 
 														<div class="col-md-6">
 															<label for="senha" class="form-label">Senha</label> <input
 																type="password" name="senha" class="form-control" id="senha" 
-																style="font-weight: bold;" value="${modelLogin.senha}">
+																style="font-weight: bold;" value="${modelLogin.senha}" required="required">
 														</div>
-														
-														<div class="d-grid gap-2 d-md-flex justify-content-md-end"
-														style="margin-top: 2rem">
 
+														<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
 
-														<button type="submit" class="btn btn-primary waves-effect waves-light btn-lg"
-															>Novo</button>
+															<button  
+																class="btn btn-primary waves-effect waves-light btn-lg"
+																onclick="limparFormulario();">Novo</button>
 
-														<button type="submit" class="btn btn-danger waves-effect waves-light btn-lg"
-															>Deletar</button>
+															<button 
+																class="btn btn-danger waves-effect waves-light btn-lg"
+																onclick="deletar();">Excluir</button>
 
-														<button type="submit" class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
+															<button type="submit"
+																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
+
 
 														</div>
+
 													</form>
+													
 												</div>
 											</div>
 
@@ -127,12 +133,22 @@
 		</div>
 	</div>
 
-
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	
-	
-	
 	<script>
+	
+		function deletar() {
+			document.getElementById("formUsuario").method = 'get';
+			document.getElementById("acao").value = 'deletar';
+			document.getElementById("formUsuario").submit();
+		}
+	
+		function limparFormulario() {
+			var elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
+			for (posicao = 0; posicao < elementos.length; posicao++) {
+				elementos[posicao].value = '';
+			}
+		}
 	
 		window.setTimeout(function () {
 	    $(".alert").fadeTo(500, 0).slideUp(500, function () {
