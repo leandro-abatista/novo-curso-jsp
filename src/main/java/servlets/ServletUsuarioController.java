@@ -30,12 +30,23 @@ public class ServletUsuarioController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String acao = request.getParameter("acao");
+			
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
 				String idUsuario = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUsuario);
-				request.setAttribute("mensagem", "Registro excluído com sucesso!");
+				request.setAttribute("msg", "Registro excluído com sucesso!");
+				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+			} else if (acao != null && !acao.isEmpty()
+					&& acao.equalsIgnoreCase("deletarajax")) {/* usando o ajax para deletar usuário */
+				String idUsuario = request.getParameter("id");
+				daoUsuarioRepository.deletarUsuario(idUsuario);
+				response.getWriter().write("Registro excluído com sucesso!");
+				
+			} else {
+				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 			}
-			request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionar = request.getRequestDispatcher("/error/erro.jsp");

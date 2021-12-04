@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-	
 </head>
 
 <body>
@@ -42,13 +41,7 @@
 										<div class="row">
 											<!-- conteudo das páginas -->
 											
-											<!-- alerta de sucesso -->
-											<div class="alert alert-danger" style="font-weight: bold; background: #98FB98" role="alert">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-												<strong>${mensagem}</strong> 
-											</div>
+												<strong id="msg">${mensagem}</strong> 
 											
 
 											<div class="card"
@@ -98,6 +91,10 @@
 														</div>
 
 														<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
+														
+															<button type="button" class="btn btn-dark waves-effect waves-light btn-lg" data-bs-toggle="modal" href="#exampleModalToggle" 
+															role="button"
+															>Pesquisar</button>
 
 															<button  
 																class="btn btn-primary waves-effect waves-light btn-lg"
@@ -105,11 +102,10 @@
 
 															<button 
 																class="btn btn-danger waves-effect waves-light btn-lg"
-																onclick="deletar();">Excluir</button>
+																onclick="criarDeleteComAjax();">Excluir</button>
 
 															<button type="submit"
 																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
-
 
 														</div>
 
@@ -134,8 +130,54 @@
 	</div>
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #B0C4DE">
+					<h5 class="modal-title" id="exampleModalToggleLabel">Pesquisa de Usuário</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- corpo da página -->
+					
+					<!-- corpo da página -->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success">Buscar</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+
+	<script type="text/javascript">
 	
-	<script>
+		/*usando ajax*/
+		function criarDeleteComAjax() {
+			if (confirm('Deseja realmente excluir este registro?')) {
+				
+				var urlAction = document.getElementById('formUsuario').action;
+				var idUsuario = document.getElementById('id').value;
+				
+				$.ajax({
+					
+					method: "get",
+					url: urlAction,
+					data: "id=" + idUsuario + '&acao=deletarajax',
+					sucess: function(response) {
+						//chama o limparFormulario
+						limparFormulario();
+						document.getElementById('msg').textContent = response;
+					}
+					
+				}).fail(function(xhr, status, errorThrown) {
+					alert('Erro ao excluir usuário por id: ' + xhr.responseText);
+				});
+			}
+		}
 	
 		function deletar() {
 			document.getElementById("formUsuario").method = 'get';
