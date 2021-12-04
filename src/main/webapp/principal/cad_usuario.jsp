@@ -92,15 +92,15 @@
 
 														<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
 														
-															<button type="button" class="btn btn-dark waves-effect waves-light btn-lg" data-bs-toggle="modal" href="#exampleModalToggle" 
-															role="button"
+															<button type="button" class="btn btn-dark waves-effect waves-light btn-lg" 
+															data-bs-toggle="modal" href="#modalToggle" role="button"
 															>Pesquisar</button>
 
-															<button  
+															<button  type="button"
 																class="btn btn-primary waves-effect waves-light btn-lg"
 																onclick="limparFormulario();">Novo</button>
 
-															<button 
+															<button type="submit"
 																class="btn btn-danger waves-effect waves-light btn-lg"
 																onclick="criarDeleteComAjax();">Excluir</button>
 
@@ -132,7 +132,7 @@
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 
 	<!-- Modal -->
-	<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+	<div class="modal fade" id="modalToggle" aria-hidden="true" aria-labelledby="modalToggleLabel" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #B0C4DE">
@@ -141,12 +141,34 @@
 				</div>
 				<div class="modal-body">
 					<!-- corpo da página -->
+					<div class="input-group mb-3">
+						<input type="text" class="form-control"
+							placeholder="Informe os dados para pesquisa"
+							aria-label="Informe os dados para pesquisa"
+							aria-describedby="button-addon2"
+							style="font-weight: bold;"
+							id="nomeBusca">
+						<button class="btn btn-success waves-effect waves-light btn-lg" type="button" 
+						id="button-addon2" onclick="buscarUsuario();">Buscar</button>
+					</div>
 					
+					<!-- tabela de dados -->
+					<table class="table table-dark table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Código</th>
+								<th scope="col">Nome</th>
+								<th scope="col">Ver</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
 					<!-- corpo da página -->
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success">Buscar</button>
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
@@ -154,6 +176,14 @@
 	<!-- Modal -->
 
 	<script type="text/javascript">
+	
+		function buscarUsuario() {
+			var nomeBusca = document.getElementById('nomeBusca').value;
+			
+			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {/*Validando que tem que ter algum valor para buscar no banco de dados*/
+				alert('nomeBusca');	
+			}
+		}
 	
 		/*usando ajax*/
 		function criarDeleteComAjax() {
@@ -209,9 +239,6 @@
 	
 	</script>
 		
-		
-	
-
 </body>
 
 </html>
