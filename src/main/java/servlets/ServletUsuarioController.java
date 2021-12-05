@@ -32,15 +32,24 @@ public class ServletUsuarioController extends HttpServlet {
 			String acao = request.getParameter("acao");
 			
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
+				
 				String idUsuario = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUsuario);
 				request.setAttribute("msg", "Registro excluído com sucesso!");
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
-			} else if (acao != null && !acao.isEmpty()
-					&& acao.equalsIgnoreCase("deletarajax")) {/* usando o ajax para deletar usuário */
+				
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarComAjax")) {/* usando o ajax para deletar usuário */
+				
 				String idUsuario = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUsuario);
 				response.getWriter().write("Registro excluído com sucesso!");
+				
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuarioComAjax")) {
+				
+				String nomeBusca = request.getParameter("nomeBusca");
+				//daoUsuarioRepository.deletarUsuario(idUsuario);
+				//response.getWriter().write("Registro excluído com sucesso!");
+				System.out.println(nomeBusca);
 				
 			} else {
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);

@@ -9,6 +9,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -41,7 +42,7 @@
 										<div class="row">
 											<!-- conteudo das páginas -->
 											
-												<strong id="msg">${mensagem}</strong> 
+												<strong class="alert" id="msg">${mensagem}</strong> 
 											
 
 											<div class="card"
@@ -93,19 +94,15 @@
 														<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
 														
 															<button type="button" class="btn btn-dark waves-effect waves-light btn-lg" 
-															data-bs-toggle="modal" href="#modalToggle" role="button"
-															>Pesquisar</button>
+																data-bs-toggle="modal" href="#modalToggle" role="button">Pesquisar</button>
 
-															<button  type="button"
-																class="btn btn-primary waves-effect waves-light btn-lg"
+															<button  type="button" class="btn btn-primary waves-effect waves-light btn-lg"
 																onclick="limparFormulario();">Novo</button>
 
-															<button type="submit"
-																class="btn btn-danger waves-effect waves-light btn-lg"
+															<button type="submit" class="btn btn-danger waves-effect waves-light btn-lg"
 																onclick="criarDeleteComAjax();">Excluir</button>
 
-															<button type="submit"
-																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
+															<button type="submit" class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
 
 														</div>
 
@@ -143,10 +140,10 @@
 					<!-- corpo da página -->
 					<div class="input-group mb-3">
 						<input type="text" class="form-control"
-							placeholder="Informe os dados para pesquisa"
-							aria-label="Informe os dados para pesquisa"
+							placeholder="Informe o nome para pesquisar"
+							aria-label="Informe o nome para pesquisar"
 							aria-describedby="button-addon2"
-							style="font-weight: bold;"
+							style="font-weight: bold; font-size: 18px"
 							id="nomeBusca">
 						<button class="btn btn-success waves-effect waves-light btn-lg" type="button" 
 						id="button-addon2" onclick="buscarUsuario();">Buscar</button>
@@ -174,60 +171,74 @@
 		</div>
 	</div>
 	<!-- Modal -->
-
+	
 	<script type="text/javascript">
 	
 		function buscarUsuario() {
 			var nomeBusca = document.getElementById('nomeBusca').value;
 			
 			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {/*Validando que tem que ter algum valor para buscar no banco de dados*/
-				alert('nomeBusca');	
+				
+				$.ajax({
+					method : "get",
+					url : urlAction,
+					data : "nomeBusca=" + nomeBusca + '&acao=buscarUsuarioComAjax',
+					success : function(response) {
+						
+					}
+
+				}).fail(function(xhr, status, errorThrown) {
+					alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
+				});
+
 			}
 		}
-	
+
 		/*usando ajax*/
 		function criarDeleteComAjax() {
 			if (confirm('Deseja realmente excluir este registro?')) {
-				
+
 				var urlAction = document.getElementById('formUsuario').action;
 				var idUsuario = document.getElementById('id').value;
-				
+
 				$.ajax({
-					
-					method: "get",
-					url: urlAction,
-					data: "id=" + idUsuario + '&acao=deletarajax',
-					sucess: function(response) {
+
+					method : "get",
+					url : urlAction,
+					data : "id=" + idUsuario + '&acao=deletarComAjax',
+					success : function(response) {
 						//chama o limparFormulario
 						limparFormulario();
 						document.getElementById('msg').textContent = response;
 					}
-					
-				}).fail(function(xhr, status, errorThrown) {
-					alert('Erro ao excluir usuário por id: ' + xhr.responseText);
-				});
+
+				}).fail(
+						function(xhr, status, errorThrown) {
+							alert('Erro ao excluir usuário por id: '
+									+ xhr.responseText);
+						});
 			}
 		}
-	
+
 		function deletar() {
 			document.getElementById("formUsuario").method = 'get';
 			document.getElementById("acao").value = 'deletar';
 			document.getElementById("formUsuario").submit();
 		}
-	
+
 		function limparFormulario() {
 			var elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
 			for (posicao = 0; posicao < elementos.length; posicao++) {
 				elementos[posicao].value = '';
 			}
 		}
-	
-		window.setTimeout(function () {
-	    $(".alert").fadeTo(500, 0).slideUp(500, function () {
-	        $(this).remove();
-	    });
+
+		window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function() {
+				$(this).remove();
+			});
 		}, 4000);
-		
+
 		/*Iniciará quando todo o corpo do documento HTML estiver pronto.
 		$().ready(function() {
 			setTimeout(function () {
@@ -235,8 +246,7 @@
 			        $(this).remove(); // "mensagemDeGravar" é o id do elemento que seja manipular.
 			}, 4000); // O valor é representado em milisegundos.
 		});
-		*/
-	
+		 */
 	</script>
 		
 </body>
