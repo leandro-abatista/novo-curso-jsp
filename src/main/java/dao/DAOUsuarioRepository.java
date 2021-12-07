@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
@@ -43,6 +45,23 @@ public class DAOUsuarioRepository {
 				connection.commit();
 			}
 			return this.consultaUsuario(modelLogin.getLogin());
+	}
+	
+	public List<ModelLogin> consultaListPorNome(String nome) throws SQLException{
+		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+		
+		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome + "%')";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultado = statement.executeQuery();
+		while(resultado.next()) {/*percorre as linhas de resultado do sql */
+			ModelLogin modelLogin = new ModelLogin();
+			modelLogin.setEmail(resultado.getString("email"));
+			modelLogin.setId(resultado.getLong("id"));
+			modelLogin.setLogin(resultado.getString("login"));
+			modelLogin.setNome(resultado.getString("nome"));
+			retorno.add(modelLogin);
+		}
+		return retorno;
 	}
 	
 	/**

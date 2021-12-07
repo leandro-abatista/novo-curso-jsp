@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +38,7 @@ public class ServletUsuarioController extends HttpServlet {
 				
 				String idUsuario = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUsuario);
-				request.setAttribute("msg", "Registro excluído com sucesso!");
+				request.setAttribute("mensagem", "Registro excluído com sucesso!");
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarComAjax")) {/* usando o ajax para deletar usuário */
@@ -47,9 +50,12 @@ public class ServletUsuarioController extends HttpServlet {
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuarioComAjax")) {
 				
 				String nomeBusca = request.getParameter("nomeBusca");
-				//daoUsuarioRepository.deletarUsuario(idUsuario);
+				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaListPorNome(nomeBusca);
 				//response.getWriter().write("Registro excluído com sucesso!");
-				System.out.println(nomeBusca);
+				//System.out.println(nomeBusca);
+				 ObjectMapper mapper = new ObjectMapper();
+				 String json = mapper.writeValueAsString(dadosJsonUser);
+				 response.getWriter().write(json);
 				
 			} else {
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
@@ -97,6 +103,7 @@ public class ServletUsuarioController extends HttpServlet {
 			}
 
 			request.setAttribute("mensagem", mensagem);
+			//request.setAttribute("modelLogin", modelLogin);
 			RequestDispatcher redireciona = request.getRequestDispatcher("principal/cad_usuario.jsp");
 			/* seta os atributos de ModelLogin na tela */
 			request.setAttribute("modelLogin", modelLogin);

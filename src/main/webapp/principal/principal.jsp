@@ -2,10 +2,10 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="pt_BR">
-
+<!--  
 <script src="sweetalert2/dist/sweetalert2.min.js"></script>
 <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css">
-
+-->
 
 <body>
 	<jsp:include page="head.jsp"></jsp:include>

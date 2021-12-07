@@ -3,19 +3,9 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
 
-<head>
-	<!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
+<jsp:include page="head.jsp"></jsp:include>
+	
 <body>
-
-	<jsp:include page="head.jsp"></jsp:include>
 
 	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>
@@ -42,7 +32,7 @@
 										<div class="row">
 											<!-- conteudo das páginas -->
 											
-												<strong class="alert" id="msg">${mensagem}</strong> 
+												<strong class="alert" id="mensagem">${mensagem}</strong> 
 											
 
 											<div class="card"
@@ -57,11 +47,11 @@
 												
 													<form class="row g-3" id="formUsuario" method="post" action="<%= request.getContextPath()%>/ServletUsuarioController">
 														
-														<input type="hidden" name="acao" value="deletar">
+														<input type="hidden" id="acao" name="acao" value="">
 														
 														<div class="col-md-3">
-															<label for="codigo" class="form-label">Código</label> 
-															<input type="text" name="id" class="form-control" id="codigo" readonly="readonly" value="${modelLogin.id}">
+															<label for="id" class="form-label">Código</label> 
+															<input type="text" name="id" class="form-control" id="id" readonly="readonly" value="${modelLogin.id}">
 														</div>
 														
 														<div class="col-md-6">
@@ -130,7 +120,7 @@
 
 	<!-- Modal -->
 	<div class="modal fade" id="modalToggle" aria-hidden="true" aria-labelledby="modalToggleLabel" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #B0C4DE">
 					<h5 class="modal-title" id="exampleModalToggleLabel">Pesquisa de Usuário</h5>
@@ -150,7 +140,8 @@
 					</div>
 					
 					<!-- tabela de dados -->
-					<table class="table table-dark table-hover">
+					<div style="height: 20rem; overflow: scroll;">
+					<table id="tabelaUsuarioResultados" class="table table-dark table-hover">
 						<thead>
 							<tr>
 								<th scope="col">Código</th>
@@ -162,7 +153,12 @@
 							
 						</tbody>
 					</table>
+					</div>
 					<!-- corpo da página -->
+				</div>
+				<div style="font-weight: bold; font-size: 15px; margin: 15px;">
+				<!-- total de registros buscados -->
+					<span id="totalResultados"></span>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
@@ -176,21 +172,31 @@
 	
 		function buscarUsuario() {
 			var nomeBusca = document.getElementById('nomeBusca').value;
+		    
+		    if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){ /*Validando que tem que ter valor pra buscar no banco*/
 			
-			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {/*Validando que tem que ter algum valor para buscar no banco de dados*/
-				
-				$.ajax({
-					method : "get",
-					url : urlAction,
-					data : "nomeBusca=" + nomeBusca + '&acao=buscarUsuarioComAjax',
-					success : function(response) {
-						
-					}
-
-				}).fail(function(xhr, status, errorThrown) {
-					alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
-				});
-
+			 const urlAction = document.getElementById('formUsuario').action;
+			
+			 $.ajax({
+			     
+			     method: 'get',
+			     url : urlAction,
+			     data : 'nomeBusca=' + nomeBusca + '&acao=buscarUsuarioComAjax',
+			     success: function (response) {
+			    	 const json = JSON.parse(response);
+				  
+				 	$('tabelaUsuarioResultados > tbody > tr').remove();
+				 	for(var posicao = 0; posicao < json.length; posicao++){
+				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info">Ver</button></td><td><button type="button" class="btn btn-secondary">Detalhes</button></td></tr>');
+				 	}
+				 	
+				 	document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados ';
+				 
+			     }
+			     
+			 }).fail(function(xhr, status, errorThrown){
+			    alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
+			 });
 			}
 		}
 
@@ -198,8 +204,8 @@
 		function criarDeleteComAjax() {
 			if (confirm('Deseja realmente excluir este registro?')) {
 
-				var urlAction = document.getElementById('formUsuario').action;
-				var idUsuario = document.getElementById('id').value;
+				const urlAction = document.getElementById('formUsuario').action;
+				const idUsuario = document.getElementById('id').value;
 
 				$.ajax({
 
@@ -209,7 +215,7 @@
 					success : function(response) {
 						//chama o limparFormulario
 						limparFormulario();
-						document.getElementById('msg').textContent = response;
+						document.getElementById('mensagem').textContent = response;
 					}
 
 				}).fail(
@@ -227,7 +233,7 @@
 		}
 
 		function limparFormulario() {
-			var elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
+			const elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
 			for (posicao = 0; posicao < elementos.length; posicao++) {
 				elementos[posicao].value = '';
 			}
@@ -248,7 +254,6 @@
 		});
 		 */
 	</script>
-		
-</body>
 
+</body>
 </html>
