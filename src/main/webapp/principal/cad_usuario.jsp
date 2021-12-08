@@ -147,6 +147,7 @@
 								<th scope="col">Código</th>
 								<th scope="col">Nome</th>
 								<th scope="col">Ver</th>
+								<th scope="col">Visualizar</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -156,7 +157,7 @@
 					</div>
 					<!-- corpo da página -->
 				</div>
-				<div style="font-weight: bold; font-size: 15px; margin: 15px;">
+				<div style="font-weight: bold; font-size: 15px; margin-left: 15px;">
 				<!-- total de registros buscados -->
 					<span id="totalResultados"></span>
 				</div>
@@ -170,6 +171,18 @@
 	
 	<script type="text/javascript">
 	
+		function verEditar(id) {
+			//alert(id);
+			const urlAction = document.getElementById('formUsuario').action;
+			/*redireciona com javascript e buscar o id no get na servlet*/
+			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
+			//alert(window.location.href);
+		}
+	
+		function limparCampoBusca() {
+			document.getElementById("nomeBusca").value = '';
+		}
+	
 		function buscarUsuario() {
 			var nomeBusca = document.getElementById('nomeBusca').value;
 		    
@@ -181,18 +194,20 @@
 			     
 			     method: 'get',
 			     url : urlAction,
-			     data : 'nomeBusca=' + nomeBusca + '&acao=buscarUsuarioComAjax',
+			     data : 'nomeBusca=' + nomeBusca + '&acao=buscaUsuarioComAjax',
 			     success: function (response) {
 			    	 const json = JSON.parse(response);
 				  
 				 	$('tabelaUsuarioResultados > tbody > tr').remove();
 				 	for(var posicao = 0; posicao < json.length; posicao++){
-				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info">Ver</button></td><td><button type="button" class="btn btn-secondary">Detalhes</button></td></tr>');
+				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><td><button type="button" class="btn btn-secondary">Detalhes</button></td></tr>');
 				 	}
 				 	
 				 	document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados ';
 				 
 			     }
+			 
+			 //limparCampoBusca();
 			     
 			 }).fail(function(xhr, status, errorThrown){
 			    alert('Erro ao buscar usuário por nome: ' + xhr.responseText);

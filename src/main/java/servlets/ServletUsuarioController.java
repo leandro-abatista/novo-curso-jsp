@@ -47,7 +47,7 @@ public class ServletUsuarioController extends HttpServlet {
 				daoUsuarioRepository.deletarUsuario(idUsuario);
 				response.getWriter().write("Registro excluído com sucesso!");
 				
-			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuarioComAjax")) {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscaUsuarioComAjax")) {
 				
 				String nomeBusca = request.getParameter("nomeBusca");
 				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaListPorNome(nomeBusca);
@@ -56,6 +56,15 @@ public class ServletUsuarioController extends HttpServlet {
 				 ObjectMapper mapper = new ObjectMapper();
 				 String json = mapper.writeValueAsString(dadosJsonUser);
 				 response.getWriter().write(json);
+				
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
+				
+				String idUser = request.getParameter("id");
+				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser);
+				
+				request.setAttribute("mensagem", "Usuário em edição!");
+				request.setAttribute("modelLogin", modelLogin);
+				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
 			} else {
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
@@ -108,6 +117,7 @@ public class ServletUsuarioController extends HttpServlet {
 			/* seta os atributos de ModelLogin na tela */
 			request.setAttribute("modelLogin", modelLogin);
 			redireciona.forward(request, response);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionar = request.getRequestDispatcher("/error/erro.jsp");

@@ -114,5 +114,27 @@ public class DAOUsuarioRepository {
 		statement.executeUpdate();
 		connection.commit();
 	}
+	
+	public ModelLogin consultaUsuarioPorID(String id) {
+
+		ModelLogin modelLogin = new ModelLogin();
+		try {
+			String sql = "SELECT * FROM model_login WHERE id = ?;";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setLong(1, Long.parseLong(id));
+			ResultSet resultadoDaConsulta = statement.executeQuery();
+			while (resultadoDaConsulta.next()) {
+				modelLogin.setId(resultadoDaConsulta.getLong("id"));
+				modelLogin.setNome(resultadoDaConsulta.getString("nome"));
+				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
+				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
+				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelLogin;
+	}
 
 }
