@@ -17,7 +17,7 @@ import dao.DAOUsuarioRepository;
 import model.ModelLogin;
 
 
-@WebServlet("/ServletUsuarioController")
+@WebServlet( urlPatterns = {"/ServletUsuarioController", "/principal/cad_usuario.jsp"})
 public class ServletUsuarioController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -73,7 +73,14 @@ public class ServletUsuarioController extends HttpServlet {
 				
 				request.setAttribute("modelLogin", modelLogin);
 				
-			} 
+			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuarios")) {
+				
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				
+				request.setAttribute("mensagem", "Usuários carregados!");
+				request.setAttribute("modelLogins", modelLogins);
+				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+			}
 			else {
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 			}
