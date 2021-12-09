@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="pt_BR">
+
 
 <jsp:include page="head.jsp"></jsp:include>
 	
@@ -169,7 +170,41 @@
 	</div>
 	<!-- Modal -->
 	
+	<!-- Modal 2 detalhes-->
+	<div class="modal fade" id="modalToggle1" aria-hidden="true"
+		aria-labelledby="modalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #B0C4DE">
+					<h5 class="modal-title" id="exampleModalToggleLabel">Dados do
+						Usuário</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- corpo da página -->
+					<div class="input-group mb-3">
+						
+						<span ></span>
+
+
+						<!-- corpo da página -->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							data-bs-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal 2-->
+	
 	<script type="text/javascript">
+	
+		function mostrarDados(id) {
+			/**/
+		}
 	
 		function verEditar(id) {
 			//alert(id);
@@ -200,7 +235,7 @@
 				  
 				 	$('tabelaUsuarioResultados > tbody > tr').remove();
 				 	for(var posicao = 0; posicao < json.length; posicao++){
-				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><td><button type="button" class="btn btn-secondary">Detalhes</button></td></tr>');
+				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><td><button type="button" class="btn btn-secondary" data-bs-toggle="modal" href="#modalToggle1" role="button" onclick="mostrarDados('+json[posicao].id+')">Detalhes</button></td></tr>');
 				 	}
 				 	
 				 	document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados ';

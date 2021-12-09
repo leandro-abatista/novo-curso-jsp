@@ -66,7 +66,15 @@ public class ServletUsuarioController extends HttpServlet {
 				request.setAttribute("modelLogin", modelLogin);
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
-			} else {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("mostrarDetalhes")) {
+				
+				String idUser = request.getParameter("id");
+				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser);
+				
+				request.setAttribute("modelLogin", modelLogin);
+				
+			} 
+			else {
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 			}
 			
