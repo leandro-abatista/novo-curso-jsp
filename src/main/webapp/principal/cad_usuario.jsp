@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="pt_BR">
 
-
 <jsp:include page="head.jsp"></jsp:include>
 	
 <body>
@@ -103,10 +102,58 @@
 											</div>
 
 
-											<!--  fim do conteúdo das páginas -->
+											<div class="card"
+												style="font-weight: bold; background-color: #D3D3D3">
+
+												<div class="card-header"
+													style="margin: 0.5rem; font-weight: bold; text-align: center; background-color: #F5F5F5; padding: 0.2rem">
+													<h4 class="card-title">Usuário Cadastrados</h4>
+												</div>
+
+												<div class="card-body">
+													<!-- tabela de dados usando jstl-->
+													<div style="height: 20rem; overflow: scroll;">
+														<table id="tabelaViewUser"
+															class="table table-dark table-hover">
+															<thead>
+																<tr>
+																	<th scope="col">Código</th>
+																	<th scope="col">Nome</th>
+																	<th scope="col">E-mail</th>
+																	<th scope="col">Login</th>
+																	<th scope="col">Ver</th>
+																</tr>
+															</thead>
+															<tbody>
+																<!-- torna a tabela dinâmica -->
+																<c:forEach items="${modelLogins}" var="ml">
+																	<tr>
+																		<!-- linha -->
+																		<td><c:out value="${ml.id}"></c:out></td>
+																		<!-- coluna -->
+																		<td><c:out value="${ml.nome}"></c:out></td>
+																		<!-- coluna -->
+																		<td><c:out value="${ml.email}"></c:out></td>
+																		<!-- coluna -->
+																		<td><c:out value="${ml.login}"></c:out></td>
+																		<!-- coluna -->
+																		<td><a
+																			href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${ml.id}"
+																			class="btn btn-success waves-effect waves-light"
+																			type="button" id="button-addon2">Ver</a></td>
+																		<!-- coluna -->
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
+													</div>
+													</div>
+
+													<!--  fim do conteúdo das páginas -->
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
 								<!-- Page-body end -->
 							</div>
 							<div id="styleSelector"></div>

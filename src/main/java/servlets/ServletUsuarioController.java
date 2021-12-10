@@ -17,7 +17,7 @@ import dao.DAOUsuarioRepository;
 import model.ModelLogin;
 
 
-@WebServlet( urlPatterns = {"/ServletUsuarioController", "/principal/cad_usuario.jsp"})
+@WebServlet( urlPatterns = {"/ServletUsuarioController"})
 public class ServletUsuarioController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -38,6 +38,12 @@ public class ServletUsuarioController extends HttpServlet {
 				
 				String idUsuario = request.getParameter("id");
 				daoUsuarioRepository.deletarUsuario(idUsuario);
+				
+				//consulta os dados no banco
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				//depois seta os atributos do usuario na tabela
+				request.setAttribute("modelLogins", modelLogins);
+				
 				request.setAttribute("mensagem", "Registro excluído com sucesso!");
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
@@ -62,6 +68,11 @@ public class ServletUsuarioController extends HttpServlet {
 				String idUser = request.getParameter("id");
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser);
 				
+				//consulta os dados no banco
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				//depois seta os atributos do usuario na tabela
+				request.setAttribute("modelLogins", modelLogins);
+				
 				request.setAttribute("mensagem", "Usuário em edição!");
 				request.setAttribute("modelLogin", modelLogin);
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
@@ -82,7 +93,13 @@ public class ServletUsuarioController extends HttpServlet {
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 			}
 			else {
+				
+				//consulta os dados no banco
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				//depois seta os atributos do usuario na tabela
+				request.setAttribute("modelLogins", modelLogins);
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+				
 			}
 			
 			
@@ -125,6 +142,11 @@ public class ServletUsuarioController extends HttpServlet {
 				
 				modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin);
 			}
+			
+			//consulta os dados no banco
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+			//depois seta os atributos do usuario na tabela
+			request.setAttribute("modelLogins", modelLogins);
 
 			request.setAttribute("mensagem", mensagem);
 			//request.setAttribute("modelLogin", modelLogin);

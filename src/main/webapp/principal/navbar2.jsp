@@ -55,7 +55,7 @@
 										class="pcoded-mcaret"></span>
 								</a>
 									<ul class="pcoded-submenu">
-										<li class=" "><a href="<%= request.getContextPath() %>/principal/cad_usuario.jsp?acao=listarUsuarios" class="waves-effect waves-dark"> 
+										<li class=" "><a href="<%= request.getContextPath() %>/ServletUsuarioController?acao=listarUsuarios" class="waves-effect waves-dark"> 
 											<span class="pcoded-micon"><i class="ti-angle-right"></i></span> 
 											<span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Usuário</span>
 												<span class="pcoded-mcaret"></span>
