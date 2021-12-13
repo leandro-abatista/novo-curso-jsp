@@ -38,3 +38,6 @@ INSERT INTO public.model_login(
 	
 update model_login set senha = 'admin';
 alter table model_login alter column senha set not null;
+
+//busca apenas o admin
+SELECT * FROM model_login WHERE useradmin is true

@@ -18,7 +18,7 @@ public class DAOUsuarioRepository {
 		connection = SingleConnectionBanco.getConnection();
 	}
 
-	public ModelLogin gravarUsuario(ModelLogin modelLogin) throws Exception{
+	public ModelLogin gravarUsuario(ModelLogin modelLogin) throws SQLException{
 			
 			if (modelLogin.isNovo()) {/*grava um novo*/
 				
@@ -50,7 +50,7 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaListPorNome(String nome) throws SQLException{
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
 		
-		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome + "%')";
+		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome + "%') and useradmin is false";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultado = statement.executeQuery();
 		while(resultado.next()) {/*percorre as linhas de resultado do sql */
@@ -73,7 +73,7 @@ public class DAOUsuarioRepository {
 		
 		ModelLogin modelLogin = new ModelLogin();
 		try {
-			String sql = "SELECT * FROM model_login WHERE upper(login) = upper('" + loginUsuario + "');";
+			String sql = "SELECT * FROM model_login WHERE upper(login) = upper('" + loginUsuario + "') and useradmin is false;";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultadoDaConsulta = statement.executeQuery();
 			while (resultadoDaConsulta.next()) {
@@ -108,7 +108,7 @@ public class DAOUsuarioRepository {
 	}
 	
 	public void deletarUsuario(String idUsuario)throws Exception {
-		String sql = "DELETE FROM model_login WHERE id = ?;";
+		String sql = "DELETE FROM model_login WHERE id = ? and useradmin is false;";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, Long.parseLong(idUsuario));
 		statement.executeUpdate();
@@ -118,7 +118,7 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaUsuarioLista() throws SQLException {
 		
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
-		String sql = "SELECT * FROM model_login;";
+		String sql = "SELECT * FROM model_login WHERE useradmin is false;";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
 		while (resultadoDaConsulta.next()) {
@@ -138,7 +138,7 @@ public class DAOUsuarioRepository {
 
 		ModelLogin modelLogin = new ModelLogin();
 		try {
-			String sql = "SELECT * FROM model_login WHERE id = ?;";
+			String sql = "SELECT * FROM model_login WHERE id = ? and useradmin is false;";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setLong(1, Long.parseLong(id));
 			ResultSet resultadoDaConsulta = statement.executeQuery();

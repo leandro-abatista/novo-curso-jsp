@@ -125,7 +125,7 @@
 																</tr>
 															</thead>
 															<tbody>
-																<!-- torna a tabela dinâmica -->
+																<!-- torna a tabela dinâmica ml-->
 																<c:forEach items="${modelLogins}" var="ml">
 																	<tr>
 																		<!-- linha -->
@@ -139,7 +139,7 @@
 																		<!-- coluna -->
 																		<td><a
 																			href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${ml.id}"
-																			class="btn btn-success waves-effect waves-light"
+																			class="btn btn-secondary"
 																			type="button" id="button-addon2">Ver</a></td>
 																		<!-- coluna -->
 																	</tr>
