@@ -285,6 +285,9 @@
 				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><td><button type="button" class="btn btn-secondary" data-bs-toggle="modal" href="#modalToggle1" role="button" onclick="mostrarDados('+json[posicao].id+')">Detalhes</button></td></tr>');
 				 	}
 				 	
+				 	if(json.length >= 0 && json.length <= 1){
+				 		document.getElementById('totalResultados').textContent = json.length + ' Resultado encontrado ';
+				 	} 
 				 	document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados ';
 				 
 			     }
