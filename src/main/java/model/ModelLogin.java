@@ -13,6 +13,7 @@ public class ModelLogin implements Serializable {
 	private String login;
 	private String senha;
 	private Boolean userAdmin;
+	private String perfil;
 
 	/**
 	 * Método genérico para gravar um novo registro de usuário
@@ -28,6 +29,14 @@ public class ModelLogin implements Serializable {
 		}
 
 		return id == null;
+	}
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
 	public Boolean getUserAdmin() {

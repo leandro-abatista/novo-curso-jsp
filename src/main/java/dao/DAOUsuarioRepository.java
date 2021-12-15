@@ -1,5 +1,6 @@
 package dao;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,25 +23,27 @@ public class DAOUsuarioRepository {
 
 		if (modelLogin.isNovo()) {/* grava um novo */
 
-			String sql = "INSERT INTO model_login(login, senha, nome, email, usuario_id) VALUES (?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO model_login(login, senha, nome, email, usuario_id, perfil) VALUES (?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
 			statement.setString(2, modelLogin.getSenha());
 			statement.setString(3, modelLogin.getNome());
 			statement.setString(4, modelLogin.getEmail());
 			statement.setLong(5, userLogado);
+			statement.setString(6, modelLogin.getPerfil());
 
 			statement.execute();
 			connection.commit();
 
 		} else {
-			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=? " + " WHERE id = "
+			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=?, perfil=? WHERE id = "
 					+ modelLogin.getId() + ";";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
 			statement.setString(2, modelLogin.getSenha());
 			statement.setString(3, modelLogin.getNome());
 			statement.setString(4, modelLogin.getEmail());
+			statement.setString(5, modelLogin.getPerfil());
 
 			statement.executeUpdate();
 			connection.commit();
@@ -60,6 +63,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setId(resultado.getLong("id"));
 			modelLogin.setLogin(resultado.getString("login"));
 			modelLogin.setNome(resultado.getString("nome"));
+			modelLogin.setPerfil(resultado.getString("perfil"));
 			retorno.add(modelLogin);
 		}
 		return retorno;
@@ -128,6 +132,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
+				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -175,6 +180,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 			modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 			retorno.add(modelLogin);
 		}
 
@@ -195,6 +201,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

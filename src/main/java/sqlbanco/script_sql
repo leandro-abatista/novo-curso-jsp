@@ -41,3 +41,6 @@ alter table model_login alter column senha set not null;
 
 //busca apenas o admin
 SELECT * FROM model_login WHERE useradmin is true
+
+--criando perfil do usuário
+alter table model_login add column perfil character varying(50)

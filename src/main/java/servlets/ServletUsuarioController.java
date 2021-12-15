@@ -122,13 +122,16 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String email = request.getParameter("email");
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
+			String perfil = request.getParameter("perfil");
 
 			ModelLogin modelLogin = new ModelLogin();
+			//seta os dados para este objeto
 			modelLogin.setId(id != null && !id.isEmpty() ? Long.parseLong(id) : null);
 			modelLogin.setNome(nome);
 			modelLogin.setEmail(email);
 			modelLogin.setLogin(login);
 			modelLogin.setSenha(senha);
+			modelLogin.setPerfil(perfil);
 
 			if (daoUsuarioRepository.validaLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
 				mensagem = "Já existe um usuario com o mesmo 'Login'.\nInforme um login válido!";

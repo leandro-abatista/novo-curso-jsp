@@ -70,6 +70,24 @@
 														</div>
 
 														<div class="col-md-6">
+															<label for="perfil" class="form-label">Perfil</label> 
+															<select id="perfil" class="form-select" style="font-weight: bold;" name="perfil" aria-label="Default select example">
+																<option disabled="disabled" selected>Selecione um perfil</option>
+																<option value="ADMINISTRADOR">ADMINISTRADOR</option>
+																<option value="SECRETARIO(a)">SECRETARIO(a)</option>
+																<option value="AUXILIARTI">AUXILIAR DE TI</option>
+																<option value="AUXILIARFINANCEIRO">AUXILIAR FINANCEIRO</option>
+																<option value="AUXILIARLOJA">AUXILIAR DE LOJA</option>
+																<option value="AUXILIARCONTABILIDADE">AUXILIAR DE CONTABILIDADE</option>
+																<option value="ESTOQUISTA">ESTOQUISTA</option>
+																<option value="ATENDENTE">ATENDENTE</option>
+															</select>
+														</div>
+														
+														<div class="col-md-6">
+														</div>
+
+														<div class="col-md-6">
 															<label for="login" class="form-label">Login</label> 
 															<input type="text" name="login" class="form-control" id="login" 
 															style="font-weight: bold;" value="${modelLogin.login}" required="required">
@@ -107,7 +125,7 @@
 
 												<div class="card-header"
 													style="margin: 0.5rem; font-weight: bold; text-align: center; background-color: #F5F5F5; padding: 0.2rem">
-													<h4 class="card-title">Usuário Cadastrados</h4>
+													<h4 class="card-title">Usuários Cadastrados</h4>
 												</div>
 
 												<div class="card-body">

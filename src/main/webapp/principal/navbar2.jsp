@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set scope="session" var="isAdmin" value='<%=request.getSession().getAttribute("isAdmin") %>'></c:set>
+<c:set scope="session" var="perfil" value='<%=request.getSession().getAttribute("perfil") %>'></c:set>
     
 <nav class="pcoded-navbar">
 						<div class="sidebar_toggle">
@@ -58,7 +58,7 @@
 									<ul class="pcoded-submenu">
 									
 									<!-- submenu de cadastro de usuário -->
-									<c:if test="${isAdmin}">
+									<c:if test="${perfil == 'ADMINISTRADOR'}">
 										<li class=" "><a
 											href="<%=request.getContextPath()%>/ServletUsuarioController?acao=listarUsuarios"
 											class="waves-effect waves-dark"> <span class="pcoded-micon"><i
