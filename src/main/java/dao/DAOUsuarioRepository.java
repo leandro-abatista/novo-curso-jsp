@@ -105,6 +105,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -126,6 +127,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

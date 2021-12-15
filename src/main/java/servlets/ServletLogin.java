@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.jasper.tagplugins.jstl.core.If;
 
 import dao.DAOLoginRepository;
+import dao.DAOUsuarioRepository;
 import model.ModelLogin;
 
 /**
@@ -26,6 +27,7 @@ public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private DAOLoginRepository repository = new DAOLoginRepository();
+	private DAOUsuarioRepository usuarioRepository = new DAOUsuarioRepository();
 
 	public ServletLogin() {
 		super();
@@ -65,10 +67,16 @@ public class ServletLogin extends HttpServlet {
 				modelLogin.setSenha(senha);
 
 				if (repository.validarAutenticacao(modelLogin)) {
+					
+					modelLogin = usuarioRepository.consultaUsuarioLogado(login);
 
 					/* esse código pega o usuário logado na sessão */
 					request.getSession().setAttribute("usuarioLogado", modelLogin.getLogin());
-
+					
+					/*verifica se esse login é administrador*/
+					request.getSession().setAttribute("isAdmin", modelLogin.getUserAdmin());
+					
+					
 					if (url == null || url.equals("null")) {
 						url = "principal/principal.jsp";
 					}
