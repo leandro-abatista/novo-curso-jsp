@@ -18,7 +18,7 @@ import model.ModelLogin;
 
 
 @WebServlet( urlPatterns = {"/ServletUsuarioController"})
-public class ServletUsuarioController extends HttpServlet {
+public class ServletUsuarioController extends ServletGenericUtil {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -40,7 +40,7 @@ public class ServletUsuarioController extends HttpServlet {
 				daoUsuarioRepository.deletarUsuario(idUsuario);
 				
 				//consulta os dados no banco
-				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
 				//depois seta os atributos do usuario na tabela
 				request.setAttribute("modelLogins", modelLogins);
 				
@@ -56,7 +56,7 @@ public class ServletUsuarioController extends HttpServlet {
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscaUsuarioComAjax")) {
 				
 				String nomeBusca = request.getParameter("nomeBusca");
-				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaListPorNome(nomeBusca);
+				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaListPorNome(nomeBusca, super.getUserLogado(request));
 				//response.getWriter().write("Registro excluído com sucesso!");
 				//System.out.println(nomeBusca);
 				 ObjectMapper mapper = new ObjectMapper();
@@ -66,10 +66,10 @@ public class ServletUsuarioController extends HttpServlet {
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 				
 				String idUser = request.getParameter("id");
-				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser);
+				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser, super.getUserLogado(request));
 				
 				//consulta os dados no banco
-				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
 				//depois seta os atributos do usuario na tabela
 				request.setAttribute("modelLogins", modelLogins);
 				
@@ -80,13 +80,13 @@ public class ServletUsuarioController extends HttpServlet {
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("mostrarDetalhes")) {
 				
 				String idUser = request.getParameter("id");
-				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser);
+				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser, super.getUserLogado(request));
 				
 				request.setAttribute("modelLogin", modelLogin);
 				
 			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuarios")) {
 				
-				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
 				
 				request.setAttribute("mensagem", "Usuários carregados!");
 				request.setAttribute("modelLogins", modelLogins);
@@ -95,7 +95,7 @@ public class ServletUsuarioController extends HttpServlet {
 			else {
 				
 				//consulta os dados no banco
-				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
 				//depois seta os atributos do usuario na tabela
 				request.setAttribute("modelLogins", modelLogins);
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
@@ -140,11 +140,11 @@ public class ServletUsuarioController extends HttpServlet {
 					mensagem = "Registro atualizado com sucesso!";
 				}
 				
-				modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin);
+				modelLogin = daoUsuarioRepository.gravarUsuario(modelLogin, super.getUserLogado(request));
 			}
 			
 			//consulta os dados no banco
-			List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista();
+			List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
 			//depois seta os atributos do usuario na tabela
 			request.setAttribute("modelLogins", modelLogins);
 
