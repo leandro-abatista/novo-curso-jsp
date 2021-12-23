@@ -14,6 +14,7 @@ public class ModelLogin implements Serializable {
 	private String senha;
 	private Boolean userAdmin;
 	private String perfil;
+	private String sexo;
 
 	/**
 	 * Método genérico para gravar um novo registro de usuário
@@ -31,6 +32,14 @@ public class ModelLogin implements Serializable {
 		return id == null;
 	}
 
+	public String getSexo() {
+		return sexo;
+	}
+	
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	
 	public String getPerfil() {
 		return perfil;
 	}

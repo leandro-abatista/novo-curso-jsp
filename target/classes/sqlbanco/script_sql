@@ -44,3 +44,6 @@ SELECT * FROM model_login WHERE useradmin is true
 
 --criando perfil do usuário
 alter table model_login add column perfil character varying(50)
+
+--add a coluna sexo
+alter table model_login add column sexo character varying(10)

@@ -12,7 +12,7 @@
 				<h4>Entre em contato com o suporte do sistema.</h4>
 				<h4 class="card-text">(99) 9.9999-9999 | (99) 9.8888-8888</h4>
 				<h4 class="card-text">Suporte 24 horas por dia e 7 dias por semana.</h4>
-			<a href="../principal/principal.jsp" class="btn btn-primary">Página Inicial</a>
+			<a href="<%=request.getContextPath()%>/principal.jsp" class="btn btn-primary">Página Inicial</a>
 		</div>
 		<div class="card-footer text-muted">
 			<%

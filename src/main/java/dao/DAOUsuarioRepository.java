@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.StatementEvent;
+
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
 
@@ -23,7 +25,8 @@ public class DAOUsuarioRepository {
 
 		if (modelLogin.isNovo()) {/* grava um novo */
 
-			String sql = "INSERT INTO model_login(login, senha, nome, email, usuario_id, perfil) VALUES (?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO model_login(login, senha, nome, email, usuario_id, perfil, sexo) "
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
 			statement.setString(2, modelLogin.getSenha());
@@ -31,12 +34,14 @@ public class DAOUsuarioRepository {
 			statement.setString(4, modelLogin.getEmail());
 			statement.setLong(5, userLogado);
 			statement.setString(6, modelLogin.getPerfil());
+			statement.setString(7, modelLogin.getSexo());
+			
 
 			statement.execute();
 			connection.commit();
 
 		} else {
-			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=?, perfil=? WHERE id = "
+			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=?, perfil=?, sexo=? WHERE id = "
 					+ modelLogin.getId() + ";";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
@@ -44,6 +49,7 @@ public class DAOUsuarioRepository {
 			statement.setString(3, modelLogin.getNome());
 			statement.setString(4, modelLogin.getEmail());
 			statement.setString(5, modelLogin.getPerfil());
+			statement.setString(6, modelLogin.getSexo());
 
 			statement.executeUpdate();
 			connection.commit();
@@ -54,7 +60,7 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaListPorNome(String nome, Long userLogado) throws SQLException {
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
 
-		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome + "%') and useradmin is false and usuario_id = " + userLogado;
+		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome + "%') and useradmin is false and usuario_id = " + userLogado + " order by id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultado = statement.executeQuery();
 		while (resultado.next()) {/* percorre as linhas de resultado do sql */
@@ -64,6 +70,8 @@ public class DAOUsuarioRepository {
 			modelLogin.setLogin(resultado.getString("login"));
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
+			modelLogin.setSexo(resultado.getString("sexo"));
+			
 			retorno.add(modelLogin);
 		}
 		return retorno;
@@ -88,6 +96,8 @@ public class DAOUsuarioRepository {
 				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -110,6 +120,8 @@ public class DAOUsuarioRepository {
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
+				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,6 +145,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,7 +183,7 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaUsuarioLista(Long userLogado) throws SQLException {
 
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
-		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado;
+		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado + " order by id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
 		while (resultadoDaConsulta.next()) {
@@ -181,6 +194,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 			modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+			modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 			retorno.add(modelLogin);
 		}
 
@@ -202,6 +216,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
