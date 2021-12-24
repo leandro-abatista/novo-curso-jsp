@@ -47,3 +47,7 @@ alter table model_login add column perfil character varying(50)
 
 --add a coluna sexo
 alter table model_login add column sexo character varying(10)
+
+--criando os campos foto usuário e extensaofotousuario
+alter table model_login add column fotousuario text;
+alter table model_login add column extensaofotousuario character varying(50);

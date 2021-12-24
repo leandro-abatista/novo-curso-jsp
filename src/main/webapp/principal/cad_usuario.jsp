@@ -47,7 +47,7 @@
 												<div class="card-body">
 
 													<form class="row g-3" id="formUsuario" method="post"
-														action="<%=request.getContextPath()%>/ServletUsuarioController">
+														action="<%=request.getContextPath()%>/ServletUsuarioController" enctype="multipart/form-data">
 
 														<input type="hidden" id="acao" name="acao" value="">
 
@@ -56,7 +56,20 @@
 																type="text" name="id" class="form-control" id="id"
 																readonly="readonly" value="${modelLogin.id}">
 														</div>
+														
+														<div class="col-md-6"></div>
 
+														<div class="col-md-6">
+															<div class="mb-3">
+																<img alt="Imagem do Usuário" style="font-weight: bold;"
+																src="https://www.unilab.com.br/wp-content/uploads/2018/08/saiba-o-que-um-software-para-controle-de-estoque-precisa-ter.jpeg" width="100px" height="80px">
+															</div>
+															<div class="mb-3">
+																<label for="formFile" style="font-weight: bold;" class="form-label">Selecione uma foto</label>
+	  															<input class="form-control" type="file" id="formFile" style="font-weight: bold;">
+															</div>
+														</div>
+														
 														<div class="col-md-6"></div>
 
 														<div class="col-md-6">

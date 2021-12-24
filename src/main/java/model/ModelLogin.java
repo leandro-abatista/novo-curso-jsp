@@ -16,6 +16,9 @@ public class ModelLogin implements Serializable {
 	private String perfil;
 	private String sexo;
 
+	private String fotoUsuario;
+	private String extensaoFotoUsuario;
+
 	/**
 	 * Método genérico para gravar um novo registro de usuário
 	 * 
@@ -32,14 +35,30 @@ public class ModelLogin implements Serializable {
 		return id == null;
 	}
 
+	public String getFotoUsuario() {
+		return fotoUsuario;
+	}
+
+	public void setFotoUsuario(String fotoUsuario) {
+		this.fotoUsuario = fotoUsuario;
+	}
+
+	public String getExtensaoFotoUsuario() {
+		return extensaoFotoUsuario;
+	}
+
+	public void setExtensaoFotoUsuario(String extensaoFotoUsuario) {
+		this.extensaoFotoUsuario = extensaoFotoUsuario;
+	}
+
 	public String getSexo() {
 		return sexo;
 	}
-	
+
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	
+
 	public String getPerfil() {
 		return perfil;
 	}
