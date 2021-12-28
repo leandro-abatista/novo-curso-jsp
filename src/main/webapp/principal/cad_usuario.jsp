@@ -61,12 +61,12 @@
 
 														<div class="col-md-6">
 															<div class="mb-3">
-																<img alt="Imagem do Usuário" style="font-weight: bold;"
-																src="https://www.unilab.com.br/wp-content/uploads/2018/08/saiba-o-que-um-software-para-controle-de-estoque-precisa-ter.jpeg" width="100px" height="80px">
+																<img id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
+																src="" width="100px" height="80px">
 															</div>
 															<div class="mb-3">
 																<label for="formFile" style="font-weight: bold;" class="form-label">Selecione uma foto</label>
-	  															<input class="form-control" type="file" id="formFile" style="font-weight: bold;">
+	  															<input type="file" id="fileFoto" name="fileFoto" class="form-control" accept="image/*" onchange="visualizarImage('fotoEmBase64', 'fileFoto');"  style="font-weight: bold;">
 															</div>
 														</div>
 														
@@ -382,6 +382,22 @@
 	<!-- Modal 2-->
 
 	<script type="text/javascript">
+	
+		function visualizarImage(fotoEmBase64, fileFoto) {
+			var preview = document.getElementById(fotoEmBase64);//campo img do html
+			var fileUsuario = document.getElementById(fileFoto).files[0];
+			var reader = new FileReader();
+			
+			reader.onloadend = function () {
+				preview.src = reader.result;/*carrega a foto na tela*/
+			};
+			
+			if (fileUsuario) {
+				reader.readAsDataURL(fileUsuario);/* preview da imagem*/
+			} else {
+				preview.src = '';
+			}
+		}
 	
 		function mostrarDados(id) {
 			/**/

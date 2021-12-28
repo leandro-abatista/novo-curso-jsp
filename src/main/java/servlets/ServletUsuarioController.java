@@ -11,7 +11,11 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import dao.DAOUsuarioRepository;
 import model.ModelLogin;
@@ -124,6 +128,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String senha = request.getParameter("senha");
 			String perfil = request.getParameter("perfil");
 			String sexo = request.getParameter("sexo");
+			
 
 			ModelLogin modelLogin = new ModelLogin();
 			//seta os dados para este objeto
@@ -134,6 +139,21 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelLogin.setSenha(senha);
 			modelLogin.setPerfil(perfil);
 			modelLogin.setSexo(sexo);
+			
+
+			/*código abaixo é referente ao upload de fotos/imagem*/
+			if (ServletFileUpload.isMultipartContent(request)) {
+				Part part = request.getPart("fileFoto");/*pega a foto da tela*/
+				byte[] foto = IOUtils.toByteArray(part.getInputStream());
+				String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
+				System.out.println(imagemBase64);
+				//IOUtils.toByteArray(part.getInputStream());/*converte imagem para byte*/
+				
+				//se tiver tudo certo
+				modelLogin.setFotoUsuario(imagemBase64);
+				modelLogin.setExtensaoFotoUsuario(part.getContentType().split("\\/")[1]);
+				
+			}
 
 			if (daoUsuarioRepository.validaLogin(modelLogin.getLogin()) && modelLogin.getId() == null) {
 				mensagem = "Já existe um usuario com o mesmo 'Login'.\nInforme um login válido!";
