@@ -122,6 +122,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+				modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -146,6 +147,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+				modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,6 +172,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setUserAdmin(resultadoDaConsulta.getBoolean("useradmin"));
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+				modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -241,6 +244,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+				modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

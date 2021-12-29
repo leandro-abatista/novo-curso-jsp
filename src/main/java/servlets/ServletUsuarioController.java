@@ -143,15 +143,20 @@ public class ServletUsuarioController extends ServletGenericUtil {
 
 			/*código abaixo é referente ao upload de fotos/imagem*/
 			if (ServletFileUpload.isMultipartContent(request)) {
-				Part part = request.getPart("fileFoto");/*pega a foto da tela*/
-				byte[] foto = IOUtils.toByteArray(part.getInputStream());
-				String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
-				System.out.println(imagemBase64);
-				//IOUtils.toByteArray(part.getInputStream());/*converte imagem para byte*/
 				
-				//se tiver tudo certo
-				modelLogin.setFotoUsuario(imagemBase64);
-				modelLogin.setExtensaoFotoUsuario(part.getContentType().split("\\/")[1]);
+				Part part = request.getPart("fileFoto");/*pega a foto da tela*/
+				
+				if(part != null && part.getSize() > 0) {
+ 					
+					byte[] foto = IOUtils.toByteArray(part.getInputStream());
+					String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," + new Base64().encodeBase64String(foto);
+					System.out.println(imagemBase64);
+					//IOUtils.toByteArray(part.getInputStream());/*converte imagem para byte*/
+					//se tiver tudo certo
+					modelLogin.setFotoUsuario(imagemBase64);
+					modelLogin.setExtensaoFotoUsuario(part.getContentType().split("\\/")[1]);
+				}
+				
 				
 			}
 

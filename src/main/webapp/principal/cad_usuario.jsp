@@ -61,8 +61,16 @@
 
 														<div class="col-md-6">
 															<div class="mb-3">
-																<img id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
-																src="" width="100px" height="80px">
+																	<!-- esse if verifica se tem imagem ou não -->
+																	<c:if test="${modelLogin.fotoUsuario != ' ' && modelLogin.fotoUsuario != null}">
+																		<img id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
+																		src="${modelLogin.fotoUsuario}" width="120px" height="120px">
+																	</c:if>
+																	<!-- se não -->
+																	<c:if test="${modelLogin.fotoUsuario == ' ' || modelLogin.fotoUsuario == null}">
+																		<img id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
+																		src="assets/images/sem-imagem2.png" width="100px" height="90px">
+																	</c:if>
 															</div>
 															<div class="mb-3">
 																<label for="formFile" style="font-weight: bold;" class="form-label">Selecione uma foto</label>
