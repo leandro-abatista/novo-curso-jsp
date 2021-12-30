@@ -245,6 +245,7 @@ public class DAOUsuarioRepository {
 				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 				modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
+				modelLogin.setExtensaoFotoUsuario(resultadoDaConsulta.getString("extensaofotousuario"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

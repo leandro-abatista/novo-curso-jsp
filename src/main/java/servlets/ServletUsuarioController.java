@@ -95,8 +95,18 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				request.setAttribute("mensagem", "Usuários carregados!");
 				request.setAttribute("modelLogins", modelLogins);
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
-			}
-			else {
+			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
+				/*pegando o id do usuário*/
+				String idUser = request.getParameter("id");
+				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser, super.getUserLogado(request));
+				if (modelLogin.getFotoUsuario() != null && !modelLogin.getFotoUsuario().isEmpty()) {
+					/*codigo para o navegador fazer o download*/
+					response.setHeader("Content-Disposition", "attachment;filename=arquivo." + modelLogin.getExtensaoFotoUsuario());
+					
+					response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFotoUsuario().split("\\,")[1]));
+				}
+				
+			} else {
 				
 				//consulta os dados no banco
 				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
