@@ -246,7 +246,59 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaUsuarioLista(Long userLogado) throws SQLException {
 
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
-		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado + " order by id";
+		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado + " order by id limit 5";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+		
+		while (resultadoDaConsulta.next()) {
+			ModelLogin modelLogin = new ModelLogin();
+			modelLogin.setId(resultadoDaConsulta.getLong("id"));
+			modelLogin.setNome(resultadoDaConsulta.getString("nome"));
+			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
+			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
+			modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+			modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+			modelLogin.setCep(resultadoDaConsulta.getString("cep"));
+			modelLogin.setLogradouro(resultadoDaConsulta.getString("logradouro"));
+			modelLogin.setNumero(resultadoDaConsulta.getString("numero"));
+			modelLogin.setComplemento(resultadoDaConsulta.getString("complemento"));
+			modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
+			modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
+			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
+			
+			retorno.add(modelLogin);
+		}
+
+		return retorno;
+	}
+	
+	public int totalDePaginas(Long userLogado) throws Exception {
+		String sql = "select count(1) from model_login where usuario_id = " + userLogado;
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+		
+		Double totalDeCadastros = resultadoDaConsulta.getDouble("total");
+		Double totalDePaginas = 5.0;
+		Double numeroDePaginas = totalDeCadastros / totalDePaginas;
+		Double resto = numeroDePaginas % 2;
+		if (resto > 0) {
+			numeroDePaginas ++;//se o resto for maior que zero, soma +1
+		}
+		
+		return numeroDePaginas.intValue();
+	}
+	
+	/**
+	 * Método de consulta paginada
+	 * @param userLogado
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<ModelLogin> consultaUsuarioListaPaginada(Long userLogado, Integer offSet) throws SQLException {
+
+		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado + " order by id offset " + offSet + " limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
 		
@@ -273,11 +325,12 @@ public class DAOUsuarioRepository {
 		return retorno;
 	}
 
+
 	public ModelLogin consultaUsuarioPorID(String id, Long userLogado) {
 
 		ModelLogin modelLogin = new ModelLogin();
 		try {
-			String sql = "SELECT * FROM model_login WHERE id = ? and useradmin is false and usuario_id = " + userLogado;
+			String sql = "SELECT * FROM model_login WHERE id = ? and useradmin is false and usuario_id = " + userLogado + " limit 5";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setLong(1, Long.parseLong(id));
 			ResultSet resultadoDaConsulta = statement.executeQuery();

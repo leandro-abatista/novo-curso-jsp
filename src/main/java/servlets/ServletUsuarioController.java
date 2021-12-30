@@ -49,6 +49,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				request.setAttribute("modelLogins", modelLogins);
 				
 				request.setAttribute("mensagem", "Registro excluído com sucesso!");
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarComAjax")) {/* usando o ajax para deletar usuário */
@@ -79,14 +80,15 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				
 				request.setAttribute("mensagem", "Usuário em edição!");
 				request.setAttribute("modelLogin", modelLogin);
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
 			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("mostrarDetalhes")) {
 				
 				String idUser = request.getParameter("id");
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser, super.getUserLogado(request));
-				
 				request.setAttribute("modelLogin", modelLogin);
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 				
 			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listarUsuarios")) {
 				
@@ -94,8 +96,11 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				
 				request.setAttribute("mensagem", "Usuários carregados!");
 				request.setAttribute("modelLogins", modelLogins);
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+				
 			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
+				
 				/*pegando o id do usuário*/
 				String idUser = request.getParameter("id");
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioPorID(idUser, super.getUserLogado(request));
@@ -207,6 +212,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			RequestDispatcher redireciona = request.getRequestDispatcher("principal/cad_usuario.jsp");
 			/* seta os atributos de ModelLogin na tela */
 			request.setAttribute("modelLogin", modelLogin);
+			request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 			redireciona.forward(request, response);
 			
 		} catch (Exception e) {
