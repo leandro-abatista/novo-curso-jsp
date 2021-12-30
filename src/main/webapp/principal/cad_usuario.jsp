@@ -64,13 +64,13 @@
 																	<!-- esse if verifica se tem imagem ou não -->
 																	<c:if test="${modelLogin.fotoUsuario != ' ' && modelLogin.fotoUsuario != null}">
 																		<a href="<%= request.getContextPath()%>/ServletUsuarioController?acao=downloadFoto&id=${modelLogin.id}">
-																			<img id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
+																			<img class="border border-secondary border-3" id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
 																			src="${modelLogin.fotoUsuario}" width="120px" height="120px">
 																		</a>
 																	</c:if>
 																	<!-- se não -->
 																	<c:if test="${modelLogin.fotoUsuario == ' ' || modelLogin.fotoUsuario == null}">
-																		<img id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
+																		<img class="border border-secondary border-3" id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
 																		src="assets/images/sem-imagem2.png" width="100px" height="90px">
 																	</c:if>
 															</div>
@@ -215,9 +215,50 @@
 																id="senha" style="font-weight: bold;"
 																value="${modelLogin.senha}" required="required">
 														</div>
+														
+														<br>
+														<hr style="border-color: #aaa; box-sizing: border-box; width: 100%; height: .3rem"></hr>
+														<div style="margin-top: 5px; margin-left: 8px; color: #6495ED; size: 25px">Dados do endereço</div>
+														
+														<div class="col-md-3">
+															<label class="form-label">Cep:</label>
+        													<input class="form-control" style="font-weight: bold;" name="cep" type="text" id="cep" value="${modelLogin.cep}" size="10" maxlength="9" onblur="pesquisaCep();"/>
+														</div>
+														
+														<div class="col-md-6">
+														</div>
+														
+														<div class="col-md-6">
+															<label class="form-label">Logradouro:</label>
+        													<input class="form-control" style="font-weight: bold;" name="logradouro" type="text" id="logradouro" value="${modelLogin.logradouro}" maxlength="200" />
+														</div>
+														
+														<div class="col-md-2">
+															<label class="form-label">Número:</label>
+        													<input class="form-control" style="font-weight: bold;" name="numero" type="text" id="numero" value="${modelLogin.numero}" maxlength="10" />
+														</div>
+														
+														<div class="col-md-4">
+															<label class="form-label">Complemento:</label>
+        													<input class="form-control" style="font-weight: bold;" name="complemento" type="text" id="complemento" value="${modelLogin.complemento}" maxlength="150" />
+														</div>
+														
+														<div class="col-md-5">
+															<label class="form-label">Bairro:</label>
+        													<input class="form-control" style="font-weight: bold;" name="bairro" type="text" id="bairro" value="${modelLogin.bairro}" maxlength="30" />
+														</div>
+														
+														<div class="col-md-5">
+															<label class="form-label">Cidade:</label>
+        													<input class="form-control" style="font-weight: bold;" name="cidade" type="text" id="cidade" value="${modelLogin.cidade}" maxlength="50" />
+														</div>
+														
+														<div class="col-md-2">
+															<label class="form-label">Estado:</label>
+        													<input class="form-control" style="font-weight: bold;" name="uf" type="text" id="uf" value="${modelLogin.uf}" maxlength="2" />
+														</div>
 
-														<div class="d-grid gap-2 d-md-flex justify-content-md-end"
-															style="margin-top: 2rem">
+														<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
 
 															<button type="button"
 																class="btn btn-dark waves-effect waves-light btn-lg"
@@ -392,6 +433,74 @@
 	<!-- Modal 2-->
 
 	<script type="text/javascript">
+	
+	$(document).ready(function() {
+
+        function limpa_formulário_cep() {
+            // Limpa valores do formulário de cep.
+            $("#logradouro").val("");
+            $("#numero").val("");
+            $("#complemento").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+            
+        }
+        
+        //Quando o campo cep perde o foco.
+        $("#cep").blur(function() {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $("#logradouro").val("...");
+                    $("#numero").val("...");
+                    $("#complemento").val("...");
+                    $("#bairro").val("...");
+                    $("#cidade").val("...");
+                    $("#uf").val("...");
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#logradouro").val(dados.logradouro);
+                            $("#numero").val(dados.numero);
+                            $("#complemento").val(dados.complemento);
+                            $("#bairro").val(dados.bairro);
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+                        }
+                    });
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        });
+    });
 	
 		function visualizarImage(fotoEmBase64, fileFoto) {
 			var preview = document.getElementById(fotoEmBase64);//campo img do html

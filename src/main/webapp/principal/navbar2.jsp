@@ -66,8 +66,7 @@
 					<!-- submenu de cadastro de usuário -->
 					<c:if test="${perfil == 'ADMINISTRADOR'}">
 						<li class=" ">
-							<a href="<%=request.getContextPath()%>/ServletUsuarioController?acao=listarUsuarios"
-							class="waves-effect waves-dark"> 
+							<a href="<%=request.getContextPath()%>/ServletUsuarioController?acao=listarUsuarios" class="waves-effect waves-dark"> 
 								<span class="pcoded-micon">
 									<i class="ti-angle-right"></i>
 								</span> 
@@ -76,6 +75,18 @@
 							</a>
 						</li>
 					</c:if>
+					
+					
+					<!-- submenu de cadastro de produto -->
+						<li class=" ">
+							<a href="" class="waves-effect waves-dark"> 
+								<span class="pcoded-micon">
+									<i class="ti-angle-right"></i>
+								</span> 
+								<span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Produto</span> 
+								<span class="pcoded-mcaret"></span>
+							</a>
+						</li>
 				</ul>
 				
 			<div class="pcoded-navigation-label" data-i18n="nav.category.forms">Forms &amp; Tables</div>
