@@ -491,7 +491,7 @@
 		}
 
 		function limparFormulario() {
-			const elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
+			var elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
 			for (posicao = 0; posicao < elementos.length; posicao++) {
 				elementos[posicao].value = '';
 			}
