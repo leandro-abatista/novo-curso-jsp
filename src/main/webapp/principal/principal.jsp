@@ -34,7 +34,7 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
-											<h2>Cadastro de Usuário</h2>
+											<h2>Tela inicial do sistema</h2>
 											
 											<!--  fim do conteúdo das páginas -->
 											</div>

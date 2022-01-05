@@ -21,34 +21,46 @@
 
 			<div class="main-menu-content">
 				<ul>
-					<li class="more-details"><a href="user-profile.html"> <i
-							class="ti-user"></i>View Profile
-					</a> <a href="#!"> <i class="ti-settings"></i>Settings
-					</a> <a href="<%= request.getContextPath() %>/ServletLogin?acao=logout">
-							<i class="ti-layout-sidebar-left"></i>Logout
-					</a></li>
+					<li class="more-details">
+						<!-- 
+						<a href="user-profile.html"> 
+							<i class="ti-user"></i>View Profile
+						</a> 
+						<a href="#!"> 
+							<i class="ti-settings"></i>Settings
+						</a>
+						 --> 
+						<a href="<%= request.getContextPath() %>/ServletLogin?acao=logout">
+							<i class="ti-layout-sidebar-left"></i>Sair do sistema
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>
 		<div class="p-15 p-b-0">
 			<form class="form-material">
+				<!-- 
 				<div class="form-group form-primary">
 					<input type="text" name="footer-email" class="form-control"
 						required=""> <span class="form-bar"></span> <label
 						class="float-label"><i class="fa fa-search m-r-10"></i>Search Friend</label>
 				</div>
+				 -->
 			</form>
 		</div>
 
+		<!-- 
 		<div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
-		
+		 -->
 		<ul class="pcoded-item pcoded-left-item">
 			<li class="active">
-				<a href="index.html" class="waves-effect waves-dark"> 
-				<span class="pcoded-micon">
-					<i class="ti-home"></i><b>D</b></span> <span class="pcoded-mtext"
-						data-i18n="nav.dash.main">Dashboard</span> 
-						<span class="pcoded-mcaret"></span>
+				<a href="<%= request.getContextPath()%>/principal/principal.jsp" class="waves-effect waves-dark"> 
+					<span class="pcoded-micon">
+						<i class="ti-home"></i>
+							<b>D</b>
+					</span> 
+					<span class="pcoded-mtext" data-i18n="nav.dash.main">Início</span> 
+					<span class="pcoded-mcaret"></span>
 				</a>
 			</li>
 
@@ -58,7 +70,7 @@
 					<span class="pcoded-micon">
 						<i class="ti-layout-grid2-alt"></i>
 					</span> 
-					<span class="pcoded-mtext" data-i18n="nav.basic-components.main">Cadastros</span>
+					<span style="font-size: 16px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.basic-components.main">Cadastros</span>
 				    <span class="pcoded-mcaret"></span>
 				</a>
 
@@ -70,7 +82,7 @@
 								<span class="pcoded-micon">
 									<i class="ti-angle-right"></i>
 								</span> 
-								<span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Usuário</span> 
+								<span style="font-size: 15px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Usuário</span> 
 								<span class="pcoded-mcaret"></span>
 							</a>
 						</li>
@@ -83,29 +95,39 @@
 								<span class="pcoded-micon">
 									<i class="ti-angle-right"></i>
 								</span> 
-								<span class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Produto</span> 
+								<span style="font-size: 15px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.basic-components.alert">Cad. Produto</span> 
 								<span class="pcoded-mcaret"></span>
 							</a>
 						</li>
 				</ul>
 				
-			<div class="pcoded-navigation-label" data-i18n="nav.category.forms">Forms &amp; Tables</div>
+			
+			<div class="pcoded-navigation-label" data-i18n="nav.category.forms" style="font-size: 16px">Relatório</div>
 			
 			<ul class="pcoded-item pcoded-left-item">
-				<li><a href="form-elements-component.html"
-					class="waves-effect waves-dark"> <span class="pcoded-micon"><i
-							class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
-						data-i18n="nav.form-components.main">Form Components</span> <span
-						class="pcoded-mcaret"></span>
-				</a></li>
-				<li><a href="bs-basic-table.html"
-					class="waves-effect waves-dark"> <span class="pcoded-micon"><i
-							class="ti-layers"></i><b>FC</b></span> <span class="pcoded-mtext"
-						data-i18n="nav.form-components.main">Basic Table</span> <span
-						class="pcoded-mcaret"></span>
-				</a></li>
+				<li>
+					<a href="form-elements-component.html" class="waves-effect waves-dark"> 
+						<span class="pcoded-micon">
+							<i class="ti-layers"></i>
+								<b>FC</b>
+						</span> 
+						<span style="font-size: 15px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.form-components.main">Usuário</span> 
+						<span class="pcoded-mcaret"></span>
+					</a>
+				</li>
+				<li>
+					<a href="bs-basic-table.html" class="waves-effect waves-dark"> 
+						<span class="pcoded-micon">
+							<i class="ti-layers"></i>
+								<b>FC</b>
+						</span>
+						<span style="font-size: 15px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.form-components.main">Produto</span> 
+						<span class="pcoded-mcaret"></span>
+					</a>
+				</li>
 			</ul>
-
+			
+			<!-- 
 			<div class="pcoded-navigation-label" data-i18n="nav.category.forms">Chart &amp; Maps</div>
 			
 			<ul class="pcoded-item pcoded-left-item">
@@ -190,6 +212,7 @@
 					</a></li>
 
 				</ul></li>
+				 -->
 		</ul>
 	</div>
 </nav>
