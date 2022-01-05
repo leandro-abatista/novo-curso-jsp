@@ -274,13 +274,14 @@ public class DAOUsuarioRepository {
 	}
 	
 	public int totalDePaginas(Long userLogado) throws Exception {
-		String sql = "select count(1) from model_login where usuario_id = " + userLogado;
+		String sql = "select count(1) as total from model_login where usuario_id = " + userLogado;
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
+		resultadoDaConsulta.next();
 		
 		Double totalDeCadastros = resultadoDaConsulta.getDouble("total");
-		Double totalDePaginas = 5.0;
-		Double numeroDePaginas = totalDeCadastros / totalDePaginas;
+		Double totalPorPaginas = 5.0;
+		Double numeroDePaginas = totalDeCadastros / totalPorPaginas;
 		Double resto = numeroDePaginas % 2;
 		if (resto > 0) {
 			numeroDePaginas ++;//se o resto for maior que zero, soma +1

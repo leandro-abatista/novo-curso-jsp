@@ -111,12 +111,21 @@ public class ServletUsuarioController extends ServletGenericUtil {
 					response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFotoUsuario().split("\\,")[1]));
 				}
 				
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
+				
+				Integer offset = Integer.parseInt(request.getParameter("pagina"));
+				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioListaPaginada(this.getUserLogado(request), offset);
+				request.setAttribute("modelLogins", modelLogins);
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
+				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
+						
 			} else {
 				
 				//consulta os dados no banco
 				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
 				//depois seta os atributos do usuario na tabela
 				request.setAttribute("modelLogins", modelLogins);
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 				
 			}
