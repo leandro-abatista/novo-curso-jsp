@@ -52,8 +52,9 @@
 														<input type="hidden" id="acao" name="acao" value="">
 
 														<div class="col-md-3">
-															<label for="id" class="form-label">Código</label> <input
-																type="text" name="id" class="form-control" id="id"
+															<label for="id" class="form-label">Código</label> 
+															<input type="text" name="id" style="font-weight: bold;" 
+																class="form-control" id="id"
 																readonly="readonly" value="${modelLogin.id}">
 														</div>
 														
@@ -65,13 +66,13 @@
 																	<c:if test="${modelLogin.fotoUsuario != ' ' && modelLogin.fotoUsuario != null}">
 																		<a href="<%= request.getContextPath()%>/ServletUsuarioController?acao=downloadFoto&id=${modelLogin.id}">
 																			<img class="border border-secondary border-3" id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
-																			src="${modelLogin.fotoUsuario}" width="120px" height="120px">
+																			src="${modelLogin.fotoUsuario}" width="160px" height="120px">
 																		</a>
 																	</c:if>
 																	<!-- se não -->
 																	<c:if test="${modelLogin.fotoUsuario == ' ' || modelLogin.fotoUsuario == null}">
 																		<img class="border border-secondary border-3" id="fotoEmBase64" alt="Imagem do Usuário" style="font-weight: bold;"
-																		src="assets/images/sem-imagem2.png" width="100px" height="90px">
+																		src="assets/images/sem-user2.png" width="160px" height="120px">
 																	</c:if>
 															</div>
 															<div class="mb-3">
@@ -294,8 +295,7 @@
 												<div class="card-body">
 													<!-- tabela de dados usando jstl-->
 													<div style="height: 20rem; overflow: scroll;">
-														<table id="tabelaViewUser"
-															class="table table-dark table-hover">
+														<table id="tabelaViewUser" class="table table-primary table-hover">
 															<thead>
 																<tr>
 																	<th scope="col">Código</th>
@@ -318,10 +318,12 @@
 																		<!-- coluna -->
 																		<td><c:out value="${ml.login}"></c:out></td>
 																		<!-- coluna -->
-																		<td><a
+																		<td>
+																			<a
 																			href="<%= request.getContextPath() %>/ServletUsuarioController?acao=buscarEditar&id=${ml.id}"
 																			class="btn btn-secondary" type="button"
-																			id="button-addon2">Ver</a></td>
+																			id="button-addon2">Ver</a>
+																		</td>
 																		<!-- coluna -->
 																	</tr>
 																</c:forEach>
@@ -331,7 +333,7 @@
 
 												</div>
 												
-												<nav aria-label="Page navigation example" style="margin: 20px">
+												<nav aria-label="Page navigation example" style="margin: 18px">
 														<ul class="pagination pagination-lg justify-content-center">
 															<%
 																int totalPagina = (int) request.getAttribute("totalPagina");
@@ -361,16 +363,13 @@
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 
-	<!-- Modal -->
-	<div class="modal fade" id="modalToggle" aria-hidden="true"
-		aria-labelledby="modalToggleLabel" tabindex="-1">
+	<!-- Modal 1 ver -->
+	<div class="modal fade" id="modalToggle" aria-hidden="true" aria-labelledby="modalToggleLabel" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header" style="background-color: #B0C4DE">
-					<h5 class="modal-title" id="exampleModalToggleLabel">Pesquisa
-						de Usuário</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<h5 class="modal-title" id="exampleModalToggleLabel">Pesquisa de Usuário</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<!-- corpo da página -->
@@ -379,72 +378,49 @@
 							placeholder="Informe o nome para pesquisar"
 							aria-label="Informe o nome para pesquisar"
 							aria-describedby="button-addon2"
-							style="font-weight: bold; font-size: 18px" id="nomeBusca">
+							style="font-size: 18px" id="nomeBusca">
+							
 						<button class="btn btn-success waves-effect waves-light btn-lg"
 							type="button" id="button-addon2" onclick="buscarUsuario();">Buscar</button>
 					</div>
 
 					<!-- tabela de dados -->
 					<div style="height: 20rem; overflow: scroll;">
-						<table id="tabelaUsuarioResultados"
-							class="table table-dark table-hover">
-							<thead>
+						<table id="tabelaUsuarioResultados" class="table table-primary table-hover">
+							<thead><!-- cabeçalho da tabela -->
 								<tr>
 									<th scope="col">Código</th>
 									<th scope="col">Nome</th>
 									<th scope="col">Ver</th>
-									<th scope="col">Visualizar</th>
 								</tr>
 							</thead>
-							<tbody>
-
+							<tbody><!-- dados da tabela -->
 							</tbody>
+							<tfoot>
+							</tfoot>
 						</table>
 					</div>
 					<!-- corpo da página -->
 				</div>
-				<div style="font-weight: bold; font-size: 15px; margin-left: 15px;">
+				
+				<nav aria-label="Page navigation example">
+						<ul id="ulPaginacaoUserAjax" class="pagination pagination-sm justify-content-center">
+
+						</ul>
+					</nav>
+				
+				<div style="font-size: 16px; margin-left: 15px;">
 					<!-- total de registros buscados -->
-					<span id="totalResultados"></span>
+					<p id="totalResultados"></p>
 				</div>
+				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger"
-						data-bs-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Modal -->
-
-	<!-- Modal 2 detalhes-->
-	<div class="modal fade" id="modalToggle1" aria-hidden="true"
-		aria-labelledby="modalToggleLabel" tabindex="-1">
-		<div class="modal-dialog modal-lg modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header" style="background-color: #B0C4DE">
-					<h5 class="modal-title" id="exampleModalToggleLabel">Dados do
-						Usuário</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<!-- corpo da página -->
-					<div class="input-group mb-3">
-
-						<span></span>
-
-
-						<!-- corpo da página -->
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger"
-							data-bs-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal 2-->
+	<!-- Modal 1 ver -->
 
 	<script type="text/javascript">
 	
@@ -532,10 +508,6 @@
 			}
 		}
 	
-		function mostrarDados(id) {
-			/**/
-		}
-	
 		function verEditar(id) {
 			//alert(id);
 			const urlAction = document.getElementById('formUsuario').action;
@@ -543,40 +515,98 @@
 			window.location.href = urlAction + '?acao=buscarEditar&id=' + id;
 			//alert(window.location.href);
 		}
-	
-		function limparCampoBusca() {
-			document.getElementById("nomeBusca").value = '';
+		
+		function buscarUserPaginaAjax(url) {
+			
+			$.ajax({
+			     
+			     method: "get",
+			     url: urlAction,
+			     data: url,
+			     success: function (response, textStatus, xhr) {
+			    	 
+			    	var json = JSON.parse(response);
+				  
+				 	$("#tabelaUsuarioResultados > tbody > tr").remove();
+				 	$("#ulPaginacaoAjax > li").remove();
+				 	
+				 	for(var posicao = 0; posicao < json.length; posicao++){
+				 		$("#tabelaUsuarioResultados > tbody").append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td></tr>');
+				 	}
+				 	
+				 	document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados ';
+				 	//o código abaixo, recebe o número de páginas da busca
+				 	var totalPagina = xhr.getResponseHeader("totalPagina");
+				 	
+				 	for (var posicao = 0; posicao < totalPagina; posicao++) {
+				 		
+				 		var url = 'nomeBusca=' + nomeBusca + '&acao=buscaUsuarioComAjaxPage&Pagenation=' + (posicao * 5);
+				 		$("#ulPaginacaoUserAjax")
+				 		.append(
+				 			'<li class="page-item"><a class="page-link" href="#" onclick="buscarUserPaginaAjax(\'' + url + '\')">' + (posicao + 1) + '</a></li>'
+				 		);
+					}
+				 	
+				 	if(json.length <= 0){
+				 		document.getElementById('totalResultados').textContent = json.length + ' Nenhum resultado encontrado. ';
+				 	} else if(json.length <= 1){
+				 		document.getElementById('totalResultados').textContent = json.length + ' Resultado encontrado. ';
+				 	} else {
+				 		document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados. ';
+				 	}
+				 	
+			     }
+			 
+			 }).fail(function(xhr, status, errorThrown){
+			    alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
+			 });
+			
 		}
 	
 		function buscarUsuario() {
+			
 			var nomeBusca = document.getElementById('nomeBusca').value;
 		    
 		    if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){ /*Validando que tem que ter valor pra buscar no banco*/
 			
-			 const urlAction = document.getElementById('formUsuario').action;
+			 var urlAction = document.getElementById('formUsuario').action;
 			
 			 $.ajax({
 			     
-			     method: 'get',
+			     method: "get",
 			     url : urlAction,
-			     data : 'nomeBusca=' + nomeBusca + '&acao=buscaUsuarioComAjax',
-			     success: function (response) {
-			    	 const json = JSON.parse(response);
+			     data : "nomeBusca=" + nomeBusca + '&acao=buscaUsuarioComAjax',
+			     success: function (response, textStatus, xhr) {
+			    	 
+			    	var json = JSON.parse(response);
 				  
-				 	$('tabelaUsuarioResultados > tbody > tr').remove();
+				 	$("#tabelaUsuarioResultados > tbody > tr").remove();
+				 	$("#ulPaginacaoUserAjax > li").remove();
+				 	
 				 	for(var posicao = 0; posicao < json.length; posicao++){
-				 		$('#tabelaUsuarioResultados > tbody').append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><td><button type="button" class="btn btn-secondary" data-bs-toggle="modal" href="#modalToggle1" role="button" onclick="mostrarDados('+json[posicao].id+')">Detalhes</button></td></tr>');
+				 		$("#tabelaUsuarioResultados > tbody").append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].nome +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><tr>');
 				 	}
 				 	
-				 	if(json.length >= 0 && json.length <= 1){
-				 		document.getElementById('totalResultados').textContent = json.length + ' Resultado encontrado ';
-				 	} 
-				 	document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados ';
-				 
+				 	//aqui recebe o número de páginas da busca
+				 	var totalPagina = xhr.getResponseHeader("totalPagina");
+				 	
+				 	for (var posicao = 0; posicao < totalPagina; posicao++) {
+				 		
+				 		var url = 'nomeBusca=' + nomeBusca + '&acao=buscaUsuarioComAjaxPage&Pagenation=' + (posicao * 5);
+				 		
+						$("#ulPaginacaoUserAjax").append('<li class="page-item"><a class="page-link" href="#" onclick="buscarUserPaginaAjax(\'' + url + '\')">' + (posicao + 1) + '</a></li>');
+					}
+				 	
+				 	if(json.length <= 0){
+				 		document.getElementById('totalResultados').textContent = json.length + ' Nenhum resultado encontrado. ';
+				 	} else if(json.length <= 1){
+				 		document.getElementById('totalResultados').textContent = json.length + ' Resultado encontrado. ';
+				 	} else {
+				 		document.getElementById('totalResultados').textContent = json.length + ' Resultados encontrados. ';
+				 	}
+				 	
 			     }
 			 
-			 //limparCampoBusca();
-			     
 			 }).fail(function(xhr, status, errorThrown){
 			    alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
 			 });
@@ -587,8 +617,8 @@
 		function criarDeleteComAjax() {
 			if (confirm('Deseja realmente excluir este registro?')) {
 
-				const urlAction = document.getElementById('formUsuario').action;
-				const idUsuario = document.getElementById('id').value;
+				var urlAction = document.getElementById('formUsuario').action;
+				var idUsuario = document.getElementById('id').value;
 
 				$.ajax({
 
@@ -602,10 +632,9 @@
 					}
 
 				}).fail(
-						function(xhr, status, errorThrown) {
-							alert('Erro ao excluir usuário por id: '
-									+ xhr.responseText);
-						});
+					function(xhr, status, errorThrown) {
+						alert('Erro ao excluir usuário por id: ' + xhr.responseText);
+				});
 			}
 		}
 

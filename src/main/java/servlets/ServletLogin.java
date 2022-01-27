@@ -76,6 +76,8 @@ public class ServletLogin extends HttpServlet {
 					/*verifica se esse login é administrador*/
 					request.getSession().setAttribute("perfil", modelLogin.getPerfil());
 					
+					request.getSession().setAttribute("imagemUsuario", modelLogin.getFotoUsuario());
+					
 					
 					if (url == null || url.equals("null")) {
 						url = "principal/principal.jsp";

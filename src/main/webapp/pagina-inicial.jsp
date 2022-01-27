@@ -71,9 +71,9 @@ body {
 									value="<%=request.getParameter("url")%>" name="url">
 
 								<div class="mb-3">
-									<label for="login" class="form-label"
-										style="font-weight: bold;">Login :: </label> <input id="login"
-										name="login" class="form-control" style="font-weight: bold;"
+									<label for="login" class="form-label" style="font-weight: bold;">Login :: </label> 
+										<input id="login"
+										name="login" class="form-control"
 										placeholder="Informe seu login" required="required">
 
 									<div class="invalid-feedback">Campo obrigatório</div>
@@ -81,10 +81,10 @@ body {
 								</div>
 
 								<div class="mb-3">
-									<label for="senha" class="form-label"
-										style="font-weight: bold;">Senha :: </label> <input id="senha"
+									<label for="senha" class="form-label" style="font-weight: bold;">Senha :: </label> 
+										<input id="senha"
 										type="password" name="senha" class="form-control"
-										style="font-weight: bold;" placeholder="Informe sua senha"
+									    placeholder="Informe sua senha"
 										required="required">
 
 									<div class="invalid-feedback">Campo obrigatório</div>
@@ -92,8 +92,7 @@ body {
 								</div>
 
 								<div class="d-grid gap-2">
-									<input class="btn btn-primary btn-lg" type="submit"
-										value="Entrar">
+									<input class="btn btn-primary btn-lg" type="submit" value="Entrar">
 								</div>
 							</form>
 						</div>

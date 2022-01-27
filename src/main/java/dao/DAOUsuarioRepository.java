@@ -95,6 +95,34 @@ public class DAOUsuarioRepository {
 		}
 		return this.consultaUsuario(modelLogin.getLogin(), userLogado);
 	}
+	
+	/**
+	 * Método de paginação por página com ajax
+	 * @param nome
+	 * @param userLogado
+	 * @return
+	 * @throws SQLException
+	 */
+	public int consultaOTotalUsuariosListEPaginaPaginacao(String nome, Long userLogado) throws SQLException {
+		
+		String sql = "SELECT count(1) as total FROM model_login "
+				+ " WHERE upper(nome) like upper('%" + nome + "%') "
+						+ " and useradmin is false and usuario_id = " + userLogado;
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+		resultadoDaConsulta.next();
+
+		Double totalDeCadastros = resultadoDaConsulta.getDouble("total");
+		Double totalPorPaginas = 5.0;
+		Double numeroDePaginas = totalDeCadastros / totalPorPaginas;
+		Double resto = numeroDePaginas % 2;
+		if (resto > 0) {
+			numeroDePaginas++;// se o resto for maior que zero, soma +1
+		}
+
+		return numeroDePaginas.intValue();
+	}
 
 	public List<ModelLogin> consultaListPorNome(String nome, Long userLogado) throws SQLException {
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();

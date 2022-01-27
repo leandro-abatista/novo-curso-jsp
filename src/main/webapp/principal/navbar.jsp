@@ -61,9 +61,9 @@
 									</li>
 									<li class="waves-effect waves-light">
 										<div class="media">
-											<img class="d-flex align-self-center img-radius"
-												src="<%= request.getContextPath() %>/assets/images/avatar-2.jpg"
-												alt="Generic placeholder image">
+											
+											<img class="d-flex align-self-center img-radius" src="<%= request.getContextPath() %>/assets/images/avatar-2.jpg" alt="Generic placeholder image">
+											
 											<div class="media-body">
 												<h5 class="notification-user"><%= session.getAttribute("usuarioLogado") %></h5>
 												<p class="notification-msg">Lorem ipsum dolor sit amet,
@@ -86,12 +86,11 @@
 									<li class="waves-effect waves-light">
 										<div class="media">
 											<img class="d-flex align-self-center img-radius" 
-												src="<%= request.getContextPath() %>/assets/images/avatar-3.jpg"
+												src="<%= request.getContextPath() %>/assets/images/sem-user2.png"
 												alt="Generic placeholder image">
 											<div class="media-body">
 												<h5 class="notification-user">Sara Soudein</h5>
-												<p class="notification-msg">Lorem ipsum dolor sit amet,
-													consectetuer elit.</p>
+												<p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
 												<span class="notification-time">30 minutes ago</span>
 											</div>
 										</div>
@@ -101,7 +100,9 @@
 								
 							<li class="user-profile header-notification">
 								<a href="#!" class="waves-effect waves-light"> 
-									<img src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image"> 
+									<!-- 
+									<img src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg" class="img-radius" alt="User-Profile-Image">
+									 --> 
 										<!-- dados do usuário -->
 										<span><%= session.getAttribute("usuarioLogado") %></span> 
 										<i class="ti-angle-down"></i>

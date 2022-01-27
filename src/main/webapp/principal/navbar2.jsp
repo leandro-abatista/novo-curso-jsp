@@ -10,9 +10,14 @@
 	<div class="pcoded-inner-navbar main-menu">
 		<div class="">
 			<div class="main-menu-header">
-				<img class="img-80 img-radius"
-					src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg"
-					alt="User-Profile-Image">
+			<c:if test="${imagemUsuario != ' ' && imagemUsuario != null}">
+				<img class="img-80" src="${imagemUsuario}" alt="User-Profile-Image">
+			</c:if>	
+			
+			<c:if test="${imagemUsuario == ' ' || imagemUsuario == null}">
+				<img class="img-80 img-radius" src="<%= request.getContextPath() %>/assets/images/sem-imagem2.png" alt="User-Profile-Image">
+			</c:if>
+				
 				<div class="user-details">
 					<span id="more-details"><%= session.getAttribute("usuarioLogado") %>
 						<i class="fa fa-caret-down"></i></span>
@@ -52,6 +57,7 @@
 		<!-- 
 		<div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
 		 -->
+		 
 		<ul class="pcoded-item pcoded-left-item">
 			<li class="active">
 				<a href="<%= request.getContextPath()%>/principal/principal.jsp" class="waves-effect waves-dark"> 
