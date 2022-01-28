@@ -42,27 +42,25 @@ public class DAOUsuarioRepository {
 			statement.setString(12, modelLogin.getBairro());
 			statement.setString(13, modelLogin.getCidade());
 			statement.setString(14, modelLogin.getUf());
-			
 
 			statement.execute();
 			connection.commit();
-			
-			/*se tiver foto ou imagem*/
+
+			/* se tiver foto ou imagem */
 			if (modelLogin.getFotoUsuario() != null && !modelLogin.getFotoUsuario().isEmpty()) {
 				sql = "update model_login set fotousuario = ?, extensaofotousuario = ? where login = ?";
 				statement = connection.prepareStatement(sql);
 				statement.setString(1, modelLogin.getFotoUsuario());
 				statement.setString(2, modelLogin.getExtensaoFotoUsuario());
 				statement.setString(3, modelLogin.getLogin());
-				
+
 				statement.execute();
 				connection.commit();
 			}
 
 		} else {
 			String sql = "UPDATE public.model_login SET login=?, senha=?, nome=?, email=?, perfil=?, sexo=? , cep=?, logradouro=?, numero=?, complemento=?, bairro=?, cidade=?, uf=? "
-					+ " WHERE id = "
-					+ modelLogin.getId() + ";";
+					+ " WHERE id = " + modelLogin.getId() + ";";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, modelLogin.getLogin());
 			statement.setString(2, modelLogin.getSenha());
@@ -80,35 +78,35 @@ public class DAOUsuarioRepository {
 
 			statement.executeUpdate();
 			connection.commit();
-			
-			/*se tiver foto ou imagem*/
+
+			/* se tiver foto ou imagem */
 			if (modelLogin.getFotoUsuario() != null && !modelLogin.getFotoUsuario().isEmpty()) {
 				sql = "update model_login set fotousuario = ?, extensaofotousuario = ? where id = ?";
 				statement = connection.prepareStatement(sql);
 				statement.setString(1, modelLogin.getFotoUsuario());
 				statement.setString(2, modelLogin.getExtensaoFotoUsuario());
 				statement.setLong(3, modelLogin.getId());
-				
+
 				statement.execute();
 				connection.commit();
 			}
 		}
 		return this.consultaUsuario(modelLogin.getLogin(), userLogado);
 	}
-	
+
 	/**
 	 * Método de paginação por página com ajax
+	 * 
 	 * @param nome
 	 * @param userLogado
 	 * @return
 	 * @throws SQLException
 	 */
 	public int consultaOTotalUsuariosListEPaginaPaginacao(String nome, Long userLogado) throws SQLException {
-		
-		String sql = "SELECT count(1) as total FROM model_login "
-				+ " WHERE upper(nome) like upper('%" + nome + "%') "
-						+ " and useradmin is false and usuario_id = " + userLogado;
-		
+
+		String sql = "SELECT count(1) as total FROM model_login " + " WHERE upper(nome) like upper('%" + nome + "%') "
+				+ " and useradmin is false and usuario_id = " + userLogado;
+
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
 		resultadoDaConsulta.next();
@@ -127,7 +125,8 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaListPorNome(String nome, Long userLogado) throws SQLException {
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
 
-		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome + "%') and useradmin is false and usuario_id = " + userLogado + " order by id";
+		String sql = "SELECT * FROM model_login WHERE upper(nome) like upper('%" + nome
+				+ "%') and useradmin is false and usuario_id = " + userLogado + " order by id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultado = statement.executeQuery();
 		while (resultado.next()) {/* percorre as linhas de resultado do sql */
@@ -138,7 +137,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
-			
+
 			retorno.add(modelLogin);
 		}
 		return retorno;
@@ -154,7 +153,8 @@ public class DAOUsuarioRepository {
 
 		ModelLogin modelLogin = new ModelLogin();
 		try {
-			String sql = "SELECT * FROM model_login WHERE upper(login) = upper('" + login + "') and useradmin is false and usuario_id = " + userLogado;
+			String sql = "SELECT * FROM model_login WHERE upper(login) = upper('" + login
+					+ "') and useradmin is false and usuario_id = " + userLogado;
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultadoDaConsulta = statement.executeQuery();
 			while (resultadoDaConsulta.next()) {
@@ -274,10 +274,11 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaUsuarioLista(Long userLogado) throws SQLException {
 
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
-		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado + " order by id limit 5";
+		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado
+				+ " order by id limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
-		
+
 		while (resultadoDaConsulta.next()) {
 			ModelLogin modelLogin = new ModelLogin();
 			modelLogin.setId(resultadoDaConsulta.getLong("id"));
@@ -294,32 +295,33 @@ public class DAOUsuarioRepository {
 			modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
 			modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
 			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
-			
+
 			retorno.add(modelLogin);
 		}
 
 		return retorno;
 	}
-	
+
 	public int totalDePaginas(Long userLogado) throws Exception {
 		String sql = "select count(1) as total from model_login where usuario_id = " + userLogado;
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
 		resultadoDaConsulta.next();
-		
+
 		Double totalDeCadastros = resultadoDaConsulta.getDouble("total");
 		Double totalPorPaginas = 5.0;
 		Double numeroDePaginas = totalDeCadastros / totalPorPaginas;
 		Double resto = numeroDePaginas % 2;
 		if (resto > 0) {
-			numeroDePaginas ++;//se o resto for maior que zero, soma +1
+			numeroDePaginas++;// se o resto for maior que zero, soma +1
 		}
-		
+
 		return numeroDePaginas.intValue();
 	}
-	
+
 	/**
 	 * Método de consulta paginada
+	 * 
 	 * @param userLogado
 	 * @return
 	 * @throws SQLException
@@ -327,10 +329,11 @@ public class DAOUsuarioRepository {
 	public List<ModelLogin> consultaUsuarioListaPaginada(Long userLogado, Integer offSet) throws SQLException {
 
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
-		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado + " order by id offset " + offSet + " limit 5";
+		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado
+				+ " order by id offset " + offSet + " limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		ResultSet resultadoDaConsulta = statement.executeQuery();
-		
+
 		while (resultadoDaConsulta.next()) {
 			ModelLogin modelLogin = new ModelLogin();
 			modelLogin.setId(resultadoDaConsulta.getLong("id"));
@@ -347,42 +350,77 @@ public class DAOUsuarioRepository {
 			modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
 			modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
 			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
-			
+
 			retorno.add(modelLogin);
 		}
 
 		return retorno;
 	}
-
-
-	public ModelLogin consultaUsuarioPorID(String id, Long userLogado) {
+	
+	public ModelLogin consultaUsuarioPorID(Long id) throws Exception {
 
 		ModelLogin modelLogin = new ModelLogin();
-		try {
-			String sql = "SELECT * FROM model_login WHERE id = ? and useradmin is false and usuario_id = " + userLogado + " limit 5";
-			PreparedStatement statement = connection.prepareStatement(sql);
-			statement.setLong(1, Long.parseLong(id));
-			ResultSet resultadoDaConsulta = statement.executeQuery();
-			while (resultadoDaConsulta.next()) {
-				modelLogin.setId(resultadoDaConsulta.getLong("id"));
-				modelLogin.setNome(resultadoDaConsulta.getString("nome"));
-				modelLogin.setEmail(resultadoDaConsulta.getString("email"));
-				modelLogin.setLogin(resultadoDaConsulta.getString("login"));
-				modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
-				modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
-				modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
-				modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
-				modelLogin.setExtensaoFotoUsuario(resultadoDaConsulta.getString("extensaofotousuario"));
-				modelLogin.setCep(resultadoDaConsulta.getString("cep"));
-				modelLogin.setLogradouro(resultadoDaConsulta.getString("logradouro"));
-				modelLogin.setNumero(resultadoDaConsulta.getString("numero"));
-				modelLogin.setComplemento(resultadoDaConsulta.getString("complemento"));
-				modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
-				modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
-				modelLogin.setUf(resultadoDaConsulta.getString("uf"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+		String sql = "SELECT * FROM model_login WHERE id = ? and useradmin is false";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, id);
+
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+
+		while (resultadoDaConsulta.next()) {
+
+			modelLogin.setId(resultadoDaConsulta.getLong("id"));
+			modelLogin.setNome(resultadoDaConsulta.getString("nome"));
+			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
+			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
+			modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+			modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+			modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
+			modelLogin.setExtensaoFotoUsuario(resultadoDaConsulta.getString("extensaofotousuario"));
+			modelLogin.setCep(resultadoDaConsulta.getString("cep"));
+			modelLogin.setLogradouro(resultadoDaConsulta.getString("logradouro"));
+			modelLogin.setNumero(resultadoDaConsulta.getString("numero"));
+			modelLogin.setComplemento(resultadoDaConsulta.getString("complemento"));
+			modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
+			modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
+			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
+		}
+
+		return modelLogin;
+	}
+
+	public ModelLogin consultaUsuarioPorID(String id, Long userLogado) throws Exception {
+
+		ModelLogin modelLogin = new ModelLogin();
+
+		String sql = "SELECT * FROM model_login WHERE id = ? and useradmin is false and usuario_id = ?";
+				
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, Long.parseLong(id));
+		statement.setLong(2, userLogado);
+
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+
+		while (resultadoDaConsulta.next()) {
+
+			modelLogin.setId(resultadoDaConsulta.getLong("id"));
+			modelLogin.setNome(resultadoDaConsulta.getString("nome"));
+			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
+			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
+			modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+			modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+			modelLogin.setFotoUsuario(resultadoDaConsulta.getString("fotousuario"));
+			modelLogin.setExtensaoFotoUsuario(resultadoDaConsulta.getString("extensaofotousuario"));
+			modelLogin.setCep(resultadoDaConsulta.getString("cep"));
+			modelLogin.setLogradouro(resultadoDaConsulta.getString("logradouro"));
+			modelLogin.setNumero(resultadoDaConsulta.getString("numero"));
+			modelLogin.setComplemento(resultadoDaConsulta.getString("complemento"));
+			modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
+			modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
+			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
 		}
 
 		return modelLogin;
