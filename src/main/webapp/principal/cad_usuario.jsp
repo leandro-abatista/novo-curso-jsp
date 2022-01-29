@@ -275,7 +275,11 @@
 
 															<button type="submit"
 																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
-
+																
+															<c:if test="${modelLogin.id > 0}">
+																<a href="<%= request.getContextPath() %>/ServletTelefone?idUser=${modelLogin.id}" 
+																class="btn btn-info waves-effect waves-light btn-lg">Telefone</a>
+															</c:if>		
 														</div>
 
 													</form>

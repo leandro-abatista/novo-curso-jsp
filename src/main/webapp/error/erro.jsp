@@ -6,7 +6,7 @@
 <body>
 
 	<div class="card text-center">
-		<div class="card-header text-white bg-primary"><h1>Ops!!</h1></div>
+		<div class="card-header text-white bg-primary"><h1>Ops!! Ocorreu um erro inesperado!</h1></div>
 		<div class="card-body">
 			<h3 class="card-title">Mensagem de Erro!</h3>
 				<h4>Entre em contato com o suporte do sistema.</h4>
@@ -15,7 +15,8 @@
 			<a href="<%= request.getContextPath()%>/principal/principal.jsp" class="btn btn-primary">Página Inicial</a>
 		</div>
 		<div class="card-footer text-muted">
-			<textarea rows="10" cols="5">
+			<p style="font-size: 15px">Log de erro.</p>
+			<textarea title="Log de Erro" rows="10" style="width: 35rem; ">
 				<% out.println(request.getAttribute("msg")); %>
 			</textarea>
 		</div>
