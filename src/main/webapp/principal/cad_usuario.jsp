@@ -52,14 +52,14 @@
 														<input type="hidden" id="acao" name="acao" value="">
 
 														<div class="col-md-3">
-															<label for="id" class="form-label">Código</label> 
+															<label for="id" class="form-label">Código:</label> 
 															<input type="text" name="id" style="font-weight: bold;" 
 																class="form-control" id="id"
 																readonly="readonly" value="${modelLogin.id}">
 														</div>
 														
-														<div class="col-md-6"></div>
-
+														<div class="col-md-9"></div>
+														
 														<div class="col-md-6">
 															<div class="mb-3">
 																	<!-- esse if verifica se tem imagem ou não -->
@@ -84,7 +84,7 @@
 														<div class="col-md-6"></div>
 
 														<div class="col-md-6">
-															<label for="nome" class="form-label">Nome</label> 
+															<label for="nome" class="form-label">Nome:</label> 
 															<input
 																type="text" 
 																name="nome" 
@@ -94,9 +94,11 @@
 																value="${modelLogin.nome}"
 																required="required">
 														</div>
+														
+														<div class="col-md-6"></div>
 
 														<div class="col-md-6">
-															<label for="email" class="form-label">E-mail</label> 
+															<label for="email" class="form-label">E-mail:</label> 
 															<input
 																type="email" 
 																name="email" 
@@ -107,16 +109,27 @@
 																required="required"
 																x-moz-errormessage="Informe um endereço de e-mail válido.">
 														</div>
+														
+														<div class="col-md-6">
+															<label for="dataNascimento" class="form-label">Data Nascimento:</label> 
+															<input
+																type="text" 
+																name="dataNascimento" 
+																class="form-control"
+																id="dataNascimento" 
+																style="font-weight: bold;"
+																value="${modelLogin.dataNascimento}" 
+																required="required">
+														</div>
 
 														<div class="col-md-6">
-															<label for="perfil" class="form-label">Perfil</label> 
+															<label for="perfil" class="form-label">Perfil:</label> 
 															<select
 																id="perfil" class="form-select"
 																style="font-weight: bold;" name="perfil"
 																aria-label="Default select example">
 
-																<option disabled="disabled" selected="selected">Selecione
-																	um perfil</option>
+																<option disabled="disabled" selected="selected">Selecione um perfil</option>
 
 																<option value="ADMINISTRADOR"
 																	<%ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
@@ -189,7 +202,7 @@
 														</div>
 
 														<div class="col-md-6">
-															<label for="sexo" class="form-label">Gênero</label>
+															<label for="sexo" class="form-label">Gênero:</label>
 															<div class="form-check">
 																<input class="form-check-input" type="radio" name="sexo"
 																	id="masculino" value="masculino"
@@ -215,14 +228,14 @@
 														</div>
 
 														<div class="col-md-6">
-															<label for="login" class="form-label">Login</label> <input
+															<label for="login" class="form-label">Login:</label> <input
 																id="login" type="text" name="login" class="form-control"
 																style="font-weight: bold;" value="${modelLogin.login}"
 																required="required">
 														</div>
 
 														<div class="col-md-6">
-															<label for="senha" class="form-label">Senha</label> <input
+															<label for="senha" class="form-label">Senha:</label> <input
 																type="password" name="senha" class="form-control"
 																id="senha" style="font-weight: bold;"
 																value="${modelLogin.senha}" required="required">
@@ -438,6 +451,21 @@
 	<!-- Modal 1 ver -->
 
 	<script type="text/javascript">
+	
+	//CALENDAR COM JQUERY
+	$(function() {
+	    $("#dataNascimento").datepicker({
+	        dateFormat: 'dd/mm/yy',
+	        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+	        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+	        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+	        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+	        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+	        changeMonth: true,
+	        changeYear: true
+	    });
+	});
+	
 	
 	//FUNÇÃO PARA PEGAR APENAS NÚMEROS COM JQUERY
 	$("#numero, #cep").keypress(function(event){

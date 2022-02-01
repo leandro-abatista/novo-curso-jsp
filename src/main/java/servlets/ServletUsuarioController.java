@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -180,6 +182,8 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String bairro = request.getParameter("bairro");
 			String cidade = request.getParameter("cidade");
 			String uf = request.getParameter("uf");
+			String dataNascimento = request.getParameter("dataNascimento");
+			
 			
 
 			ModelLogin modelLogin = new ModelLogin();
@@ -198,7 +202,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelLogin.setBairro(bairro);
 			modelLogin.setCidade(cidade);
 			modelLogin.setUf(uf);
-			
+			modelLogin.setDataNascimento(new Date(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento).getTime()));
 
 			/*código abaixo é referente ao upload de fotos/imagem*/
 			if (ServletFileUpload.isMultipartContent(request)) {
