@@ -81,7 +81,9 @@
 																class="form-control" 
 																id="numero"
 																required="required"
-																maxlength="17">
+																maxlength="17" 
+																onkeypress="mask(this, mphone);" 
+																onblur="mask(this, mphone);">
 														</div>
 														
 														<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
@@ -156,11 +158,29 @@
 			  $( "mensagem" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
 		});
 	
-		$(document).ready(function () {
-			$('#cpf').mask("000.000.000-00", {reverse:true});
-			$('#numero').mask("(00) 0000-0000");
-			
-		});
+		function mask(o, f) {
+			  setTimeout(function() {
+			    var v = mphone(o.value);
+			    if (v != o.value) {
+			      o.value = v;
+			    }
+			  }, 1);
+			}
+
+			function mphone(v) {
+			  var r = v.replace(/\D/g, "");
+			  r = r.replace(/^0/, "");
+			  if (r.length > 10) {
+			    r = r.replace(/^(\d\d)(\d{5})(\d{4}).*/, "($1) $2-$3");
+			  } else if (r.length > 5) {
+			    r = r.replace(/^(\d\d)(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+			  } else if (r.length > 2) {
+			    r = r.replace(/^(\d\d)(\d{0,5})/, "($1) $2");
+			  } else {
+			    r = r.replace(/^(\d*)/, "($1");
+			  }
+			  return r;
+			}
 	</script>
 
 </body>

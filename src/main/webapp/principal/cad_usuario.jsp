@@ -439,6 +439,12 @@
 
 	<script type="text/javascript">
 	
+	//FUNÇÃO PARA PEGAR APENAS NÚMEROS COM JQUERY
+	$("#numero, #cep").keypress(function(event){
+		return /\d/.test(String.fromCharCode(event.keyCode));
+	});
+	
+	
 	$(document).ready(function() {
 
         function limpa_formulário_cep() {
