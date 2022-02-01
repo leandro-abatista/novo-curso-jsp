@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.DAOTelefoneRepository;
 import dao.DAOUsuarioRepository;
 import model.ModelLogin;
+import model.ModelTelefone;
 
 @WebServlet("/ServletTelefone")
 public class ServletTelefone extends ServletGenericUtil {
@@ -17,6 +19,8 @@ public class ServletTelefone extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
 	private DAOUsuarioRepository usuarioRepository = new DAOUsuarioRepository();
+	
+	private DAOTelefoneRepository telefoneRepository = new DAOTelefoneRepository();
 
 	public ServletTelefone() {
 	}
@@ -25,16 +29,47 @@ public class ServletTelefone extends ServletGenericUtil {
 			throws ServletException, IOException {
 
 		try {
+			
+			String acao = request.getParameter("acao");
+			
+			if (acao != null && !acao.isEmpty() && acao.equals("excluirTelefone")) {
+				
+				String idTelefone = request.getParameter("idTelefone");
+				telefoneRepository.deletarTelefone(Long.parseLong(idTelefone));
+				
+				String userPai = request.getParameter("userPai");
+				//consulta o objeto para retornar para a tela
+				ModelLogin modelUsuario = usuarioRepository.consultaUsuarioPorID(Long.parseLong(userPai));
+				
+				
+				//setando a lista de telefones da lista pai
+				List<ModelTelefone> listaDeTelefones = telefoneRepository.listaDeTelefonesUsers(modelUsuario.getId());
+				//carrega a lista de telefones
+				request.setAttribute("listaDeTelefones", listaDeTelefones);
+
+				// passa o usuário e objeto inteiro
+				request.setAttribute("modelUsuario", modelUsuario);
+				request.setAttribute("mensagem", "Registro excluído com sucesso!");
+				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
+				
+				//e para não executar o bloco abaixo, é só dar um retorno
+				return;
+			}
 
 			String idUser = request.getParameter("idUser");
 			// System.out.println(idUser);
 
 			if (idUser != null && !idUser.isEmpty()) {
 
-				ModelLogin modelLogin = usuarioRepository.consultaUsuarioPorID(Long.parseLong(idUser));
+				ModelLogin modelUsuario = usuarioRepository.consultaUsuarioPorID(Long.parseLong(idUser));
+				
+				//setando a lista de telefones da lista pai
+				List<ModelTelefone> listaDeTelefones = telefoneRepository.listaDeTelefonesUsers(modelUsuario.getId());
+				
+				request.setAttribute("listaDeTelefones", listaDeTelefones);
 
 				// passa o usuário e objeto inteiro
-				request.setAttribute("usuario", modelLogin);
+				request.setAttribute("modelUsuario", modelUsuario);
 				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
 
 			} else {
@@ -58,7 +93,36 @@ public class ServletTelefone extends ServletGenericUtil {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
+		try {
+			
+			String usuario_pai_id = request.getParameter("id");
+			String numero = request.getParameter("numero");
 
+			ModelTelefone modelTelefone = new ModelTelefone();
+			modelTelefone.setNumero(numero);
+			//passa o usuário pai
+			modelTelefone.setUsuario_pai_id(usuarioRepository.consultaUsuarioPorID(Long.parseLong(usuario_pai_id)));
+			//passa o usuário de cadastro
+			modelTelefone.setUsuario_cad_id(super.getUserLogadoObject(request));
+			
+			telefoneRepository.gravarTelefone(modelTelefone);
+			
+			//setando a lista de telefones
+			List<ModelTelefone> listaDeTelefones = telefoneRepository.listaDeTelefonesUsers(Long.parseLong(usuario_pai_id));
+			
+			ModelLogin modelUsuario = usuarioRepository.consultaUsuarioPorID(Long.parseLong(usuario_pai_id));
+			// passa o usuário e objeto inteiro
+			request.setAttribute("modelUsuario", modelUsuario);
+			request.setAttribute("listaDeTelefones", listaDeTelefones);
+			
+			request.setAttribute("mensagem", "Registro gravado com sucesso!");
+			request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

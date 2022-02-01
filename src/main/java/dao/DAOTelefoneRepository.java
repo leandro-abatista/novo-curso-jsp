@@ -44,6 +44,8 @@ public class DAOTelefoneRepository {
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
+		statement.setLong(1, idUserPai);
+		
 		ResultSet resultado = statement.executeQuery();
 		
 		while(resultado.next()) {

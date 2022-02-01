@@ -84,17 +84,28 @@
 														<div class="col-md-6"></div>
 
 														<div class="col-md-6">
-															<label for="nome" class="form-label">Nome</label> <input
-																type="text" name="nome" class="form-control" id="nome"
-																style="font-weight: bold;" value="${modelLogin.nome}"
+															<label for="nome" class="form-label">Nome</label> 
+															<input
+																type="text" 
+																name="nome" 
+																class="form-control" 
+																id="nome"
+																style="font-weight: bold;" 
+																value="${modelLogin.nome}"
 																required="required">
 														</div>
 
 														<div class="col-md-6">
-															<label for="email" class="form-label">E-mail</label> <input
-																type="email" name="email" class="form-control"
-																id="email" style="font-weight: bold;"
-																value="${modelLogin.email}" required="required">
+															<label for="email" class="form-label">E-mail</label> 
+															<input
+																type="email" 
+																name="email" 
+																class="form-control"
+																id="email" 
+																style="font-weight: bold;"
+																value="${modelLogin.email}" 
+																required="required"
+																x-moz-errormessage="Informe um endereço de e-mail válido.">
 														</div>
 
 														<div class="col-md-6">
