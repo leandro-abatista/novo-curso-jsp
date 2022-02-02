@@ -183,7 +183,9 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			String cidade = request.getParameter("cidade");
 			String uf = request.getParameter("uf");
 			String dataNascimento = request.getParameter("dataNascimento");
-			
+			String rendaMensal = request.getParameter("rendaMensal");
+			//O PRIMEIRO "." SUBSTITUE POR VAZIO E A "," SUBSTITUE POR PONTO PARA SALVAR CORRETO NO BD
+			rendaMensal = rendaMensal.split("\\ ")[1].replaceAll("\\.", "").replaceAll("\\,", ".");
 			
 
 			ModelLogin modelLogin = new ModelLogin();
@@ -203,6 +205,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelLogin.setCidade(cidade);
 			modelLogin.setUf(uf);
 			modelLogin.setDataNascimento(new Date(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento).getTime()));
+			modelLogin.setRendaMensal(Double.valueOf(rendaMensal));
 
 			/*código abaixo é referente ao upload de fotos/imagem*/
 			if (ServletFileUpload.isMultipartContent(request)) {

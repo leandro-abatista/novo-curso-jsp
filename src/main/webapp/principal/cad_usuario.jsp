@@ -95,8 +95,18 @@
 																required="required">
 														</div>
 														
-														<div class="col-md-6"></div>
-
+														<div class="col-md-6">
+															<label for="rendaMensal" class="form-label">Renda Mensal:</label> 
+															<input
+																type="text" 
+																name="rendaMensal" 
+																class="form-control" 
+																id="rendaMensal"
+																style="font-weight: bold;" 
+																value="${modelLogin.rendaMensal}"
+																required="required">
+														</div>
+														
 														<div class="col-md-6">
 															<label for="email" class="form-label">E-mail:</label> 
 															<input
@@ -451,6 +461,9 @@
 	<!-- Modal 1 ver -->
 
 	<script type="text/javascript">
+	
+	//CAMPO MONEY -> RENDA MENSAL
+	$("#rendaMensal").maskMoney({showSymbol:true, symbol:"R$: ", decimal:",", thousands:"."});
 	
 	//CALENDAR COM JQUERY
 	$(function() {

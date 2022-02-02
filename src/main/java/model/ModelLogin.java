@@ -16,6 +16,8 @@ public class ModelLogin implements Serializable {
 	
 	private Date dataNascimento;
 	
+	private Double rendaMensal;
+	
 	private Boolean userAdmin;
 	private String perfil;
 	private String sexo;
@@ -189,6 +191,14 @@ public class ModelLogin implements Serializable {
 	
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public Double getRendaMensal() {
+		return rendaMensal;
+	}
+	
+	public void setRendaMensal(Double rendaMensal) {
+		this.rendaMensal = rendaMensal;
 	}
 
 	@Override
