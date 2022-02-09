@@ -76,4 +76,21 @@ public class DAOTelefoneRepository {
 		statement.executeUpdate();
 		connection.commit();
 	}
+	
+	//MÉTODO PARA EVITAR TELFONES DUPLICADOS
+	public boolean existeFone(String fone, Long idUser) throws Exception {
+		
+		String sql = "SELECT count(1) > 0 AS existe FROM telefone WHERE usuario_pai_id = ? AND numero = ?";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setLong(1, idUser);
+		statement.setString(2, fone);
+		
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+		
+		resultadoDaConsulta.next();
+		
+		return resultadoDaConsulta.getBoolean("existe");
+	}
 }

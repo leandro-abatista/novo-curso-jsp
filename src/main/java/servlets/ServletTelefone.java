@@ -99,25 +99,42 @@ public class ServletTelefone extends ServletGenericUtil {
 			
 			String usuario_pai_id = request.getParameter("id");
 			String numero = request.getParameter("numero");
-
-			ModelTelefone modelTelefone = new ModelTelefone();
-			modelTelefone.setNumero(numero);
-			//passa o usuário pai
-			modelTelefone.setUsuario_pai_id(usuarioRepository.consultaUsuarioPorID(Long.parseLong(usuario_pai_id)));
-			//passa o usuário de cadastro
-			modelTelefone.setUsuario_cad_id(super.getUserLogadoObject(request));
 			
-			telefoneRepository.gravarTelefone(modelTelefone);
+			//SE FOR FALSE, VAI PERMITIR ADICIONAR UM NOVO NÚMERO
+			if (!telefoneRepository.existeFone(numero, Long.valueOf(usuario_pai_id))) {
+				
+
+				ModelTelefone modelTelefone = new ModelTelefone();
+				modelTelefone.setNumero(numero);
+				//passa o usuário pai
+				modelTelefone.setUsuario_pai_id(usuarioRepository.consultaUsuarioPorID(Long.parseLong(usuario_pai_id)));
+				//passa o usuário de cadastro
+				modelTelefone.setUsuario_cad_id(super.getUserLogadoObject(request));
+				
+				telefoneRepository.gravarTelefone(modelTelefone);
+				
+				//setando a lista de telefones
+				//List<ModelTelefone> listaDeTelefones = telefoneRepository.listaDeTelefonesUsers(Long.parseLong(usuario_pai_id));
+				
+				//ModelLogin modelUsuario = usuarioRepository.consultaUsuarioPorID(Long.parseLong(usuario_pai_id));
+				// passa o usuário e objeto inteiro
+				//request.setAttribute("modelUsuario", modelUsuario);
+				//request.setAttribute("listaDeTelefones", listaDeTelefones);
+				
+				request.setAttribute("mensagem", "Registro gravado com sucesso!");
+				//request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
+			
+			} else {
+				request.setAttribute("mensagem", "Telefone já existe!");
+			}
 			
 			//setando a lista de telefones
 			List<ModelTelefone> listaDeTelefones = telefoneRepository.listaDeTelefonesUsers(Long.parseLong(usuario_pai_id));
 			
 			ModelLogin modelUsuario = usuarioRepository.consultaUsuarioPorID(Long.parseLong(usuario_pai_id));
-			// passa o usuário e objeto inteiro
+			
 			request.setAttribute("modelUsuario", modelUsuario);
 			request.setAttribute("listaDeTelefones", listaDeTelefones);
-			
-			request.setAttribute("mensagem", "Registro gravado com sucesso!");
 			request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
 			
 		} catch (Exception e) {

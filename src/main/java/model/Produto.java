@@ -1,16 +1,17 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Produto implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
-	private String nome;
 	private String descricao;
-	private Double valorCompra;
-	private Double valorVenda;
 	private Integer quantidade;
+	private LocalDate dataEntrada;
 
 	public Long getId() {
 		return id;
@@ -18,14 +19,6 @@ public class Produto implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public String getDescricao() {
@@ -36,28 +29,20 @@ public class Produto implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public Double getValorCompra() {
-		return valorCompra;
-	}
-
-	public void setValorCompra(Double valorCompra) {
-		this.valorCompra = valorCompra;
-	}
-
-	public Double getValorVenda() {
-		return valorVenda;
-	}
-
-	public void setValorVenda(Double valorVenda) {
-		this.valorVenda = valorVenda;
-	}
-
 	public Integer getQuantidade() {
 		return quantidade;
 	}
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public LocalDate getDataEntrada() {
+		return dataEntrada;
+	}
+
+	public void setDataEntrada(LocalDate dataEntrada) {
+		this.dataEntrada = dataEntrada;
 	}
 
 	@Override

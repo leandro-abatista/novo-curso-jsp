@@ -2,11 +2,51 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="pt_BR">
+<html>
 
 <jsp:include page="head.jsp"></jsp:include>
 	
 <body>
+
+	<script type="text/javascript">
+	
+		$("#dataNascimento").change(function () {
+			//FORMATANDO O CAMPO DATA NASCIMENTO NA TELA COM JQUERY
+			var dataNascimento = $("#dataNascimento").val();//pegamos o valor de data
+			var dataFormatada = new Date(dataNascimento);//formata o valor de data
+			$("#dataNascimento").val(dataFormatada.toLocaleDateString('pt-BR', {timeZone: 'UTC'}));
+			
+			//FOCAR NO CAMPO NOME
+			$("#nome").focus();
+		});
+	
+	
+	
+		//CALENDAR COM JQUERY
+		$(function() {
+		    $("#dataNascimento").datepicker({
+		        dateFormat: 'dd-mm-yy',
+		        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+		        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+		        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+		        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+		        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+		        nextText: 'Próximo',
+		        prevText: 'Anterior',
+		        changeMonth: true,
+		        changeYear: true
+		    });
+		});
+		
+		$(document).ready(function(){			
+		    setTimeout(function() {
+			$(".alert").fadeOut("slow", function(){
+				$(this).alert('close');
+			});				
+		    }, 5000);			
+		});
+		
+	</script>
 
 	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>
@@ -32,9 +72,13 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
-
-											<strong class="alert" id="mensagem">${mensagem}</strong>
-
+											
+											<div class="alert alert-success fade show" role="alert">
+												<strong class="alert" id="mensagem">${mensagem}</strong>
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
 
 											<div class="card"
 												style="font-weight: bold; background-color: #D3D3D3">
@@ -96,18 +140,6 @@
 														</div>
 														
 														<div class="col-md-6">
-															<label for="rendaMensal" class="form-label">Renda Mensal:</label> 
-															<input
-																type="text" 
-																name="rendaMensal" 
-																class="form-control" 
-																id="rendaMensal"
-																style="font-weight: bold;" 
-																value="${modelLogin.rendaMensal}"
-																required="required">
-														</div>
-														
-														<div class="col-md-6">
 															<label for="email" class="form-label">E-mail:</label> 
 															<input
 																type="email" 
@@ -129,6 +161,18 @@
 																id="dataNascimento" 
 																style="font-weight: bold;"
 																value="${modelLogin.dataNascimento}" 
+																required="required">
+														</div>
+														
+														<div class="col-md-6">
+															<label for="rendaMensal" class="form-label">Renda Mensal:</label>
+															<input
+																type="text" 
+																name="rendaMensal" 
+																class="form-control" 
+																id="rendaMensal"
+																style="font-weight: bold;" 
+																value="${modelLogin.rendaMensal}"
 																required="required">
 														</div>
 
@@ -257,7 +301,7 @@
 														
 														<div class="col-md-3">
 															<label class="form-label">Cep:</label>
-        													<input class="form-control" style="font-weight: bold;" name="cep" type="text" id="cep" value="${modelLogin.cep}" size="10" maxlength="9" onblur="pesquisaCep();"/>
+        													<input class="form-control" style="font-weight: bold;" name="cep" type="text" id="cep" value="${modelLogin.cep}" size="10" maxlength="8" onblur="pesquisaCep();"/>
 														</div>
 														
 														<div class="col-md-6">
@@ -465,20 +509,14 @@
 	//CAMPO MONEY -> RENDA MENSAL
 	$("#rendaMensal").maskMoney({showSymbol:true, symbol:"R$: ", decimal:",", thousands:"."});
 	
-	//CALENDAR COM JQUERY
-	$(function() {
-	    $("#dataNascimento").datepicker({
-	        dateFormat: 'dd/mm/yy',
-	        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
-	        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-	        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-	        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-	        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-	        changeMonth: true,
-	        changeYear: true
-	    });
+	//CONSTANTE DE FORMATAÇÃO
+	const formatter = new Intl.NumberFormat('pt-BR', {
+		currency: 'BRL',
+		minimumFractionDigits: 2
 	});
-	
+	$("#rendaMensal").val(formatter.format($("#rendaMensal").val()));
+	//FOCO NO CAMPO RENDAMENSAL
+	$("#rendaMensal").focus();
 	
 	//FUNÇÃO PARA PEGAR APENAS NÚMEROS COM JQUERY
 	$("#numero, #cep").keypress(function(event){
@@ -705,12 +743,19 @@
 			document.getElementById("acao").value = 'deletar';
 			document.getElementById("formUsuario").submit();
 		}
-
+		
 		function limparFormulario() {
-			var elementos = document.getElementById("formUsuario").elements;/*retorna os elementos html dentro do form*/
+			document.getElementById("formUsuario").reset();
+			
+		}
+		
+		function limparFormulario() {
+			/*retorna os elementos html dentro do form*/
+			var elementos = document.getElementById("formUsuario").elements;
 			for (posicao = 0; posicao < elementos.length; posicao++) {
 				elementos[posicao].value = '';
 			}
+			$('#nome').focus();
 		}
 
 		window.setTimeout(function() {
@@ -727,6 +772,8 @@
 			}, 4000); // O valor é representado em milisegundos.
 		});
 		 */
+		 
+		
 	</script>
 
 </body>

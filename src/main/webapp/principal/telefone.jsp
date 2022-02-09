@@ -34,8 +34,13 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
-											
-											<strong class="alert" id="mensagem">${mensagem}</strong>
+
+											<div class="alert alert-success fade show" role="alert">
+												<strong class="alert" id="mensagem">${mensagem}</strong>
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
 
 											<div class="card" style="font-weight: bold; background-color: #D3D3D3">
 
@@ -154,8 +159,14 @@
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	
 	<script type="text/javascript">
-		$(document).ready(function(){  // A DIFERENÇA ESTA AQUI, EXECUTA QUANDO O DOCUMENTO ESTA "PRONTO"
-			  $( "mensagem" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+	
+	
+		$(document).ready(function(){			
+		    setTimeout(function() {
+			$(".alert").fadeOut("slow", function(){
+				$(this).alert('close');
+			});				
+		    }, 5000);			
 		});
 	
 		function mask(o, f) {

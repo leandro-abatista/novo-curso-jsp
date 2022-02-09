@@ -142,7 +142,21 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				request.setAttribute("totalPagina", daoUsuarioRepository.totalDePaginas(this.getUserLogado(request)));
 				request.getRequestDispatcher("principal/cad_usuario.jsp").forward(request, response);
 						
-			} else {
+			} else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelUser")){
+				
+				
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");
+				
+				
+				
+				request.setAttribute("dataInicial", dataInicial);
+				request.setAttribute("dataFinal", dataFinal);
+				request.getRequestDispatcher("principal/relatorioUsuario.jsp").forward(request, response);
+				
+			}
+			
+			else {
 				
 				//consulta os dados no banco
 				List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioLista(super.getUserLogado(request));
@@ -204,7 +218,9 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelLogin.setBairro(bairro);
 			modelLogin.setCidade(cidade);
 			modelLogin.setUf(uf);
-			modelLogin.setDataNascimento(new Date(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento).getTime()));
+			//A FORMATAÇÃO COMEÇA DE DENTRO PARA FORA
+			//PEGA PRIMEIRO A DATA QUE VEM DA TELA E DEPOIS FORMATA PARA O FORMATO DO BANCO DE DADOS
+			modelLogin.setDataNascimento(Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd-mm-yyyy").parse(dataNascimento))));
 			modelLogin.setRendaMensal(Double.valueOf(rendaMensal));
 
 			/*código abaixo é referente ao upload de fotos/imagem*/
