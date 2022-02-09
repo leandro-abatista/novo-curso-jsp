@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.jasper.tagplugins.jstl.core.If;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
@@ -148,7 +149,13 @@ public class ServletUsuarioController extends ServletGenericUtil {
 				String dataInicial = request.getParameter("dataInicial");
 				String dataFinal = request.getParameter("dataFinal");
 				
-				
+				if(dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()){
+					
+					//se a dataInicial e a dataFinal for nula ou vazia, carrega todos os usuários
+					request.setAttribute("listaUser", 
+							daoUsuarioRepository.consultaUsuarioListaRelatorio(super.getUserLogado(request)));
+					
+				}
 				
 				request.setAttribute("dataInicial", dataInicial);
 				request.setAttribute("dataFinal", dataFinal);

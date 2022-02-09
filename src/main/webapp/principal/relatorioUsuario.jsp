@@ -54,7 +54,7 @@
 															class="form-control" 
 															id="dataInicial" 
 															name="dataInicial"
-															value="${}">
+															>
 														</div>
 														<div class="col-md-4">
 															<label class="form-label" for="dataFinal">Data Final:</label>
@@ -63,7 +63,7 @@
 															class="form-control"
 															id="dataFinal" 
 															name="dataFinal"
-															value="${}">
+															>
 														</div>
 														
 														<div class="col-md-4">
@@ -71,7 +71,43 @@
 														</div>
 
 													</form>
-												
+												</div>
+											</div>
+											
+											<div class="card"
+												style="font-weight: bold; background-color: #D3D3D3">
+
+												<div class="card-header"
+													style="margin: 0.5rem; font-weight: bold; text-align: center; background-color: #F5F5F5; padding: 0.2rem">
+													<h4 class="card-title">Usuários Cadastrados</h4>
+												</div>
+
+												<div class="card-body">
+													<!-- tabela de dados usando jstl-->
+													<div style="height: 20rem; overflow: scroll;">
+														<table id="tabelaViewUser" class="table table-primary table-hover">
+															<thead>
+																<tr>
+																	<th scope="col">Código</th>
+																	<th scope="col">Nome</th>
+																	<th scope="col">E-mail</th>
+																</tr>
+															</thead>
+															<tbody>
+																<!-- torna a tabela dinâmica ml-->
+																<c:forEach items="${listaUser}" var="ml">
+																	<tr>
+																		<!-- linha -->
+																		<td><c:out value="${ml.id}"></c:out></td>
+																		<!-- coluna -->
+																		<td><c:out value="${ml.nome}"></c:out></td>
+																		<!-- coluna -->
+																		<td><c:out value="${ml.email}"></c:out></td>
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</table>
+													</div>
 												</div>
 											</div>
 

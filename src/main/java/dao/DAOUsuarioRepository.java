@@ -279,6 +279,41 @@ public class DAOUsuarioRepository {
 		statement.executeUpdate();
 		connection.commit();
 	}
+	
+	
+	public List<ModelLogin> consultaUsuarioListaRelatorio(Long userLogado) throws SQLException {
+
+		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
+		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado
+				+ " order by id";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		ResultSet resultadoDaConsulta = statement.executeQuery();
+
+		while (resultadoDaConsulta.next()) {
+			ModelLogin modelLogin = new ModelLogin();
+			modelLogin.setId(resultadoDaConsulta.getLong("id"));
+			modelLogin.setNome(resultadoDaConsulta.getString("nome"));
+			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
+			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
+			//modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
+			modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
+			modelLogin.setCep(resultadoDaConsulta.getString("cep"));
+			modelLogin.setLogradouro(resultadoDaConsulta.getString("logradouro"));
+			modelLogin.setNumero(resultadoDaConsulta.getString("numero"));
+			modelLogin.setComplemento(resultadoDaConsulta.getString("complemento"));
+			modelLogin.setBairro(resultadoDaConsulta.getString("bairro"));
+			modelLogin.setCidade(resultadoDaConsulta.getString("cidade"));
+			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
+			modelLogin.setDataNascimento(resultadoDaConsulta.getDate("datanascimento"));
+			modelLogin.setRendaMensal(resultadoDaConsulta.getDouble("rendamensal"));
+
+			retorno.add(modelLogin);
+		}
+
+		return retorno;
+	}
+	
 
 	public List<ModelLogin> consultaUsuarioLista(Long userLogado) throws SQLException {
 
@@ -294,7 +329,7 @@ public class DAOUsuarioRepository {
 			modelLogin.setNome(resultadoDaConsulta.getString("nome"));
 			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 			modelLogin.setLogin(resultadoDaConsulta.getString("login"));
-			modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
+			//modelLogin.setSenha(resultadoDaConsulta.getString("senha"));
 			modelLogin.setPerfil(resultadoDaConsulta.getString("perfil"));
 			modelLogin.setSexo(resultadoDaConsulta.getString("sexo"));
 			modelLogin.setCep(resultadoDaConsulta.getString("cep"));
