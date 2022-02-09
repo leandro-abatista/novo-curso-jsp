@@ -10,11 +10,12 @@ import java.util.List;
 
 import connection.SingleConnectionBanco;
 import model.ModelLogin;
+import model.ModelTelefone;
 
 public class DAOUsuarioRepository {
 
 	private Connection connection;
-
+	
 	public DAOUsuarioRepository() {
 		connection = SingleConnectionBanco.getConnection();
 	}
@@ -281,7 +282,7 @@ public class DAOUsuarioRepository {
 	}
 	
 	
-	public List<ModelLogin> consultaUsuarioListaRelatorio(Long userLogado) throws SQLException {
+	public List<ModelLogin> consultaUsuarioListaRelatorio(Long userLogado) throws Exception {
 
 		List<ModelLogin> retorno = new ArrayList<ModelLogin>();
 		String sql = "SELECT * FROM model_login WHERE useradmin is false and usuario_id = " + userLogado
@@ -307,6 +308,8 @@ public class DAOUsuarioRepository {
 			modelLogin.setUf(resultadoDaConsulta.getString("uf"));
 			modelLogin.setDataNascimento(resultadoDaConsulta.getDate("datanascimento"));
 			modelLogin.setRendaMensal(resultadoDaConsulta.getDouble("rendamensal"));
+			
+			modelLogin.setTelefones(this.listaDeTelefonesUsers(modelLogin.getId()));
 
 			retorno.add(modelLogin);
 		}
@@ -476,6 +479,32 @@ public class DAOUsuarioRepository {
 		}
 
 		return modelLogin;
+	}
+	
+	public List<ModelTelefone> listaDeTelefonesUsers(Long idUserPai) throws Exception {
+
+		List<ModelTelefone> retornoLista = new ArrayList<ModelTelefone>();
+
+		String sql = "SELECT * FROM telefone WHERE usuario_pai_id = ?";
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setLong(1, idUserPai);
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+
+			ModelTelefone modelTelefone = new ModelTelefone();
+			modelTelefone.setIdFoneUser(resultado.getLong("idFoneUser"));
+			modelTelefone.setNumero(resultado.getString("numero"));
+			modelTelefone.setUsuario_cad_id(this.consultaUsuarioPorID(resultado.getLong("usuario_cad_id")));
+			modelTelefone.setUsuario_pai_id(this.consultaUsuarioPorID(resultado.getLong("usuario_pai_id")));
+
+			retornoLista.add(modelTelefone);
+		}
+
+		return retornoLista;
 	}
 
 }

@@ -85,30 +85,54 @@
 												<div class="card-body">
 													<!-- tabela de dados usando jstl-->
 													<div style="height: 20rem; overflow: scroll;">
-														<table id="tabelaViewUser" class="table table-primary table-hover">
-															<thead>
-																<tr>
-																	<th scope="col">Código</th>
-																	<th scope="col">Nome</th>
-																	<th scope="col">E-mail</th>
-																</tr>
-															</thead>
-															<tbody>
-																<!-- torna a tabela dinâmica ml-->
-																<c:forEach items="${listaUser}" var="ml">
+													
+													<table id="tabelaViewUser"
+																class="table table-primary table-hover"
+																style="font-weight: bold;">
+																
+																<thead>
 																	<tr>
-																		<!-- linha -->
-																		<td><c:out value="${ml.id}"></c:out></td>
-																		<!-- coluna -->
-																		<td><c:out value="${ml.nome}"></c:out></td>
-																		<!-- coluna -->
-																		<td><c:out value="${ml.email}"></c:out></td>
+																		<th scope="col">Código</th>
+																		<th scope="col">Nome</th>
+																		<th scope="col">E-mail</th>
 																	</tr>
-																</c:forEach>
+																</thead>
+																<tbody>
+																		<!-- torna a tabela dinâmica ml-->
+																		<c:forEach items="${listaUser}" var="ml">
+																			<tr>
+																				<!-- linha -->
+																				<td><c:out value="${ml.id}"></c:out></td>
+																				<!-- coluna -->
+																				<td><c:out value="${ml.nome}"></c:out></td>
+																				<!-- coluna -->
+																				<td><c:out value="${ml.email}"></c:out></td>
+																			</tr>
+																			
+																				<thead class="table-danger">
+																					<tr>
+																						<th scope="col">Código</th>
+																						<th scope="col">Número</th>
+																						<th></th>
+																					</tr>
+																				</thead>
+																			<c:forEach items="${ml.telefones}" var="fone">
+																				<tbody class="table-danger">
+																					<tr style="font-style: oblique;">
+																						<td>
+																							<c:out value="${fone.idFoneUser}"></c:out>
+																						</td>
+																						<td>
+																							<c:out value="${fone.numero}"></c:out>
+																						</td>
+																						<td></td>
+																						</tr>
+																				</tbody>
+																			</c:forEach>
+																		</c:forEach>
 															</tbody>
 														</table>
 													</div>
-												</div>
 											</div>
 
 											<!--  fim do conteúdo das páginas -->
