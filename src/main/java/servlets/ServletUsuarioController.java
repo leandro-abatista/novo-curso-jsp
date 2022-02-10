@@ -155,6 +155,11 @@ public class ServletUsuarioController extends ServletGenericUtil {
 					request.setAttribute("listaUser", 
 							daoUsuarioRepository.consultaUsuarioListaRelatorio(super.getUserLogado(request)));
 					
+				} else {
+					
+					request.setAttribute("listaUser", 
+							daoUsuarioRepository.consultaUsuarioListaRelatorio(super.getUserLogado(request), dataInicial, dataFinal));
+					
 				}
 				
 				request.setAttribute("dataInicial", dataInicial);
@@ -227,7 +232,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			modelLogin.setUf(uf);
 			//A FORMATAÇÃO COMEÇA DE DENTRO PARA FORA
 			//PEGA PRIMEIRO A DATA QUE VEM DA TELA E DEPOIS FORMATA PARA O FORMATO DO BANCO DE DADOS
-			modelLogin.setDataNascimento(Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd-mm-yyyy").parse(dataNascimento))));
+			modelLogin.setDataNascimento(Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento))));
 			modelLogin.setRendaMensal(Double.valueOf(rendaMensal));
 
 			/*código abaixo é referente ao upload de fotos/imagem*/

@@ -25,7 +25,7 @@
 		//CALENDAR COM JQUERY
 		$(function() {
 		    $("#dataNascimento").datepicker({
-		        dateFormat: 'dd-mm-yy',
+		        dateFormat: 'dd/mm/yy',
 		        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
 		        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
 		        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
