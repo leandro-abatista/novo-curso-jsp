@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.15.0.final using JasperReports Library version 6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_reluser" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e76bce0f-aee7-4dc3-806b-253a08e63520">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="100" y="0" width="450" height="30" backcolor="#FAC6C5" uuid="e618ea78-3fe1-4e65-b786-f6016d8c68fa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="100" height="30" backcolor="#FAC6C5" uuid="c1cb0295-a9f1-4310-8f9c-7755ed364c92"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="12"/>
+				</textElement>
+				<text><![CDATA[Número: ]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
