@@ -334,7 +334,7 @@ public class DAOUsuarioRepository {
 
 		while (resultadoDaConsulta.next()) {
 			ModelLogin modelLogin = new ModelLogin();
-			modelLogin.setId(resultadoDaConsulta.getLong("id"));
+			modelLogin.setId(resultadoDaConsulta.getLong("id"));         
 			modelLogin.setNome(resultadoDaConsulta.getString("nome"));
 			modelLogin.setEmail(resultadoDaConsulta.getString("email"));
 			modelLogin.setLogin(resultadoDaConsulta.getString("login"));

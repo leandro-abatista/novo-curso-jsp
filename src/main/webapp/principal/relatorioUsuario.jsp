@@ -45,7 +45,11 @@
 												
 													<form class="row g-3" id="formRelUser" method="get" action="<%=request.getContextPath()%>/ServletUsuarioController?acao=imprimirRelUser">
 														
-														<input type="hidden" name="acao" value="imprimirRelUser">
+														<input 
+														id="acaoRelatorioImprimirTipo" 
+														type="hidden" 
+														name="acao" 
+														value="imprimirRelUser">
 														
 														<div class="col-md-4">
 															<label class="form-label" for="dataInicial">Data Inicial:</label>
@@ -67,7 +71,8 @@
 														</div>
 														
 														<div class="col-md-4">
-															<button type="submit" style="margin-top: 25px" class="btn btn-primary waves-effect waves-light">Imprimir</button>
+															<button type="button" onclick="imprimirHtml();" style="margin-top: 25px" class="btn btn-primary waves-effect waves-light">Imprimir Tela</button>
+															<button type="button" onclick="imprimirPdf(); return false;" style="margin-top: 25px" class="btn btn-primary waves-effect waves-light">Imprimir PDF</button>
 														</div>
 
 													</form>
@@ -152,6 +157,17 @@
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	
 	<script type="text/javascript">
+	
+	
+		function imprimirHtml() {
+			document.getElementById("acaoRelatorioImprimirTipo").value = "imprimirRelUser";
+			$("#formRelUser").submit();
+		}
+		
+		function imprimirPdf() {
+			document.getElementById("acaoRelatorioImprimirTipo").value = "imprimirRelPdf";
+			$("#formRelUser").submit();
+		}
 	
 		//CALENDAR COM JQUERY
 		$(function() {
