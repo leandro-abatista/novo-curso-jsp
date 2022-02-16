@@ -133,6 +133,21 @@
 				</li>
 			</ul>
 			
+			<div class="pcoded-navigation-label" data-i18n="nav.category.forms" style="font-size: 16px">Gráfico</div>
+			
+			<ul class="pcoded-item pcoded-left-item">
+				<li>
+					<a href="<%=request.getContextPath()%>/principal/relatorioUsuarioGrafico.jsp" class="waves-effect waves-dark"> 
+						<span class="pcoded-micon">
+							<i class="ti-layers"></i>
+								<b>FC</b>
+						</span> 
+						<span style="font-size: 15px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.form-components.main">Gráfico Salário</span> 
+						<span class="pcoded-mcaret"></span>
+					</a>
+				</li>
+			</ul>
+			
 			<!-- 
 			<div class="pcoded-navigation-label" data-i18n="nav.category.forms">Chart &amp; Maps</div>
 			

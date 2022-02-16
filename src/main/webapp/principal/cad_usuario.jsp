@@ -72,6 +72,8 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
+											<!-- 
+											
 											
 											<div class="alert alert-success fade show" role="alert">
 												<strong class="alert" id="mensagem">${mensagem}</strong>
@@ -79,6 +81,8 @@
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
+											
+											 -->
 
 											<div class="card"
 												style="font-weight: bold; background-color: #D3D3D3">
@@ -89,6 +93,10 @@
 												</div>
 
 												<div class="card-body">
+												
+													<div class="alert alert-danger alert-dismissible fade show" role="alert">
+														<strong class="alert" id="mensagem">${mensagem}</strong>
+													</div>
 
 													<form class="row g-3" id="formUsuario" method="post"
 														action="<%=request.getContextPath()%>/ServletUsuarioController" enctype="multipart/form-data">
@@ -201,36 +209,36 @@
 																		out.print(" ");
 																	}%>>SECRETARIO(a)</option>
 
-																<option value="AUXILIARTI"
+																<option value="AUXILIAR TI"
 																	<%modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																	if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIARTI")) {
+																	if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR TI")) {
 																		out.print(" ");
 																		out.print("selected=\"selected\"");
 																		out.print(" ");
 																	}%>>AUXILIAR
 																	DE TI</option>
 
-																<option value="AUXILIARFINANCEIRO"
+																<option value="AUXILIAR FINANCEIRO"
 																	<%modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																	if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIARFINANCEIRO")) {
+																	if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR FINANCEIRO")) {
 																		out.print(" ");
 																		out.print("selected=\"selected\"");
 																		out.print(" ");
 																	}%>>AUXILIAR
 																	FINANCEIRO</option>
 
-																<option value="AUXILIARLOJA"
+																<option value="AUXILIAR LOJA"
 																	<%modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																	if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIARLOJA")) {
+																	if (modelLogin != null && modelLogin.getPerfil().equals("AUXILIAR LOJA")) {
 																		out.print(" ");
 																		out.print("selected=\"selected\"");
 																		out.print(" ");
 																	}%>>AUXILIAR
 																	DE LOJA</option>
 
-																<option value="AUXILIARCONTABILIDADE"
+																<option value="AUXILIAR CONTABILIDADE"
 																	<%modelLogin = (ModelLogin) request.getAttribute("modelLogin");
-																	if (modelLogin != null && modelLogin.getPerfil().equalsIgnoreCase("AUXILIARCONTABILIDADE")) {
+																	if (modelLogin != null && modelLogin.getPerfil().equalsIgnoreCase("AUXILIAR CONTABILIDADE")) {
 																		out.print(" ");
 																		out.print("selected=\"selected\"");
 																		out.print(" ");
@@ -259,7 +267,7 @@
 															<label for="sexo" class="form-label">Gênero:</label>
 															<div class="form-check">
 																<input class="form-check-input" type="radio" name="sexo"
-																	id="masculino" value="masculino"
+																	id="masculino" value="MASCULINO"
 																	<%modelLogin = (ModelLogin) request.getAttribute("modelLogin");
 																	if (modelLogin != null && modelLogin.getSexo().equalsIgnoreCase("MASCULINO")) {
 																		out.print(" ");
@@ -270,7 +278,7 @@
 															</div>
 															<div class="form-check">
 																<input class="form-check-input" type="radio" name="sexo"
-																	id="feminino" value="feminino"
+																	id="feminino" value="FEMININO"
 																	<%modelLogin = (ModelLogin) request.getAttribute("modelLogin");
 																	if (modelLogin != null && modelLogin.getSexo().equalsIgnoreCase("FEMININO")) {
 																		out.print(" ");
@@ -301,7 +309,9 @@
 														
 														<div class="col-md-3">
 															<label class="form-label">Cep:</label>
-        													<input class="form-control" style="font-weight: bold;" name="cep" type="text" id="cep" value="${modelLogin.cep}" size="10" maxlength="8" onblur="pesquisaCep();"/>
+        													<input class="form-control" style="font-weight: bold;" 
+        													name="cep" type="text" id="cep" value="${modelLogin.cep}" 
+        													size="10" maxlength="8" onkeypress="$(this).mask('00000000')" onblur="pesquisaCep();"/>
 														</div>
 														
 														<div class="col-md-6">
@@ -347,9 +357,9 @@
 																class="btn btn-primary waves-effect waves-light btn-lg"
 																onclick="limparFormulario();">Novo</button>
 
-															<button type="submit"
+															<button type="button"
 																class="btn btn-danger waves-effect waves-light btn-lg"
-																onclick="criarDeleteComAjax();">Excluir</button>
+																data-bs-toggle="modal" href="#modalExclusao" role="button">Excluir</button>
 
 															<button type="submit"
 																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
@@ -445,6 +455,39 @@
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 
+	<!-- Início Modal de confirmação de exclusão de registro -->
+	<div class="modal modal-danger fade" id="modalExclusao" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog  modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h5 class="modal-title" id="TituloModalCentralizado">Confirmar exclusão</h5>
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Fechar">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+				</div>
+
+				<div class="modal-body">
+					<h6>
+						Deseja excluir o registro
+						<c:out value="${modelLogin.nome}" />
+						?
+					</h6>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<a type="submit" class="btn btn-danger" onclick="criarDeleteComAjax();">Excluir</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Fim do Modal de confirmação de exclusão de registro -->
+
 	<!-- Modal 1 ver -->
 	<div class="modal fade" id="modalToggle" aria-hidden="true" aria-labelledby="modalToggleLabel" tabindex="-1">
 		<div class="modal-dialog modal-lg modal-dialog-centered">
@@ -506,6 +549,8 @@
 
 	<script type="text/javascript">
 	
+	
+	
 	//CAMPO MONEY -> RENDA MENSAL
 	$("#rendaMensal").maskMoney({showSymbol:true, symbol:"R$: ", decimal:",", thousands:"."});
 	
@@ -525,15 +570,15 @@
 	
 	
 	$(document).ready(function() {
-
+		
         function limpa_formulário_cep() {
             // Limpa valores do formulário de cep.
-            $("#logradouro").val("");
-            $("#numero").val("");
-            $("#complemento").val("");
-            $("#bairro").val("");
-            $("#cidade").val("");
-            $("#uf").val("");
+            $("#logradouro").val('');
+            $("#numero").val('');
+            $("#complemento").val('');
+            $("#bairro").val('');
+            $("#cidade").val('');
+            $("#uf").val('');
             
         }
         
@@ -574,8 +619,15 @@
                         } //end if.
                         else {
                             //CEP pesquisado não foi encontrado.
-                            limpa_formulário_cep();
+                            $("#cep").val('');
+                            $("#logradouro").val('');
+				            $("#numero").val('');
+				            $("#complemento").val('');
+				            $("#bairro").val('');
+				            $("#cidade").val('');
+				            $("#uf").val('');
                             alert("CEP não encontrado.");
+                            $("#cep").focus();
                         }
                     });
                 } //end if.
@@ -715,7 +767,7 @@
 
 		/*usando ajax*/
 		function criarDeleteComAjax() {
-			if (confirm('Deseja realmente excluir este registro?')) {
+			if ($("#modalExclusao")) {
 
 				var urlAction = document.getElementById('formUsuario').action;
 				var idUsuario = document.getElementById('id').value;
@@ -728,7 +780,9 @@
 					success : function(response) {
 						//chama o limparFormulario
 						limparFormulario();
+						$("#modalExclusao").modal('hide');
 						document.getElementById('mensagem').textContent = response;
+						$("#nome").focus();
 					}
 
 				}).fail(
@@ -742,11 +796,6 @@
 			document.getElementById("formUsuario").method = 'get';
 			document.getElementById("acao").value = 'deletar';
 			document.getElementById("formUsuario").submit();
-		}
-		
-		function limparFormulario() {
-			document.getElementById("formUsuario").reset();
-			
 		}
 		
 		function limparFormulario() {

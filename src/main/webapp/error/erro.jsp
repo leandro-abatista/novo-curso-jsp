@@ -8,7 +8,6 @@
 	<div class="card text-center">
 		<div class="card-header text-white bg-primary"><h1>Ops!! Ocorreu um erro inesperado!</h1></div>
 		<div class="card-body">
-			<h3 class="card-title">Mensagem de Erro!</h3>
 				<h4>Entre em contato com o suporte do sistema.</h4>
 				<h4 class="card-text">(99) 9.9999-9999 | (99) 9.8888-8888</h4>
 				<h4 class="card-text">Suporte 24 horas por dia e 7 dias por semana.</h4>

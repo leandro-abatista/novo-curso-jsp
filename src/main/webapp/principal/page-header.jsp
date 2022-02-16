@@ -8,7 +8,7 @@
 			<div class="col-md-8">
 				<div class="page-header-title">
 					<h5 class="m-b-10">SGE</h5>
-					<p class="m-b-0">Bem-vindo ao sistema de gerenciamento de estoque</p>
+					<p class="m-b-0">Seja Bem-vindo ao sistema de gerenciamento de estoque</p>
 				</div>
 			</div>
 			<div class="col-md-4">
