@@ -2,41 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="pt_BR">
+<html lang="pt-BR">
 
 <jsp:include page="head.jsp"></jsp:include>
 	
 <body>
 
 	<script type="text/javascript">
-	
-		$("#dataNascimento").change(function () {
-			//FORMATANDO O CAMPO DATA NASCIMENTO NA TELA COM JQUERY
-			var dataNascimento = $("#dataNascimento").val();//pegamos o valor de data
-			var dataFormatada = new Date(dataNascimento);//formata o valor de data
-			$("#dataNascimento").val(dataFormatada.toLocaleDateString('pt-BR', {timeZone: 'UTC'}));
-			
-			//FOCAR NO CAMPO NOME
-			$("#nome").focus();
-		});
-	
-	
-	
-		//CALENDAR COM JQUERY
-		$(function() {
-		    $("#dataNascimento").datepicker({
-		        dateFormat: 'dd/mm/yy',
-		        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
-		        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
-		        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
-		        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
-		        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-		        nextText: 'Próximo',
-		        prevText: 'Anterior',
-		        changeMonth: true,
-		        changeYear: true
-		    });
-		});
 		
 		$(document).ready(function(){			
 		    setTimeout(function() {
@@ -179,6 +151,7 @@
 																name="rendaMensal" 
 																class="form-control" 
 																id="rendaMensal"
+																onkeypress="$(this).mask('###.###.##0,00', {reverse: true});"
 																style="font-weight: bold;" 
 																value="${modelLogin.rendaMensal}"
 																required="required">
@@ -362,7 +335,7 @@
 																data-bs-toggle="modal" href="#modalExclusao" role="button">Excluir</button>
 
 															<button type="submit"
-																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
+																class="btn btn-success waves-effect waves-light btn-lg" onclick="validarCamposInput();">Gravar</button>
 																
 															<c:if test="${modelLogin.id > 0}">
 																<a href="<%= request.getContextPath() %>/ServletTelefone?idUser=${modelLogin.id}" 
@@ -549,19 +522,191 @@
 
 	<script type="text/javascript">
 	
+	//VALIDANDO OS CAMPOS
+	function validarCamposInput() {
+		
+		var nome = document.getElementById("nome");
+		var email = document.getElementById("email");
+		var datanascimento = document.getElementById("datanascimento");
+		var rendamensal = document.getElementById("rendamensal");
+		var perfil = document.getElementById("perfil");
+		var sexo = document.getElementById("sexo");
+		var login = document.getElementById("login");
+		var senha = document.getElementById("senha");
+		var cep = document.getElementById("cep");
+		var logradouro = document.getElementById("logradouro");
+		var numero = document.getElementById("numero");
+		var complemento = document.getElementById("complemento");
+		var bairro = document.getElementById("bairro");
+		var cidade = document.getElementById("cidade");
+		var uf = document.getElementById("uf");
+		
+		//verifica se o nome está vazio
+		if(nome.value == ""){
+			//emite um alert
+			alert("Preencha o campo nome.");
+			//deixa o input com o foco
+			nome.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(email.value == ""){
+			//emite um alert
+			alert("Preencha o campo E-mail.");
+			//deixa o input com o foco
+			email.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(login.value == ""){
+			//emite um alert
+			alert("Preencha o campo login.");
+			//deixa o input com o foco
+			login.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(senha.value == ""){
+			//emite um alert
+			alert("Preencha o campo senha.");
+			//deixa o input com o foco
+			senha.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(perfil.value == ""){
+			//emite um alert
+			alert("Preencha o campo perfil.");
+			//deixa o input com o foco
+			perfil.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(sexo.value == ""){
+			//emite um alert
+			alert("Preencha o campo sexo.");
+			//deixa o input com o foco
+			sexo.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(datanascimento.value == ""){
+			//emite um alert
+			alert("Preencha o campo data de nascimento.");
+			//deixa o input com o foco
+			datanascimento.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(rendamensal.value == ""){
+			//emite um alert
+			alert("Preencha o campo renda mensal.");
+			//deixa o input com o foco
+			rendamensal.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(cep.value == ""){
+			//emite um alert
+			alert("Preencha o campo cep.");
+			//deixa o input com o foco
+			cep.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(logradouro.value == ""){
+			//emite um alert
+			alert("Preencha o campo logradouro.");
+			//deixa o input com o foco
+			logradouro.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(numero.value == ""){
+			//emite um alert
+			alert("Preencha o campo número.");
+			//deixa o input com o foco
+			numero.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(complemento.value == ""){
+			//emite um alert
+			alert("Preencha o campo complemento.");
+			//deixa o input com o foco
+			complemento.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(bairro.value == ""){
+			//emite um alert
+			alert("Preencha o campo bairro.");
+			//deixa o input com o foco
+			bairro.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(cidade.value == ""){
+			//emite um alert
+			alert("Preencha o campo cidade.");
+			//deixa o input com o foco
+			cidade.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+		if(uf.value == ""){
+			//emite um alert
+			alert("Preencha o campo estado.");
+			//deixa o input com o foco
+			uf.focus();
+			//retona a função e não passa para as outros campos sem antes preencher
+			return;
+		}
+	}
+	
 	
 	
 	//CAMPO MONEY -> RENDA MENSAL
 	$("#rendaMensal").maskMoney({showSymbol:true, symbol:"R$: ", decimal:",", thousands:"."});
 	
 	//CONSTANTE DE FORMATAÇÃO
-	const formatter = new Intl.NumberFormat('pt-BR', {
+	const formatter = new Intl.NumberFormat('pt-br', {
 		currency: 'BRL',
 		minimumFractionDigits: 2
 	});
 	$("#rendaMensal").val(formatter.format($("#rendaMensal").val()));
 	//FOCO NO CAMPO RENDAMENSAL
 	$("#rendaMensal").focus();
+	
+	
+	
+	//CALENDAR COM JQUERY
+	$(function() {
+	    $("#dataNascimento").datepicker({
+	        dateFormat: 'dd/mm/yy',
+	        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+	        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+	        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+	        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+	        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+	        nextText: 'Próximo',
+	        prevText: 'Anterior',
+	        changeMonth: true,
+	        changeYear: true
+	    });
+	});
+	
+	$("#dataNascimento").change(function () {
+		//FORMATANDO O CAMPO DATA NASCIMENTO NA TELA COM JQUERY
+		var dataNascimento = $("#dataNascimento").val();//pegamos o valor de data
+		var dataFormatada = new Date(dataNascimento);//formata o valor de data
+		$("#dataNascimento").val(dataFormatada.toLocaleDateString('pt-br', {timeZone: 'UTC'}));
+		
+		//FOCAR NO CAMPO NOME
+		$("#nome").focus();
+	});
+	
+	
 	
 	//FUNÇÃO PARA PEGAR APENAS NÚMEROS COM JQUERY
 	$("#numero, #cep").keypress(function(event){

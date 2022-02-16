@@ -51,3 +51,66 @@ alter table model_login add column sexo character varying(10)
 --criando os campos foto usuário e extensaofotousuario
 alter table model_login add column fotousuario text;
 alter table model_login add column extensaofotousuario character varying(50);
+
+
+create table model_login(
+id bigint not null,
+nome varchar(150) not null,
+login character varying(50) not null unique,
+senha character varying(50) not null,
+email character varying(150) not null unique,
+datanascimento date,
+perfil character varying(50) not null,
+sexo character varying(10),
+fotousuario text,
+extensaofotousuario character varying(50),
+rendamensal numeric(10,2),
+cep character varying(50),
+logradouro character varying(150),
+numero integer,
+complemento character varying(150),
+bairro character varying(50),
+cidade character varying(50),
+uf char(2),
+	
+constraint user_pk primary key(id)
+);
+
+CREATE SEQUENCE serial_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+
+ALTER TABLE model_login ALTER COLUMN id SET DEFAULT NEXTVAL('serial_seq'::regclass);
+
+ALTER TABLE model_login ADD UNIQUE (id);
+);
+
+CREATE TABLE telefone(
+ idFoneUser BIGINT NOT NULL,
+ numero VARCHAR(20) NOT NULL,
+ usuario_cad_id bigint,
+ usuario_pai_id bigint,
+
+ CONSTRAINT telefone_pk PRIMARY KEY (idFoneUser),
+ CONSTRAINT usuario_pai_id_fk FOREIGN KEY (usuario_pai_id) REFERENCES model_login(id),
+ CONSTRAINT usuario_cad_id_fk FOREIGN KEY (usuario_cad_id) REFERENCES model_login(id)
+);
+
+CREATE SEQUENCE tel_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    START 1
+    CACHE 1;
+
+ALTER TABLE telefone ALTER COLUMN idFoneUser SET DEFAULT NEXTVAL('tel_seq'::regclass);
+
+ALTER TABLE telefone ADD UNIQUE (idFoneUser);
+
+ALTER TABLE model_login DROP COLUMN  datanascimento;
+
+alter table model_login add column datanascimento timestamp
+alter table model_login add column userAdmin boolean
