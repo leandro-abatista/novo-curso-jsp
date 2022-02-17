@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class Produto implements Serializable {
 	private Long id;
 	private String descricao;
 	private Integer quantidade;
-	private LocalDate dataEntrada;
+	private Date dataEntrada;
 
 	public Long getId() {
 		return id;
@@ -37,11 +38,11 @@ public class Produto implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public LocalDate getDataEntrada() {
+	public Date getDataEntrada() {
 		return dataEntrada;
 	}
 
-	public void setDataEntrada(LocalDate dataEntrada) {
+	public void setDataEntrada(Date dataEntrada) {
 		this.dataEntrada = dataEntrada;
 	}
 
