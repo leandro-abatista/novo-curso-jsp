@@ -32,6 +32,24 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
+											
+											<c:if test="${mensagem != '' && mensagem != null}">
+												<div class="alert success-alert">
+												  <h3><strong>${mensagem}</strong></h3>
+												  <a class="close">&times;</a>
+												</div>
+											</c:if>
+											
+											<div class="card"
+												style="font-weight: bold; background-color: #D3D3D3">
+
+												<div class="card-header"
+													style="margin: 0.5rem; font-weight: bold; text-align: center; background-color: #F5F5F5; padding: 0.2rem">
+													<h4 class="card-title">Cadastro de Produtos</h4>
+												</div>
+
+												<div class="card-body">
+											
 
 											<form class="row g-3" id="formProduto" method="post" 
 												action="<%=request.getContextPath()%>/ServletProdutoController">
@@ -97,11 +115,14 @@
 
 
 															<button type="submit"
-																class="btn btn-success waves-effect waves-light btn-lg">Gravar</button>
+																class="btn btn-success waves-effect waves-light btn-lg" onclick="salvarProduto();">Gravar</button>
 																
 														</div>
 
 											</form>
+											
+											</div>
+											</div>
 
 											<!--  fim do conteúdo das páginas -->
 										</div>
@@ -120,8 +141,19 @@
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 
 	
-
+	
+   
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.9/sweetalert2.all.min.js" integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript">
+	
+	$(document).ready(function(){			
+	    setTimeout(function() {
+		$(".alert").fadeOut("slow", function(){
+			$(this).alert('close');
+		});				
+	    }, 5000);			
+	});
+		
 	
 	$('.datepicker').datepicker({
 	    format: 'mm/dd/yyyy',
