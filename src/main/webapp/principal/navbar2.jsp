@@ -97,7 +97,7 @@
 					
 					<!-- submenu de cadastro de produto -->
 						<li class=" ">
-							<a href="<%=request.getContextPath()%>/principal/cad_produto.jsp" class="waves-effect waves-dark"> 
+							<a href="<%=request.getContextPath()%>/ServletProdutoController?acao=listProduct" class="waves-effect waves-dark"> 
 								<span class="pcoded-micon">
 									<i class="ti-angle-right"></i>
 								</span> 

@@ -13,6 +13,19 @@ public class Produto implements Serializable {
 	private String descricao;
 	private Integer quantidade;
 	private Date dataEntrada;
+	
+	private String unidadeMedida;
+	
+	
+	public Boolean isProdutoNovo() {
+		if (this.id == null) {
+			return true;
+		} else if(this.id != null && this.id > 0){
+			return false;
+		}
+		
+		return id == null;
+	}
 
 	public Long getId() {
 		return id;
@@ -44,6 +57,14 @@ public class Produto implements Serializable {
 
 	public void setDataEntrada(Date dataEntrada) {
 		this.dataEntrada = dataEntrada;
+	}
+	
+	public String getUnidadeMedida() {
+		return unidadeMedida;
+	}
+	
+	public void setUnidadeMedida(String unidadeMedida) {
+		this.unidadeMedida = unidadeMedida;
 	}
 
 	@Override

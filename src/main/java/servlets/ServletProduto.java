@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,12 +27,33 @@ public class ServletProduto extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		request.getRequestDispatcher("principal/cad_produto.jsp").forward(request, response);
+		
+		try {
+			
+			String acao = request.getParameter("acao");
+			
+			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listProduct")) {
+				List<Produto> produtos;
+				
+					produtos = produtoRepository.listaDeProdutosCadastrados();
+				
+				request.setAttribute("listaDeProdutos", produtos);
+			}
+			
+			request.getRequestDispatcher("principal/cad_produto.jsp").forward(request, response);
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				RequestDispatcher redirecionar = request.getRequestDispatcher("/error/erro.jsp");
+				request.setAttribute("msg", e.getMessage());
+				redirecionar.forward(request, response);
+			}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		String mensagem = null;
 
 		try {
 
@@ -39,23 +61,43 @@ public class ServletProduto extends HttpServlet {
 			String descricao = request.getParameter("descricao");
 			String quantidade = request.getParameter("quantidade");
 			String dataEntrada = request.getParameter("dataEntrada");
+			String unidadeMedida = request.getParameter("unidademedida");
 
 			Produto produto = new Produto();
 			produto.setId(id != null && !id.isEmpty() ? Long.parseLong(id) : null);
 			produto.setDescricao(descricao);
 			produto.setQuantidade(Integer.valueOf(quantidade));
 			produto.setDataEntrada(Date.valueOf(dataEntrada));
+			produto.setUnidadeMedida(unidadeMedida);
 			
 			
-			produto = produtoRepository.gravarProduto(produto);
-			request.setAttribute("mensagem", "Registro salvo com sucesso!");
+			if (produtoRepository.validarProdutoPelaDescricao(produto.getDescricao()) && produto.getId() == null) {
+				mensagem = "Este produto já está cadastrado!";
+			} else {
+				if (produto.isProdutoNovo()) {
+					mensagem = "Produto cadastrado com sucesso!";
+				}
+				
+				produto = produtoRepository.gravarProduto(produto);
+			}
+			
+			List<Produto> produtos = produtoRepository.listaDeProdutosCadastrados();
+			request.setAttribute("listaDeProdutos", produtos);
+			
+			request.setAttribute("mensagem", mensagem);
+			request.setAttribute("produto", produto);
 			RequestDispatcher redirecionaAPagina = request.getRequestDispatcher("principal/cad_produto.jsp");
 			redirecionaAPagina.forward(request, response);
 			//SETA O OBJETO NA TELA
 			request.setAttribute("produto", produto);
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			RequestDispatcher redirecionar = request.getRequestDispatcher("/error/erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionar.forward(request, response);
 		}
 	}
 
