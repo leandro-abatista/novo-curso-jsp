@@ -363,11 +363,11 @@
 														<table id="tabelaViewUser" class="table table-primary table-hover">
 															<thead>
 																<tr>
-																	<th scope="col">Código</th>
-																	<th scope="col">Nome</th>
-																	<th scope="col">E-mail</th>
-																	<th scope="col">Login</th>
-																	<th scope="col">Ver</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Código</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Nome</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">E-mail</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Login</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Ver</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -487,9 +487,9 @@
 						<table id="tabelaUsuarioResultados" class="table table-primary table-hover">
 							<thead><!-- cabeçalho da tabela -->
 								<tr>
-									<th scope="col">Código</th>
-									<th scope="col">Nome</th>
-									<th scope="col">Ver</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Código</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Nome</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Ver</th>
 								</tr>
 							</thead>
 							<tbody><!-- dados da tabela -->

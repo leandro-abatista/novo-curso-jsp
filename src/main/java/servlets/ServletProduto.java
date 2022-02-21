@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dao.DAOProdutoRepository;
 import model.Produto;
 
@@ -63,6 +65,24 @@ public class ServletProduto extends HttpServlet {
 				
 				request.setAttribute("mensagem", "Produto em edição!");
 				request.setAttribute("produto", produtoEmEdicao);
+				
+			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("searchProductAjax")) {
+				
+				//PARÂMETRO DE BUSCA QUE VEM DA PÁGINA, LÁ DO MODAL
+				String descricaoBuscaAjax = request.getParameter("descricaoBuscaAjax");
+				
+				//dadosEmJsonDoProduto -> RECEBE UMA LISTA DE PRODUTOS ATRAVÉS DA CONSULTA NO BANCO DE DADOS
+				List<Produto> listProducts = produtoRepository
+						.consultarListaDeProdutosPorDescricao(descricaoBuscaAjax);
+				
+				ObjectMapper objectMapper = new ObjectMapper();
+				
+				String dadosProdutoEmJson = objectMapper.writeValueAsString(listProducts);
+				
+				//RESPOSTA PARA A TELA EM JSON
+				response.getWriter().write(dadosProdutoEmJson);
+				
+				
 			}
 			
 			

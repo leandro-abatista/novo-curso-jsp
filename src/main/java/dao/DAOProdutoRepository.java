@@ -118,6 +118,11 @@ public class DAOProdutoRepository {
 		
 	}
 	
+	/**
+	 * Método para deletar um produto pelo id
+	 * @param id
+	 * @throws Exception
+	 */
 	public void deletarProduto(Long id) throws Exception {
 		
 		String sql = "DELETE FROM public.produto WHERE id = " + id;
@@ -128,6 +133,12 @@ public class DAOProdutoRepository {
 		connection.commit();
 	}
 	
+	/**
+	 * Método para consultar um produto pelo id
+	 * @param idProduto
+	 * @return
+	 * @throws Exception
+	 */
 	public Produto consultarProdutoPorId(Long idProduto) throws Exception {
 		
 		Produto produto = new Produto();
@@ -150,5 +161,62 @@ public class DAOProdutoRepository {
 		}
 		
 		return produto;
+	}
+	
+	/**
+	 * Método para consultar um produto pela descrição
+	 * @param descricaoProduto
+	 * @return
+	 * @throws Exception
+	 */
+	public Produto consultarProdutoPorDescricao(String descricaoProduto) throws Exception {
+		
+		Produto produto = new Produto();
+		
+		String sql = "SELECT * FROM produto WHERE descricao = ?";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, descricaoProduto); 
+		
+		ResultSet resultaDaConsulta = statement.executeQuery();
+		
+		while (resultaDaConsulta.next()) {
+			
+			produto.setId(resultaDaConsulta.getLong("id"));
+			produto.setDescricao(resultaDaConsulta.getString("descricao"));
+			produto.setQuantidade(resultaDaConsulta.getInt("quantidade"));
+			produto.setDataEntrada(resultaDaConsulta.getDate("dataentrada"));
+			produto.setUnidadeMedida(resultaDaConsulta.getString("unidademedida"));
+			
+		}
+		
+		return produto;
+		
+	}
+	
+	public List<Produto> consultarListaDeProdutosPorDescricao(String descricaoProduto) throws Exception {
+		
+		List<Produto> listaDeProdutos = new ArrayList<Produto>();
+		String sql = "SELECT * FROM produto WHERE UPPER(descricao) LIKE UPPER('%" + descricaoProduto + "%')"
+				+ " ORDER BY id";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		ResultSet resultaDaConsulta = statement.executeQuery();
+		
+		while (resultaDaConsulta.next()) {
+			Produto produto = new Produto();
+			
+			produto.setId(resultaDaConsulta.getLong("id"));
+			produto.setDescricao(resultaDaConsulta.getString("descricao"));
+			produto.setQuantidade(resultaDaConsulta.getInt("quantidade"));
+			produto.setDataEntrada(resultaDaConsulta.getDate("dataentrada"));
+			produto.setUnidadeMedida(resultaDaConsulta.getString("unidademedida"));
+			
+			listaDeProdutos.add(produto);
+		}
+		
+		return listaDeProdutos;
+		
 	}
 }

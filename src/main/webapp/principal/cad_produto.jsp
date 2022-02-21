@@ -35,7 +35,7 @@
 											<!-- conteudo das páginas -->
 											
 											<c:if test="${mensagem != '' && mensagem != null}">
-												<div class="alert success-alert">
+												<div id="mensagem" class="alert success-alert">
 												  <h3><strong>${mensagem}</strong></h3>
 												  <a class="close">&times;</a>
 												</div>
@@ -200,6 +200,9 @@
 																<button type="submit"
 																	class="btn btn-success waves-effect waves-light btn-lg" onclick="salvarProduto();">Gravar</button>
 																	
+																<button type="button"
+																	class="btn btn-dark waves-effect waves-light btn-lg"
+																	data-bs-toggle="modal" href="#modalToggle" role="button">Pesquisar</button>
 																
 																	
 															</div>
@@ -222,16 +225,16 @@
 														<table id="tabelaViewUser" class="table table-primary table-hover">
 															<thead>
 																<tr>
-																	<th scope="col">Código</th>
-																	<th scope="col">Descrição</th>
-																	<th scope="col">Quantidade</th>
-																	<th scope="col">Data Entrada</th>
-																	<th scope="col">Unid. Medida</th>
-																	<th scope="col">Ver</th>
-																	<th scope="col">Excluir</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Código</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Descrição</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Quantidade</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Data Entrada</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Unid. Medida</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Ver</th>
+																	<th style="font-size: 16px; font-weight: bold;" scope="col">Excluir</th>
 																</tr>
 															</thead>
-															<tbody>
+															<tbody style="margin-top: 2px;">
 																<!-- torna a tabela dinâmica ml-->
 																<c:forEach items="${listaDeProdutos}" var="prod">
 																	<tr>
@@ -289,6 +292,69 @@
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
 	
+	<!-- Modal 1 ver -->
+	<div class="modal fade" id="modalToggle" aria-hidden="true" aria-labelledby="modalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: #B0C4DE">
+					<h5 class="modal-title" id="exampleModalToggleLabel">Pesquisar Produto</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- corpo da página -->
+					<div class="input-group mb-3">
+						<input type="text" class="form-control"
+							placeholder="Informe a descrição para pesquisar"
+							aria-label="Informe a descrição para pesquisar"
+							aria-describedby="button-addon2"
+							style="font-size: 18px" id="descricaoBuscaAjax">
+							
+						<button class="btn btn-success waves-effect waves-light btn-lg"
+							type="button" id="button-addon2" onclick="buscarProdutoPelaDescricao();">Buscar</button>
+					</div>
+
+					<!-- tabela de dados -->
+					<div style="height: 20rem; overflow: scroll;">
+						<table id="tabelaDeResultadosProdutos" class="table table-primary table-hover">
+							<thead><!-- cabeçalho da tabela -->
+								<tr>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Código</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Descrição</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Quantidade</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Unid. Medida</th>
+									<th style="font-size: 16px; font-weight: bold;" scope="col">Ver</th>
+								</tr>
+							</thead>
+							<tbody><!-- dados da tabela -->
+							</tbody>
+							<tfoot>
+							</tfoot>
+						</table>
+					</div>
+					<!-- corpo da página -->
+				</div>
+				<!-- 
+				<nav aria-label="Page navigation example">
+						<ul id="ulPaginacaoUserAjax" class="pagination pagination-sm justify-content-center">
+
+						</ul>
+					</nav>
+				
+				<div style="font-size: 16px; margin-left: 15px;">
+					<!-- total de registros buscados -
+					<p id="totalResultados"></p>
+				</div>
+				 -->
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal 1 ver -->
+	
+	
 	<!-- Início Modal de confirmação de exclusão de registro -->
 	<div class="modal modal-danger fade" id="modalExclusao" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog  modal-dialog-centered" role="document">
@@ -329,6 +395,41 @@
    	integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw==" 
    	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript">
+	
+	function buscarProdutoPelaDescricao() {
+		
+		var descricaoBuscaAjax = document.getElementById('descricaoBuscaAjax').value;
+		
+		if (descricaoBuscaAjax != null && descricaoBuscaAjax != '' && descricaoBuscaAjax.trim() != '') {
+			
+			var urlAction = document.getElementById('formProduto').action;
+			
+			$.ajax({
+				
+				method: "GET",
+				url: urlAction,
+				data: 'descricaoBuscaAjax=' + descricaoBuscaAjax + '&acao=searchProductAjax',
+				success: function (response, textStatus, xhr) {
+					
+					var json = JSON.parse(response);
+					
+					$("#tabelaDeResultadosProdutos > tbody > tr").remove();
+					$('#descricaoBuscaAjax').reset();
+					
+					for(var posicao = 0; posicao < json.length; posicao++){
+				 		$("#tabelaDeResultadosProdutos > tbody")
+				 		.append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].descricao +'</td><td>'+ json[posicao].quantidade +'</td><td>'+ json[posicao].unidadeMedida +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><tr>');
+				 	}
+					
+				}
+				
+			}).fail(function (xhr, status, errorThrow) {
+				alert('Erro ao buscar produto pela descrição :: ' + xhr.responseText);
+			})
+		}
+		
+		
+	}
 	
 	function limparFormulario() {
 		/*retorna os elementos html dentro do form*/
