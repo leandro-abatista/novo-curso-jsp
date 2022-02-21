@@ -21,6 +21,9 @@ public class DAOProdutoRepository {
 		connection = SingleConnectionBanco.getConnection();
 	}
 	
+	/*
+	 * MÉTODO PARA SALVAR UM NOVO REGISTRO NO BANCO DE DADOS
+	 */
 	public Produto gravarProduto(Produto produto) throws Exception {
 		
 		if (produto.isProdutoNovo()) {
@@ -38,11 +41,31 @@ public class DAOProdutoRepository {
 			statement.execute();
 			connection.commit();
 			
+		} else {
+			
+			String sql = "UPDATE public.produto "
+					+ "	SET id=?, descricao=?, quantidade=?, dataentrada=?, unidademedida=?"
+					+ " WHERE id = " + produto.getId();
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			statement.setLong(1, produto.getId());
+			statement.setString(2, produto.getDescricao());
+			statement.setInt(3, produto.getQuantidade());
+			statement.setDate(4, produto.getDataEntrada());
+			statement.setString(5, produto.getUnidadeMedida());
+			
+			statement.executeUpdate();
+			connection.commit();
+			
 		}
 		
 		return produto;
 	}
 	
+	/*
+	 * MÉTODO PARA VALIDAR SE EXISTE UM PRODUTO JÁ CADASTRADO NO BANCO DE DADOS
+	 */
 	public boolean validarProdutoPelaDescricao(String descricao) {
 		try {
 			String sql = "select count(1) > 0 AS existe from produto where upper(descricao) = upper('" + descricao
@@ -61,6 +84,11 @@ public class DAOProdutoRepository {
 		return false;
 	}
 	
+	/**
+	 * MÉTODO PARA LISTAR OS PRODUTOS CADASTRADOS NO BANCO DE DADOS
+	 * @return
+	 * @throws Exception
+	 */
 	public List<Produto> listaDeProdutosCadastrados() throws Exception{
 		
 		List<Produto> produtos = new ArrayList<Produto>();
@@ -88,5 +116,39 @@ public class DAOProdutoRepository {
 		//retorna a lista de produtos cadastrados
 		return produtos;
 		
+	}
+	
+	public void deletarProduto(Long id) throws Exception {
+		
+		String sql = "DELETE FROM public.produto WHERE id = " + id;
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.executeUpdate();
+		connection.commit();
+	}
+	
+	public Produto consultarProdutoPorId(Long idProduto) throws Exception {
+		
+		Produto produto = new Produto();
+		
+		String sql = "SELECT * FROM produto WHERE id = ?";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, idProduto); 
+		
+		ResultSet resultaDaConsulta = statement.executeQuery();
+		
+		while (resultaDaConsulta.next()) {
+			
+			produto.setId(resultaDaConsulta.getLong("id"));
+			produto.setDescricao(resultaDaConsulta.getString("descricao"));
+			produto.setQuantidade(resultaDaConsulta.getInt("quantidade"));
+			produto.setDataEntrada(resultaDaConsulta.getDate("dataentrada"));
+			produto.setUnidadeMedida(resultaDaConsulta.getString("unidademedida"));
+			
+		}
+		
+		return produto;
 	}
 }

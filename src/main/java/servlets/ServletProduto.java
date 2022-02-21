@@ -30,15 +30,41 @@ public class ServletProduto extends HttpServlet {
 		
 		try {
 			
+			String mensagem = null;
+			
 			String acao = request.getParameter("acao");
 			
 			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listProduct")) {
-				List<Produto> produtos;
-				
-					produtos = produtoRepository.listaDeProdutosCadastrados();
-				
+				//CARREGA A LISTA DE PRODUTOS APÓS CARREGAR A PÁGINA DE PRODUTOS 
+				List<Produto> produtos = produtoRepository.listaDeProdutosCadastrados();
 				request.setAttribute("listaDeProdutos", produtos);
+				
+				//request.getRequestDispatcher("principal/cad_produto.jsp").forward(request, response);
+				
+			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deleteProduct")) {
+				
+				String idProduto = request.getParameter("id");
+				produtoRepository.deletarProduto(Long.parseLong(idProduto));
+				
+				//CARREGA A LISTA DE PRODUTOS APÓS CARREGAR A PÁGINA DE PRODUTOS 
+				List<Produto> produtos = produtoRepository.listaDeProdutosCadastrados();
+				request.setAttribute("listaDeProdutos", produtos);
+				
+				request.setAttribute("mensagem", "Produto excluído com sucesso!");
+				
+			} else if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("editProduct")) {
+				
+				String idProduto = request.getParameter("id");
+				Produto produtoEmEdicao = produtoRepository.consultarProdutoPorId(Long.parseLong(idProduto));
+				
+				//CARREGA A LISTA DE PRODUTOS APÓS CARREGAR A PÁGINA DE PRODUTOS 
+				List<Produto> produtos = produtoRepository.listaDeProdutosCadastrados();
+				request.setAttribute("listaDeProdutos", produtos);
+				
+				request.setAttribute("mensagem", "Produto em edição!");
+				request.setAttribute("produto", produtoEmEdicao);
 			}
+			
 			
 			request.getRequestDispatcher("principal/cad_produto.jsp").forward(request, response);
 			

@@ -52,7 +52,9 @@
 											
 													<form class="row g-3" id="formProduto" method="post" 
 														action="<%=request.getContextPath()%>/ServletProdutoController">
-	
+																
+																<input type="hidden" id="acao" name="acao" value="">
+																
 																<div class="col-md-3">
 																	<label for="id" class="form-label">Código:</label> 
 																	<input
@@ -195,9 +197,10 @@
 																	class="btn btn-primary waves-effect waves-light btn-lg"
 																	onclick="limparFormulario();">Novo</button>
 	
-	
 																<button type="submit"
 																	class="btn btn-success waves-effect waves-light btn-lg" onclick="salvarProduto();">Gravar</button>
+																	
+																
 																	
 															</div>
 	
@@ -225,6 +228,7 @@
 																	<th scope="col">Data Entrada</th>
 																	<th scope="col">Unid. Medida</th>
 																	<th scope="col">Ver</th>
+																	<th scope="col">Excluir</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -244,10 +248,18 @@
 																		<!-- coluna -->
 																		<td>
 																			<a
-																			href=""
+																			href="<%= request.getContextPath() %>/ServletProdutoController?acao=editProduct&id=${prod.id}"
 																			class="btn btn-secondary" 
 																			type="button"
 																			id="button-addon2">Ver</a>
+																		</td>
+																		<!-- coluna -->
+																		<td>
+																			<a
+																			href="<%= request.getContextPath() %>/ServletProdutoController?acao=deleteProduct&id=${prod.id}"
+																			class="btn btn-danger" 
+																			type="button"
+																			id="button-addon2">Excluir</a>
 																		</td>
 																		<!-- coluna -->
 																	</tr>
@@ -276,6 +288,39 @@
 	</div>
 
 	<jsp:include page="javascriptfile.jsp"></jsp:include>
+	
+	<!-- Início Modal de confirmação de exclusão de registro -->
+	<div class="modal modal-danger fade" id="modalExclusao" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog  modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h5 class="modal-title" id="TituloModalCentralizado">Confirmar exclusão</h5>
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Fechar">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+				</div>
+
+				<div class="modal-body">
+					<h6>
+						Deseja excluir o registro
+						<c:out value="${prod.id} - ${prod.descricao}" />
+						?
+					</h6>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<a type="submit" class="btn btn-danger" onclick="criarDeleteComAjax();">Excluir</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- Fim do Modal de confirmação de exclusão de registro -->
 
 	
 	
@@ -284,6 +329,15 @@
    	integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw==" 
    	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript">
+	
+	function limparFormulario() {
+		/*retorna os elementos html dentro do form*/
+		var elementos = document.getElementById("formProduto").elements;
+		for (posicao = 0; posicao < elementos.length; posicao++) {
+			elementos[posicao].value = '';
+		}
+		$('#descricao').focus();
+	}
 	
 	$(document).ready(function() {
 		  $("#quantidade").keyup(function() {

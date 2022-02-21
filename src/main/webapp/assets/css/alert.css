@@ -9,11 +9,11 @@ h3{
 }
 .alert{
   width:50%;
-  margin:20px auto;
-  padding:30px;
+  margin:10px auto;
+  padding:15px;
   position:relative;
   border-radius:5px;
-  box-shadow:0 0 15px 5px #ccc;
+  box-shadow:0 0 15px 5px #3CB371;
 }
 .close{
   position:absolute;
