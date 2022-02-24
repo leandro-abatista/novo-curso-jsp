@@ -122,6 +122,8 @@ public class ServletProduto extends HttpServlet {
 			} else {
 				if (produto.isProdutoNovo()) {
 					mensagem = "Produto cadastrado com sucesso!";
+				} else if(!produto.isProdutoNovo()) {
+					mensagem = "Produto atualizado com sucesso!";
 				}
 				
 				produto = produtoRepository.gravarProduto(produto);
@@ -131,14 +133,11 @@ public class ServletProduto extends HttpServlet {
 			request.setAttribute("listaDeProdutos", produtos);
 			
 			request.setAttribute("mensagem", mensagem);
+			//SETA O OBJETO SALVO NA TELA
 			request.setAttribute("produto", produto);
 			RequestDispatcher redirecionaAPagina = request.getRequestDispatcher("principal/cad_produto.jsp");
 			redirecionaAPagina.forward(request, response);
-			//SETA O OBJETO NA TELA
-			request.setAttribute("produto", produto);
 			
-			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionar = request.getRequestDispatcher("/error/erro.jsp");

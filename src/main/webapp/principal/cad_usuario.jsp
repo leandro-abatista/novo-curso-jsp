@@ -8,18 +8,6 @@
 	
 <body>
 
-	<script type="text/javascript">
-		
-		$(document).ready(function(){			
-		    setTimeout(function() {
-			$(".alert").fadeOut("slow", function(){
-				$(this).alert('close');
-			});				
-		    }, 5000);			
-		});
-		
-	</script>
-
 	<!-- Pre-loader start -->
 	<jsp:include page="theme-loader.jsp"></jsp:include>
 
@@ -31,10 +19,14 @@
 
 			<div class="pcoded-main-container">
 				<div class="pcoded-wrapper">
+				
 					<jsp:include page="navbar2.jsp"></jsp:include>
+					
 					<div class="pcoded-content">
 						<!-- Page-header start -->
+						
 						<jsp:include page="page-header.jsp"></jsp:include>
+						
 						<!-- Page-header end -->
 						<div class="pcoded-inner-content">
 							<!-- Main-body start -->
@@ -44,17 +36,18 @@
 									<div class="page-body">
 										<div class="row">
 											<!-- conteudo das páginas -->
-											<!-- 
+											 
 											
+											<c:if test="${mensagem != null && mensagem != ' '}">
+												<div class="alert alert-success fade show" role="alert">
+													<strong class="alert" id="mensagem">${mensagem}</strong>
+													<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+											</c:if>
 											
-											<div class="alert alert-success fade show" role="alert">
-												<strong class="alert" id="mensagem">${mensagem}</strong>
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											
-											 -->
+											 
 
 											<div class="card"
 												style="font-weight: bold; background-color: #D3D3D3">
@@ -66,9 +59,6 @@
 
 												<div class="card-body">
 												
-													<div class="alert alert-danger alert-dismissible fade show" role="alert">
-														<strong class="alert" id="mensagem">${mensagem}</strong>
-													</div>
 
 													<form class="row g-3" id="formUsuario" method="post"
 														action="<%=request.getContextPath()%>/ServletUsuarioController" enctype="multipart/form-data">
@@ -135,7 +125,7 @@
 														<div class="col-md-6">
 															<label for="dataNascimento" class="form-label">Data Nascimento:</label> 
 															<input
-																type="text" 
+																type="date" 
 																name="dataNascimento" 
 																class="form-control"
 																id="dataNascimento" 
@@ -678,7 +668,7 @@
 	//FOCO NO CAMPO RENDAMENSAL
 	$("#rendaMensal").focus();
 	
-	
+	/*
 	
 	//CALENDAR COM JQUERY
 	$(function() {
@@ -706,7 +696,7 @@
 		$("#nome").focus();
 	});
 	
-	
+	*/
 	
 	//FUNÇÃO PARA PEGAR APENAS NÚMEROS COM JQUERY
 	$("#numero, #cep").keypress(function(event){
@@ -952,11 +942,20 @@
 			$('#nome').focus();
 		}
 
+		/*
 		window.setTimeout(function() {
 			$(".alert").fadeTo(500, 0).slideUp(500, function() {
 				$(this).remove();
 			});
 		}, 4000);
+		*/
+		$(document).ready(function(){			
+		    setTimeout(function() {
+			$(".alert").fadeOut("slow", function(){
+				$(this).alert('close');
+			});				
+		    }, 5000);			
+		});
 
 		/*Iniciará quando todo o corpo do documento HTML estiver pronto.
 		$().ready(function() {

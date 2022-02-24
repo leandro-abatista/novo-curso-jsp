@@ -219,7 +219,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			throws ServletException, IOException {
 		try {
 
-			String mensagem = "Operação realizada com sucesso!";
+			String mensagem = null;
 
 			String id = request.getParameter("id");
 			String nome = request.getParameter("nome");
@@ -260,8 +260,7 @@ public class ServletUsuarioController extends ServletGenericUtil {
 			// A FORMATAÇÃO COMEÇA DE DENTRO PARA FORA
 			// PEGA PRIMEIRO A DATA QUE VEM DA TELA E DEPOIS FORMATA PARA O FORMATO DO BANCO
 			// DE DADOS
-			modelLogin.setDataNascimento(Date.valueOf(new SimpleDateFormat("yyyy-mm-dd")
-					.format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento))));
+			modelLogin.setDataNascimento(Date.valueOf(dataNascimento));
 			modelLogin.setRendaMensal(Double.valueOf(rendaMensal));
 
 			/* código abaixo é referente ao upload de fotos/imagem */

@@ -34,7 +34,7 @@
 										<div class="row">
 											<!-- conteudo das páginas -->
 											
-											<c:if test="${mensagem != '' && mensagem != null}">
+											<c:if test="${mensagem != ' ' && mensagem != null}">
 												<div id="mensagem" class="alert success-alert">
 												  <h3><strong>${mensagem}</strong></h3>
 												  <a class="close">&times;</a>
@@ -111,62 +111,67 @@
 															<div class="col-md-6">
 																<label for="perfil" class="form-label">Unidade de Medida:</label> 
 																<select
-																	id="unidademedida" class="form-select"
-																	style="font-weight: bold;" name="unidademedida"
+																	id="unidademedida" 
+																	class="form-select"
+																	style="font-weight: bold;" 
+																	name="unidademedida"
 																	aria-label="Default select example">
 	
 																	<option disabled="disabled" selected="selected">Selecione</option>
 	
 																	<option value="Caixa"
 																		<%
-																		if(request.getParameter("produto") != null){
+																		if(request.getParameter("Caixa") != null){
 																		Produto produto = (Produto) request.getAttribute("produto");
-																		if (produto.getUnidadeMedida().equalsIgnoreCase("Caixa")) {
+																		if (produto != null && produto.getUnidadeMedida().equalsIgnoreCase("Caixa")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
 																			out.print(" ");
 																		}
-																		}%>>Caixa</option>
+																		}
+																		%>>Caixa</option>
 	
 																	<option value="Pacote"
 																		<%
-																		if(request.getParameter("produto") != null){
+																		if(request.getParameter("Caixa") != null){
 																		Produto produto = (Produto) request.getAttribute("produto");
-																		if (produto.getUnidadeMedida().equalsIgnoreCase("Pacote")) {
+																		if (produto != null && produto.getUnidadeMedida().equalsIgnoreCase("Pacote")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
 																			out.print(" ");
 																		}
-																		}%>>Pacote</option>
+																		}
+																		%>>Pacote</option>
 	
 																	<option value="KG"
 																		<%
-																		if(request.getParameter("produto") != null){
+																		if(request.getParameter("KG") != null){
 																		Produto produto = (Produto) request.getAttribute("produto");
-																		if (produto.getUnidadeMedida().equalsIgnoreCase("KG")) {
+																		if (produto != null && produto.getUnidadeMedida().equalsIgnoreCase("KG")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
 																			out.print(" ");
 																		}
-																		}%>>KG</option>
+																		}
+																		%>>KG</option>
 	
 																	<option value="ML"
 																		<%
-																		if(request.getParameter("produto") != null){
+																		if(request.getParameter("ML") != null){
 																		Produto produto = (Produto) request.getAttribute("produto");
-																		if (produto.getUnidadeMedida().equalsIgnoreCase("ML")) {
+																		if (produto != null && produto.getUnidadeMedida().equalsIgnoreCase("ML")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
 																			out.print(" ");
 																		}
-																		}
+																		}																		
 																		%>>ML</option>
 	
 																	<option value="Litro"
 																		<%
-																		if(request.getParameter("produto") != null){
+																		if(request.getParameter("Litro") != null){
 																		Produto produto = (Produto) request.getAttribute("produto");
-																		if (produto.getUnidadeMedida().equalsIgnoreCase("Litro")) {
+																		if (produto != null && produto.getUnidadeMedida().equalsIgnoreCase("Litro")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
 																			out.print(" ");
@@ -176,9 +181,9 @@
 	
 																	<option value="Pote"
 																		<%
-																		if(request.getParameter("produto") != null){
+																		if(request.getParameter("Pote") != null){
 																		Produto produto = (Produto) request.getAttribute("produto");
-																		if (produto.getUnidadeMedida().equalsIgnoreCase("Pote")) {
+																		if (produto != null && produto.getUnidadeMedida().equalsIgnoreCase("Pote")) {
 																			out.print(" ");
 																			out.print("selected=\"selected\"");
 																			out.print(" ");
@@ -192,7 +197,6 @@
 															
 															<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin-top: 2rem">
 	
-	
 																<button type="button"
 																	class="btn btn-primary waves-effect waves-light btn-lg"
 																	onclick="limparFormulario();">Novo</button>
@@ -203,10 +207,12 @@
 																<button type="button"
 																	class="btn btn-dark waves-effect waves-light btn-lg"
 																	data-bs-toggle="modal" href="#modalToggle" role="button">Pesquisar</button>
-																
 																	
+																<a type="button"
+																	class="btn btn-dark waves-effect waves-light btn-lg"
+																	 href="<%= request.getContextPath()%>/principal/estoque.jsp" >Estoque</a>
+																
 															</div>
-	
 													</form>
 												</div>
 											</div>
@@ -400,25 +406,26 @@
 		
 		var descricaoBuscaAjax = document.getElementById('descricaoBuscaAjax').value;
 		
-		if (descricaoBuscaAjax != null && descricaoBuscaAjax != '' && descricaoBuscaAjax.trim() != '') {
+		if (descricaoBuscaAjax != null && descricaoBuscaAjax != ' '  && descricaoBuscaAjax.trim() != ' ') {
 			
 			var urlAction = document.getElementById('formProduto').action;
 			
 			$.ajax({
 				
-				method: "GET",
+				method: "get",
 				url: urlAction,
 				data: 'descricaoBuscaAjax=' + descricaoBuscaAjax + '&acao=searchProductAjax',
 				success: function (response, textStatus, xhr) {
 					
-					var json = JSON.parse(response);
+					var dadosProdutoEmJson = JSON.parse(response);
+					alert(dadosProdutoEmJson);
 					
 					$("#tabelaDeResultadosProdutos > tbody > tr").remove();
 					$('#descricaoBuscaAjax').reset();
 					
-					for(var posicao = 0; posicao < json.length; posicao++){
+					for(var posicao = 0; posicao < dadosProdutoEmJson.length; posicao++){
 				 		$("#tabelaDeResultadosProdutos > tbody")
-				 		.append('<tr><td>'+ json[posicao].id +'</td><td>'+ json[posicao].descricao +'</td><td>'+ json[posicao].quantidade +'</td><td>'+ json[posicao].unidadeMedida +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><tr>');
+				 		.append('<tr><td>'+ dadosProdutoEmJson[posicao].id +'</td><td>'+ dadosProdutoEmJson[posicao].descricao +'</td><td>'+ dadosProdutoEmJson[posicao].quantidade +'</td><td>'+ dadosProdutoEmJson[posicao].unidadeMedida +'</td><td><button type="button" class="btn btn-info" onclick="verEditar('+json[posicao].id+')">Ver</button></td><tr>');
 				 	}
 					
 				}
@@ -456,7 +463,7 @@
 		
 	
 	$('.datepicker').datepicker({
-	    format: 'mm/dd/yyyy',
+	    format: 'dd/mm/yyyy',
 	    startDate: '-3d'
 	});
 	
