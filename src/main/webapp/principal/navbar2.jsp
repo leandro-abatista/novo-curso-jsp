@@ -105,6 +105,18 @@
 								<span class="pcoded-mcaret"></span>
 							</a>
 						</li>
+						
+					
+					<!-- submenu de estoque -->
+						<li class=" ">
+							<a href="<%=request.getContextPath()%>/ServletEstoqueProduto?acao=listaDeProdutos" class="waves-effect waves-dark"> 
+								<span class="pcoded-micon">
+									<i class="ti-angle-right"></i>
+								</span> 
+								<span style="font-size: 15px; font-weight: bold;" class="pcoded-mtext" data-i18n="nav.basic-components.alert">Estoque</span> 
+								<span class="pcoded-mcaret"></span>
+							</a>
+						</li>
 				</ul>
 				
 			

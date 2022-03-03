@@ -208,9 +208,6 @@
 																	class="btn btn-dark waves-effect waves-light btn-lg"
 																	data-bs-toggle="modal" href="#modalToggle" role="button">Pesquisar</button>
 																	
-																<a type="button"
-																	class="btn btn-dark waves-effect waves-light btn-lg"
-																	 href="<%= request.getContextPath()%>/principal/estoque.jsp" >Estoque</a>
 																
 															</div>
 													</form>

@@ -93,7 +93,7 @@ public class DAOProdutoRepository {
 		
 		List<Produto> produtos = new ArrayList<Produto>();
 		
-		String sql = "SELECT id, descricao, quantidade, dataentrada, unidademedida "
+		String sql = " SELECT id, descricao, quantidade, dataentrada, unidademedida "
 				+ "	FROM public.produto order by id";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
@@ -217,6 +217,24 @@ public class DAOProdutoRepository {
 		}
 		
 		return listaDeProdutos;
+	}
+	
+	public Produto adicionarEstoque(Long id, int quantidadeAjustada) throws Exception {
+		
+		
+		if (id != null) {
+			
+			String sql = "UPDATE public.produto "
+					+ " SET quantidade = quantidade + " + quantidadeAjustada + " WHERE id = " + id;
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			statement.executeUpdate();
+			connection.commit();
+			
+		}
+		
+		return null;
 		
 	}
 }

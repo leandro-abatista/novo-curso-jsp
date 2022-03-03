@@ -148,7 +148,7 @@ body {
 
     }
     
-    var mensagem = "<strong>teste</strong>"
+    var mensagem = "<strong>"+${mensagem}+"</strong>"
     mostraDialogo(mensagem, "success", 2500);
     
     /*script de validação dos campos de login e senha*/
